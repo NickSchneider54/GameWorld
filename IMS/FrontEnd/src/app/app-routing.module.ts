@@ -1,11 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { BuySellComponent } from './Components/buy-sell/buy-sell.component';
+import { DataComponent } from './Components/data/data.component';
+import { InventoryComponent } from './Components/inventory/inventory.component';
+import { PriceChartingComponent } from './Components/price-charting/price-charting.component';
 
 
-const routes: Routes = [];
+const routes: Routes = [
+
+  { path: "/buy-sell", component: BuySellComponent },
+  { path: "/data", component: DataComponent },
+  { path: "/inventory", component: InventoryComponent },
+  { path: "/price-charting", component: PriceChartingComponent }
+
+
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+export const RoutingComponent = [BuySellComponent, DataComponent, InventoryComponent, PriceChartingComponent];
