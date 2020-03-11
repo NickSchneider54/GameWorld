@@ -8,12 +8,12 @@ import {LoginComponent } from './Components/login/login.component';
 
 
 const routes: Routes = [
-
-  { path: "/buy-sell", component: BuySellComponent },
-  { path: "/data", component: DataComponent },
-  { path: "/inventory", component: InventoryComponent },
-  { path: "/price-charting", component: PriceChartingComponent },
-  { path: "/login", component: LoginComponent}
+  { path: "", component: BuySellComponent},
+  { path: "buy-sell", component: BuySellComponent },
+  { path: "data", component: DataComponent },
+  { path: "inventory", component: InventoryComponent },
+  { path: "price-charting", component: PriceChartingComponent },
+  { path: "login", component: LoginComponent}
 
 
 ];

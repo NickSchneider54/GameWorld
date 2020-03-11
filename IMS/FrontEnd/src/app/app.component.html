@@ -272,9 +272,9 @@
   <mat-toolbar-row>
     <span>Game World</span>
     <span class="filler"></span>
-    <span><form> <mat-form-field class="search-bar"><input matInput placeholder="search"> </mat-form-field><mat-icon>search</mat-icon></form></span>
+    <span><form> <mat-form-field class="search-bar"><input matInput placeholder="search" (keydown.enter)="sendSearch($event)"> </mat-form-field><mat-icon>search</mat-icon></form></span>
     <span class="filler"></span>
-    <span ><mat-icon>person</mat-icon>&nbsp; Username &nbsp;
+    <span ><mat-icon>person</mat-icon>&nbsp; {{username}} &nbsp;
       <button mat-button [matMenuTriggerFor]="menu">Menu</button>
       <mat-menu #menu="matMenu">
       <button mat-menu-item>Settings</button>
@@ -295,6 +295,6 @@
     </mat-card>
     </div>
     <div>
-    <router-outlet ></router-outlet>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
   </main>
