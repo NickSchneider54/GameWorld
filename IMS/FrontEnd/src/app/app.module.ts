@@ -1,15 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {MyMaterialModule} from './Modules/material.module';
+import {FormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppRoutingModule, RoutingComponent } from './app-routing.module';
 import { AppComponent } from './app.component';
-<<<<<<< Updated upstream
-import { BuySellComponent } from './Components/buy-sell/buy-sell.component';
-import { InventoryComponent } from './Components/inventory/inventory.component';
-import { DataComponent } from './Components/data/data.component';
-import { PriceChartingComponent } from './Components/price-charting/price-charting.component';
-=======
->>>>>>> Stashed changes
+import { HttpClientModule } from '@angular/common/http';
+
+
+
 
 @NgModule({
   declarations: [
@@ -18,7 +18,11 @@ import { PriceChartingComponent } from './Components/price-charting/price-charti
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MyMaterialModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
