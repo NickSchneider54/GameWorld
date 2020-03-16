@@ -22,6 +22,8 @@ export class AppComponent {
   sendSearch(searchItem: string): void{
     this.search.sendSearch(searchItem);
   }
+
+  showFiller = false;
   
   // waits for the login event to occur and sets loggedIn to True
   onActivate(componentReference:BuySellComponent): void{
