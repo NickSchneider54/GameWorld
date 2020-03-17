@@ -27,12 +27,16 @@
 
   .toolbar {
     height: 80px;
+    margin-top: -10px;
+    margin-left:-10px;
+    margin-right:-10px;
     padding-top: 20px;
     display: flex;
     align-items: center;
     background-color: #1976d2;
     color: white;
     font-weight: 600;
+    width:auto;
   }
 
 
@@ -46,11 +50,7 @@
     margin: 0 16px;
   }
 
-  .toolbar #twitter-logo {
-    height: 40px;
-    margin: 0 16px;
-  }
-
+  
   .toolbar #twitter-logo:hover {
     opacity: 0.8;
   }
@@ -60,7 +60,7 @@
     margin: 32px auto;
     padding: 0 16px;
     max-width: 960px;
-    flex-direction: column;
+    flex-direction:row;
     align-items: center;
   }
 
@@ -78,7 +78,7 @@
   }
 
   .card-container {
-    display: flex;
+    display: flex;    
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 16px;
@@ -99,7 +99,21 @@
     transition: all 0.2s ease-in-out;
     line-height: 24px;
   }
-
+  .itemDetailsCard {
+    border-radius: 4px;
+    border: 1px solid #eee;
+    background-color: #fafafa;
+    height: 400px;
+    width: 400px;
+    margin: 0 8px 16px;
+    padding: 16px;
+    /* display: flex;
+    flex-direction: row; */
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
+  }
   .card-container .card:not(:last-child) {
     margin-right: 0;
   }
@@ -109,7 +123,7 @@
     width: 168px;
   }
 
-  .card-container .card:not(.highlight-card) {
+  /* .card-container .card:not(.highlight-card) {
     cursor: pointer;
   }
 
@@ -120,7 +134,7 @@
 
   .card-container .card:not(.highlight-card):hover .material-icons path {
     fill: rgb(105, 103, 103);
-  }
+  } */
 
 
   .card.highlight-card {
@@ -137,20 +151,7 @@
     margin-left: 60px;
   }
 
-  svg#rocket {
-    width: 80px;
-    position: absolute;
-    left: -10px;
-    top: -24px;
-  }
 
-  svg#rocket-smoke {
-    height: 100vh;
-    position: absolute;
-    top: 10px;
-    right: 180px;
-    z-index: -10;
-  }
 
   a,
   a:visited,
@@ -235,15 +236,26 @@
 
   .sidenav-content {
     display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    /* height: 100%; */
+    /* width:100%; */
+    padding: 24px;
+    align-items: top;
+    /* justify-content: center;  */
     
   }
 
   .sidenav {
     background:white;
     padding: 20px;
+  }
+
+  .buySellTabs{
+    display:flex;
+    flex-direction: row;
+    /* width: 100%;     */
+    
   }
 
   footer {
@@ -336,6 +348,12 @@
   </mat-drawer>
 
   <div class="sidenav-content">
+    <main>
+      <div>
+        <router-outlet (activate)="onActivate($event)"></router-outlet>
+      </div>
+    </main> 
+    
     <!--Components will be able to go here in the content area based upon which sidebar is clicked-->
   </div>
 
@@ -349,8 +367,5 @@
       <a><button routerLink="/login">Login</button></a>
 
     </mat-card>
-  </div>
-  <div>
-    <router-outlet (activate)="onActivate($event)"></router-outlet>
-  </div>
-</main> -->
+  </div> -->
+ 

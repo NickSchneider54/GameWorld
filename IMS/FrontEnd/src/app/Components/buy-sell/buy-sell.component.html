@@ -1,1 +1,40 @@
-<p>buy-sell works!</p>
+<mat-tab-group class ='buySellTabs'>
+    <mat-tab label="Buy">
+        <div class='card-container'>
+         <mat-card class='itemDetailsCard'>
+            <mat-card-header>
+                <mat-card-title>Item Details</mat-card-title>
+            </mat-card-header> 
+            <mat-card-content>
+                ISBN, name, etc go here
+            </mat-card-content>
+            </mat-card>
+         <mat-card class='order-details-card'><mat-card-header>
+            <mat-card-title>Order Details</mat-card-title>
+        </mat-card-header> 
+        <mat-card-content>
+            list of all items on current buy order goes here
+        </mat-card-content></mat-card>
+        </div>
+     </mat-tab>
+    <mat-tab label="Sell"> 
+        <div class='card-container'>
+            <mat-card class='item-details-card'>
+               <mat-card-header>
+                   <mat-card-title>Item Details</mat-card-title>
+               </mat-card-header> 
+               <mat-card-content>
+                   ISBN, name, etc go here
+               </mat-card-content>
+               </mat-card>
+            <mat-card class='order-details-card'><mat-card-header>
+               <mat-card-title>Order Details</mat-card-title>
+           </mat-card-header> 
+           <mat-card-content>
+               list of all items on current sell order goes here
+           </mat-card-content></mat-card>
+           </div>
+     </mat-tab>
+    
+  </mat-tab-group>
+  
