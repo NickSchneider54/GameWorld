@@ -33,7 +33,7 @@
     padding-top: 20px;
     display: flex;
     align-items: center;
-    background-color: #1976d2;
+    /* background-color: #1976d2; */
     color: white;
     font-weight: 600;
     width:auto;
@@ -326,7 +326,7 @@
     <span class="filler"></span>
     <span>
       <mat-icon>person</mat-icon>&nbsp; {{username}} &nbsp;
-      <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon> </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>Settings</button>
         <button mat-menu-item>Logout</button>

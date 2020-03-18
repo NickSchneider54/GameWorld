@@ -6,14 +6,42 @@
                 <mat-card-title>Item Details</mat-card-title>
             </mat-card-header> 
             <mat-card-content>
-                ISBN, name, etc go here
+                <form class="buyItemForm">
+                    <mat-form-field >
+                        <mat-label>Item Name</mat-label>
+                        <input matInput placeholder="" value="">
+                    </mat-form-field>
+                    <mat-form-field >
+                        <mat-label>ISBN</mat-label>
+                        <input matInput placeholder="" value="">
+                    </mat-form-field>
+                    <mat-form-field >
+                        <mat-label>Console</mat-label>
+                        <input matInput placeholder="" value="">
+                    </mat-form-field>
+                    <p><button mat-raised-button click="">Add item to order</button></p>
+                    
+                </form>
             </mat-card-content>
             </mat-card>
          <mat-card class='order-details-card'><mat-card-header>
             <mat-card-title>Order Details</mat-card-title>
         </mat-card-header> 
         <mat-card-content>
-            list of all items on current buy order goes here
+           <mat-list>
+               <div mat-subheader>Sell Order Summary</div>               
+               <mat-list-item>                   
+                <div mat-line>Item 1</div>
+                <div mat-line>item 1 price</div>
+               </mat-list-item>
+               <mat-list-item>
+                <div mat-line>Item 2</div>
+                <div mat-line>item 2 price</div>
+               </mat-list-item>
+               <h1>Order Total</h1>
+               <h2>$0.00</h2>
+               
+           </mat-list>
         </mat-card-content></mat-card>
         </div>
      </mat-tab>
@@ -31,7 +59,19 @@
                <mat-card-title>Order Details</mat-card-title>
            </mat-card-header> 
            <mat-card-content>
-               list of all items on current sell order goes here
+            <mat-list>
+                <div mat-subheader>Buy Order Summary</div>
+                
+                <mat-list-item>
+                 <div mat-line>Item 1</div>
+                 <div mat-line>item 1 price</div>
+                </mat-list-item>
+                <mat-list-item>
+                 <div mat-line>Item 2</div>
+                 <div mat-line>item 2 price</div>
+                </mat-list-item>
+                
+            </mat-list>
            </mat-card-content></mat-card>
            </div>
      </mat-tab>
