@@ -4,11 +4,11 @@ include "connection.php";
 
 //Pass it a table name and return all records
 function GetAll($stableName){
-global $connect;
-$sql = "SELECT * from $stableName";
-$pdostate = $connect->query($sql);
-$array = $pdostate->fetchAll();
-return $array;
+    global $connect;
+    $sql = "SELECT * from $stableName";
+    $pdostate = $connect->query($sql);
+    $array = $pdostate->fetchAll();
+    return $array;
 }
 
 function Delete($stableName,$sID){

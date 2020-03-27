@@ -2,8 +2,7 @@
 
     include "connection.php";  
 
-    // $action = $_GET['action'];
-    $action = 'buy';
+    $action = $_GET['action'];
   
     switch($action){
         case 'buy':
@@ -19,10 +18,12 @@
     function getGame($isbn){   
         global $pdo;
 
-        $sql = "SELECT games.name As title, price, consoles.name AS console, brands.name AS brand FROM games 
-                JOIN consoles On games.consoleID = consoles.consoleID
-                JOIN brands ON consoles.brandID = brands.brandID
-                WHERE barNum='$isbn'";
+        $sql = "SELECT gamenames.name As title, games.price, consoles.name AS console, brands.Name AS brand 
+                FROM games
+                LEFT JOIN gamenames ON games.gamenameID = gamenames.gameNameID
+                LEFT JOIN consoles ON games.consoleID = consoles.consoleID
+                LEFT JOIN brands ON games.brandID = brands.brandID
+                WHERE games.barNum='$isbn'";
 
         $result = $pdo->query($sql);
 

@@ -16,6 +16,8 @@ export class BuySellComponent implements OnInit {
   name: string = "";
   isbn: string = "";
   console: string = "";
+  shoppingCart: Item[] = [];
+  cartTotal: number = 0.00;
   
   @Output() loggedIn = new EventEmitter<boolean>();
 
@@ -36,7 +38,18 @@ export class BuySellComponent implements OnInit {
   addItemToCart(name:string, isbn:string, console:string): void{
     this.search.getGame(name, isbn, console).subscribe((result: object) =>{
       this.cart.addToCart(new Item(result, 1));
+      this.updateCart();
     })    
+  }
+
+  updateCart(): void{
+    this.cartTotal = 0;
+    this.shoppingCart = this.cart.getShoppingCart();
+    console.log(this.shoppingCart);
+    for(var i = 0; i < this.shoppingCart.length; i++){
+      console.log(this.shoppingCart[i].product[0].price);
+      this.cartTotal += parseFloat(this.shoppingCart[i].product[0].price);
+    }
   }
 
 }

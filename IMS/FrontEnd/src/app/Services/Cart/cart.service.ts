@@ -6,11 +6,12 @@ import { Item } from 'src/app/Classes/Cart-Item/item';
 })
 export class CartService {
 
-  private shoppingCart: Item[];
+  private shoppingCart: Item[] = [];
 
   constructor() { }
 
   addToCart(item:Item): void{
+    console.log(item);
     this.shoppingCart.push(item);
   }
 

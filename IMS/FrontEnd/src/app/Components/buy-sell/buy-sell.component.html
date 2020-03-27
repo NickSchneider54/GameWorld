@@ -30,17 +30,12 @@
         <mat-card-content>
            <mat-list>
                <div mat-subheader>Sell Order Summary</div>               
-               <mat-list-item>                   
-                <div mat-line>Item 1</div>
-                <div mat-line>item 1 price</div>
-               </mat-list-item>
-               <mat-list-item>
-                <div mat-line>Item 2</div>
-                <div mat-line>item 2 price</div>
+               <mat-list-item *ngFor="let item of shoppingCart">                   
+                <div mat-line>{{item.product[0].title}}</div>
+                <div mat-line>{{item.product[0].price}}</div>
                </mat-list-item>
                <h1>Order Total</h1>
-               <h2>$0.00</h2>
-               
+               <h2>${{cartTotal}}</h2>               
            </mat-list>
         </mat-card-content></mat-card>
         </div>
