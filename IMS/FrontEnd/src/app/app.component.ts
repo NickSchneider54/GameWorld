@@ -15,25 +15,33 @@ export class AppComponent {
   title = 'FrontEnd';
   loggedIn: boolean = false;
   searchItem: string; // holds the search/filter constraint entered by the user
+  showFiller: boolean = false;
   
-  constructor(private search: SearchService, private userLogin: LoginService){}
+  constructor(private search: SearchService, private userLogin: LoginService, private router: Router){}
+
+  ngOnInit(){
+    this.userLogin.getUser().subscribe(user =>{
+      this.username = user;
+    })
+
+    if(this.username === "Username"){
+      this.router.navigate(["/login"]);
+    }
+
+  }
 
   // sends the search constraint inputted by the user to the SearchService
   sendSearch(searchItem: string): void{
     this.search.sendSearch(searchItem);
   }
 
-  showFiller = false;
-  
-  // waits for the login event to occur and sets loggedIn to True
-  onActivate(componentReference:BuySellComponent): void{
-    componentReference.loggedIn.subscribe((data:boolean)=>{
-      console.log(data);
-      this.loggedIn = data;
-      this.userLogin.getUser().subscribe(user =>{
-        this.username = user;
-      })
-    });
+
+  logout(){
+    this.username = "Username";
+    this.router.navigate(['/login']);
   }
+
+  
+  
 
 }

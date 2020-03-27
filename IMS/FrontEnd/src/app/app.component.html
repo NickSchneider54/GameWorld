@@ -329,7 +329,7 @@
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon> </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>Settings</button>
-        <button mat-menu-item>Logout</button>
+        <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
     </span>
     <span></span>
@@ -350,7 +350,7 @@
   <div class="sidenav-content">
     <main>
       <div>
-        <router-outlet (activate)="onActivate($event)"></router-outlet>
+        <router-outlet></router-outlet>
       </div>
     </main> 
     

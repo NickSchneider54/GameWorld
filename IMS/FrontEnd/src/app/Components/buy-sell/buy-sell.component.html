@@ -9,17 +9,17 @@
                 <form class="buyItemForm">
                     <mat-form-field >
                         <mat-label>Item Name</mat-label>
-                        <input matInput placeholder="" value="">
+                        <input matInput [(ngModel)]="name" name="name">
                     </mat-form-field>
                     <mat-form-field >
                         <mat-label>ISBN</mat-label>
-                        <input matInput placeholder="" value="">
+                        <input matInput [(ngModel)]="isbn" name="isbn">
                     </mat-form-field>
                     <mat-form-field >
                         <mat-label>Console</mat-label>
-                        <input matInput placeholder="" value="">
+                        <input matInput [(ngModel)]="console" name="console">
                     </mat-form-field>
-                    <p><button mat-raised-button click="">Add item to order</button></p>
+                    <p><button mat-raised-button (click)="addItemToCart(name, isbn, console)">Add item to order</button></p>
                     
                 </form>
             </mat-card-content>

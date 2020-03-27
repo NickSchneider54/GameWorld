@@ -8,7 +8,7 @@ import {LoginComponent } from './Components/login/login.component';
 
 
 const routes: Routes = [
-  { path: "", component: BuySellComponent},
+  { path: "", component: LoginComponent},
   { path: "buy-sell", component: BuySellComponent },
   { path: "data", component: DataComponent },
   { path: "inventory", component: InventoryComponent },
