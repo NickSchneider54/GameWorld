@@ -24,10 +24,11 @@ export class BuySellComponent implements OnInit {
   constructor(private userLogin: LoginService, private search: BuySellService, private cart: CartService, private router: Router) { }
 
   ngOnInit() {
+    this.updateCart();
     this.userLogin.getUser().subscribe(user=>{
       console.log(user);
       if(user != undefined){
-        this.loggedIn.emit(true);
+        this.loggedIn.emit(true);        
       }
       else{
         this.router.navigate(['/login']);
