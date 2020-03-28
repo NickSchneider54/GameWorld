@@ -17,6 +17,8 @@ export class BuySellComponent implements OnInit {
   isbn: string = "";
   console: string = "";
   shoppingCart: Item[] = [];
+  subTotal: number = 0.00;
+  salesTax: number = 0.00;
   cartTotal: number = 0.00;
   
   @Output() loggedIn = new EventEmitter<boolean>();
@@ -44,13 +46,30 @@ export class BuySellComponent implements OnInit {
   }
 
   updateCart(): void{
+    this.subTotal = 0;
+    this.salesTax = 0;
     this.cartTotal = 0;
     this.shoppingCart = this.cart.getShoppingCart();
     console.log(this.shoppingCart);
     for(var i = 0; i < this.shoppingCart.length; i++){
-      console.log(this.shoppingCart[i].product[0].price);
-      this.cartTotal += parseFloat(this.shoppingCart[i].product[0].price);
+      this.subTotal += parseFloat(this.shoppingCart[i].product[0].price);
+      console.log(this.subTotal);
+      this.salesTax = this.getSalesTax(this.subTotal);
+      this.cartTotal = this.getCartTotal(this.subTotal, this.salesTax);
     }
+    this.subTotal = this.round(this.subTotal);
+  }
+
+  getSalesTax(total:number): number{
+    return this.round(total * .0748);
+  }
+
+  getCartTotal(subTotal:number, salesTax:number): number{
+    return this.round(subTotal + salesTax)
+  }
+
+  round(total:number): number{
+    return Number(Math.round(+(total + 'e' + 2)) + 'e-' + 2);
   }
 
 }
