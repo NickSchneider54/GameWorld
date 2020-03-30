@@ -21,12 +21,16 @@ export class AppComponent {
 
   ngOnInit(){
     this.userLogin.getUser().subscribe(user =>{
-      this.username = user;
-    })
+      this.username = user;      
 
-    if(this.username === ""){
-      this.router.navigate(["/login"]);
-    }
+      if(this.username === ""){
+        this.router.navigate(["/login"]);
+      }
+      else{
+        this.loggedIn = true;
+        console.log("logged in");
+      }
+    })
 
   }
 
