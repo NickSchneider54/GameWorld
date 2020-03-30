@@ -15,3 +15,17 @@ function Delete($stableName,$sID){
     $sqlDelete ="DELETE FROM $stableName WHERE post_ID = $delID";
     $pdos=$connect->query($sqlDelete);
 }
+function GetBrand($sID){
+    global $connect;
+    $sql ="SELECT * FROM brands WHERE brandID =$sID";
+    $pdostate = $connect->query($sql);
+    return $pdostate->fetch();
+
+}
+function GetBrand($sID){
+    global $connect;
+    $sql ="SELECT * FROM brands WHERE brandID =$sID";
+    $pdostate = $connect->query($sql);
+    return $pdostate->fetch();
+
+}
