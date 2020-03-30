@@ -11,7 +11,7 @@ import { BuySellComponent } from './Components/buy-sell/buy-sell.component';
 })
 export class AppComponent {
 
-  username: string = "Username";
+  username: string = "";
   title = 'FrontEnd';
   loggedIn: boolean = false;
   searchItem: string; // holds the search/filter constraint entered by the user
@@ -24,7 +24,7 @@ export class AppComponent {
       this.username = user;
     })
 
-    if(this.username === "Username"){
+    if(this.username === ""){
       this.router.navigate(["/login"]);
     }
 
@@ -37,7 +37,7 @@ export class AppComponent {
 
 
   logout(){
-    this.username = "Username";
+    this.username = "";
     this.router.navigate(['/login']);
   }
 

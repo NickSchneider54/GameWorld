@@ -309,8 +309,9 @@
 
 <mat-toolbar color="primary" class="toolbar">
   <mat-toolbar-row>
+    <div class="loggedInToolbar" *ngIf="loggedIn">
     <span>
-      <button mat-button class="sidenavBtn" (click)="drawer.toggle()">
+      <button mat-button class="sidenavBtn" (click)="drawer.toggle()" >
         <mat-icon>dehaze</mat-icon>
       </button>
     </span>
@@ -325,18 +326,25 @@
     </span>
     <span class="filler"></span>
     <span>
+      
       <mat-icon>person</mat-icon>&nbsp; {{username}} &nbsp;
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon> </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>Settings</button>
+        <!-- <button mat-menu-item>Settings</button> -->
         <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
+    
     </span>
     <span></span>
+    </div>
+    <div class="notLoggedInToolbar" *ngIf="!loggedIn">      
+      <span>Game World - Please log In to continue</span>    
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-drawer-container class="dashContainer" autosize >
+
+<mat-drawer-container class="dashContainer" autosize  >
   <mat-drawer #drawer class="sidenav" mode="side">
       <mat-nav-list #sidenav>
         <a mat-list-item [routerLink]="'/buy-sell'"> Buy/Sell </a>
