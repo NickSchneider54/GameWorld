@@ -7,6 +7,7 @@ import { Item } from 'src/app/Classes/Cart-Item/item';
 export class CartService {
 
   private shoppingCart: Item[] = [];
+  private buyList: Item[] = [];
 
   constructor() { }
 
@@ -19,8 +20,20 @@ export class CartService {
     return this.shoppingCart;
   }
 
-  clearCart(){
+  clearCart(): void{
     this.shoppingCart = [];
+  }
+
+  addToBuyList(item:Item): void{
+    this.buyList.push(item);
+  }
+
+  getBuyList(){
+    return this.buyList;
+  }
+
+  clearBuyList(): void{
+    this.buyList = [];
   }
 
 }

@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
         console.log("logged in");
         console.log(this.username);
         this.userLogin.setUser(this.username);
+        this.userLogin.setLevel(this.users[i].level);
         this.router.navigate(['/buy-sell']);
       }
     }

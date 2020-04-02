@@ -12,6 +12,7 @@ import { BuySellComponent } from './Components/buy-sell/buy-sell.component';
 export class AppComponent {
 
   username: string = "";
+  level: string = "";
   title = 'FrontEnd';
   loggedIn: boolean = false;
   searchItem: string; // holds the search/filter constraint entered by the user
@@ -28,6 +29,10 @@ export class AppComponent {
       }
       else{
         this.loggedIn = true;
+        this.userLogin.getLevel().subscribe(level =>{
+          this.level = level; 
+          console.log(this.level);         
+        })
         console.log("logged in");
       }
     })

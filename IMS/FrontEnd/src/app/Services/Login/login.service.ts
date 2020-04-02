@@ -10,6 +10,7 @@ export class LoginService {
 
   private ping: string;
   private username = new Subject<string>();
+  private level = new Subject<string>();
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +25,14 @@ export class LoginService {
 
     getUser():Observable<string>{
       return this.username.asObservable();
+    }
+
+    setLevel(level:string){
+      this.level.next(level);
+    }
+
+    getLevel():Observable<string>{
+      return this.level.asObservable();
     }
   
 }
