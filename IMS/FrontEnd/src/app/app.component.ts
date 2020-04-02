@@ -21,7 +21,7 @@ export class AppComponent {
 
   ngOnInit(){
     this.userLogin.getUser().subscribe(user =>{
-      this.username = user;      
+      this.username = user;     
 
       if(this.username === ""){
         this.router.navigate(["/login"]);
@@ -42,6 +42,7 @@ export class AppComponent {
 
   logout(){
     this.username = "";
+    this.loggedIn = false;
     this.router.navigate(['/login']);
   }
 

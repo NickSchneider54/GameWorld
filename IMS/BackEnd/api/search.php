@@ -5,25 +5,19 @@
     $action = $_GET['action'];
   
     switch($action){
-        case 'buy':
-            $game = $_GET['game'];
-            $isbn = $_GET['isbn'];
-            $console = $_GET['console'];
+        case 'sell':
+            $upc = $_GET['upc'];
 
-            getGame($isbn);
+            getProduct($upc);
 
         break;
     }  
 
-    function getGame($isbn){   
+    function getProduct($upc){   
         global $pdo;
 
-        $sql = "SELECT gamenames.name As title, games.price, consoles.name AS console, brands.Name AS brand 
-                FROM games
-                LEFT JOIN gamenames ON games.gamenameID = gamenames.gameNameID
-                LEFT JOIN consoles ON games.consoleID = consoles.consoleID
-                LEFT JOIN brands ON games.brandID = brands.brandID
-                WHERE games.barNum='$isbn'";
+        $sql = "SELECT * FROM products
+                WHERE productID = '$upc'";
 
         $result = $pdo->query($sql);
 

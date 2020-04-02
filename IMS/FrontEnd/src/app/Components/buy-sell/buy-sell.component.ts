@@ -14,7 +14,7 @@ import { Item } from 'src/app/Classes/Cart-Item/item';
 export class BuySellComponent implements OnInit {
 
   name: string = "";
-  isbn: string = "";
+  upc: string = "";
   console: string = "";
   shoppingCart: Item[] = [];
   subTotal: number = 0.00;
@@ -38,11 +38,21 @@ export class BuySellComponent implements OnInit {
     })
   }
 
-  addItemToCart(name:string, isbn:string, console:string): void{
-    this.search.getGame(name, isbn, console).subscribe((result: object) =>{
+  addItemToCart(upc:string): void{
+    this.search.getProduct(upc).subscribe((result: object) =>{
       this.cart.addToCart(new Item(result, 1));
       this.updateCart();
     })    
+  }
+
+  removeItemFromCart(name:string){
+    for(var i = 0; i < this.shoppingCart.length; i++){
+      if(this.shoppingCart[i].product[0].name === name){
+        this.shoppingCart.splice(i, 1);
+        break;
+      }
+    }
+    this.updateCart();
   }
 
   updateCart(): void{

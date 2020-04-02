@@ -1,5 +1,5 @@
 <mat-tab-group class ='buySellTabs'>
-    <mat-tab label="Buy">
+    <mat-tab label="Sell">
         <div class='card-container'>
          <mat-card class='itemDetailsCard'>
             <mat-card-header>
@@ -13,13 +13,13 @@
                     </mat-form-field>
                     <mat-form-field >
                         <mat-label>UPC</mat-label>
-                        <input matInput [(ngModel)]="isbn" name="isbn">
+                        <input matInput [(ngModel)]="upc" name="upc">
                     </mat-form-field>
                     <mat-form-field >
                         <mat-label>Console</mat-label>
                         <input matInput [(ngModel)]="console" name="console">
                     </mat-form-field>
-                    <p><button mat-raised-button (click)="addItemToCart(name, isbn, console)">Add item to order</button></p>
+                    <p><button mat-raised-button (click)="addItemToCart(upc)">Add item to order</button></p>
                     
                 </form>
             </mat-card-content>
@@ -31,7 +31,7 @@
            <mat-list>
                <div mat-subheader>Sell Order Summary</div>               
                <mat-list-item *ngFor="let item of shoppingCart">                   
-                <div mat-line>{{item.product[0].title}}</div>
+                <div mat-line>{{item.product[0].name}} <span class="material-icons remove" (click)="removeItemFromCart(item.product[0].name)">highlight_off</span></div>
                 <div mat-line>{{item.product[0].price}}</div>
                </mat-list-item>
                <h1>Order Total</h1>
@@ -42,7 +42,7 @@
         </mat-card-content></mat-card>
         </div>
      </mat-tab>
-    <mat-tab label="Sell"> 
+    <mat-tab label="Buy"> 
         <div class='card-container'>
             <mat-card class='item-details-card'>
                <mat-card-header>
