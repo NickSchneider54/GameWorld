@@ -80,8 +80,11 @@
   .card-container {
     display: flex;    
     flex-wrap: wrap;
+    flex-direction: row;
     justify-content: center;
     margin-top: 16px;
+    align-items: flex-start;
+    
   }
 
   .card {
@@ -238,11 +241,11 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    /* height: 100%; */
-    /* width:100%; */
+    height: 100%;
+     width:95%; 
     padding: 24px;
-    align-items: top;
-    /* justify-content: center;  */
+    align-items:flex-start ;
+     justify-content: center; 
     
   }
 
@@ -257,6 +260,10 @@
     /* width: 100%;     */
     
   }
+  
+ 
+  
+
 
   footer {
     margin-top: 8px;
@@ -290,10 +297,7 @@
       margin-left: 72px;
     }
 
-    svg#rocket-smoke {
-      right: 120px;
-      transform: rotate(-5deg);
-    }
+   
   }
 
   @media screen and (max-width: 575px) {
@@ -305,9 +309,12 @@
 
 </style>
 
+<!-- un-comment this for testing -->
+<!-- <mat-toolbar color="primary" class="toolbar"  > -->
 
+<!-- comment this line for testing  -->
+<mat-toolbar color="primary" class="toolbar" *ngIf="loggedIn" >
 
-<mat-toolbar color="primary" class="toolbar" *ngIf="loggedIn">
   <mat-toolbar-row>    
     <span>
       <button mat-button class="sidenavBtn" (click)="drawer.toggle()" >
@@ -336,7 +343,13 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-  <mat-toolbar color="primary" class="notLoggedInToolbar" *ngIf="!loggedIn">
+
+<!-- un-comment this for testing -->
+<!-- <mat-toolbar color="primary" class="notLoggedInToolbar"  > -->
+
+  <!-- comment this line for testing -->
+  <mat-toolbar color="primary" class="notLoggedInToolbar" *ngIf="!loggedIn" >
+
     <mat-toolbar-row>
       <span>Game World - Please log In to continue</span>
     </mat-toolbar-row>
@@ -356,7 +369,8 @@
       </mat-nav-list>
   </mat-drawer>
 
-  <div class="sidenav-content">
+  <div>
+    
     <main>
       <div>
         <router-outlet></router-outlet>
