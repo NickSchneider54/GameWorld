@@ -21,7 +21,8 @@ export class LoginService {
 
     setUser(username:string){
       this.cookieService.set('username', username);
-      this.setLoginState('true');
+      this.setLoginState('true');                  
+      this.router.navigate(['/buy-sell']);
     }
 
     setLevel(level:string){
@@ -30,9 +31,12 @@ export class LoginService {
 
     setLoginState(state:string){      
       this.cookieService.set('loggedIn', state);
+      window.location.reload();
     }
 
     logout(){
+      this.cookieService.set('username', '');
+      this.cookieService.set('level', '');
       this.setLoginState('false');
       this.router.navigate(['/login']);
     }

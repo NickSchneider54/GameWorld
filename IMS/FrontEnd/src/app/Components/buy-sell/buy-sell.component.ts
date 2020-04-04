@@ -26,7 +26,7 @@ export class BuySellComponent implements OnInit {
   
   @Output() loggedIn = new EventEmitter<boolean>();
 
-  constructor(private userLogin: LoginService, private search: BuySellService, private cart: CartService, private router: Router, private cookies: CookieService) { }
+  constructor(private search: BuySellService, private cart: CartService, private router: Router, private cookies: CookieService) { }
 
   ngOnInit() {
     this.updateCart();
@@ -52,6 +52,7 @@ export class BuySellComponent implements OnInit {
       }
       this.updateCart();
     })    
+    this.upc = "";
   }
 
   removeItemFromCart(name:string){
@@ -111,5 +112,11 @@ export class BuySellComponent implements OnInit {
   round(total:number): number{
     return Number(Math.round(+(total + 'e' + 2)) + 'e-' + 2);
   }
+
+  completePurchase(){
+    
+  }
+
+  
 
 }

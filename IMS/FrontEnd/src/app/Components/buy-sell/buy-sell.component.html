@@ -2,89 +2,90 @@
 <mat-tab-group class ='buySellTabs' (selectedTabChange)="tabClick($event)">
     <mat-tab label="Sell">
         <div class='card-container'>
-         <mat-card class='itemDetailsCard'>
-            <mat-card-header>
-                <mat-card-title>Item Details</mat-card-title>
-            </mat-card-header> 
-            <mat-card-content>
-                <form class="buyItemForm">
-                    <mat-form-field >
-                        <mat-label>Item Name</mat-label>
-                        <input matInput [(ngModel)]="name" name="name">
-                    </mat-form-field>
-                    <mat-form-field >
-                        <mat-label>UPC</mat-label>
-                        <input matInput [(ngModel)]="upc" name="upc">
-                    </mat-form-field>
-                    <mat-form-field >
-                        <mat-label>Console</mat-label>
-                        <input matInput [(ngModel)]="console" name="console">
-                    </mat-form-field>
-                    <p><button mat-raised-button (click)="addItemToCart(upc)">Add item to order</button></p>
-                    
-                </form>
-            </mat-card-content>
+            <mat-card class='itemDetailsCard'>
+                <mat-card-header>
+                    <mat-card-title>Item Details</mat-card-title>
+                </mat-card-header> 
+                <mat-card-content>
+                    <form class="buyItemForm">
+                        <mat-form-field >
+                            <mat-label>Item Name</mat-label>
+                            <input matInput [(ngModel)]="name" name="name">
+                        </mat-form-field>
+                        <mat-form-field >
+                            <mat-label>UPC</mat-label>
+                            <input matInput [(ngModel)]="upc" name="upc">
+                        </mat-form-field>
+                        <mat-form-field >
+                            <mat-label>Console</mat-label>
+                            <input matInput [(ngModel)]="console" name="console">
+                        </mat-form-field>
+                        <p><button mat-raised-button (click)="addItemToCart(upc)">Add item to order</button></p>                        
+                    </form>
+                </mat-card-content>
             </mat-card>
-         <mat-card class='order-details-card'><mat-card-header>
-            <mat-card-title>Order Details</mat-card-title>
-        </mat-card-header> 
-        <mat-card-content>
-           <mat-list>
-               <div mat-subheader>Sell Order Summary</div>               
-               <mat-list-item *ngFor="let item of shoppingCart">                   
-                <div mat-line>{{item.product[0].name}} <span class="material-icons remove" (click)="removeItemFromCart(item.product[0].name)">highlight_off</span></div>
-                <div mat-line>{{item.product[0].price}}</div>
-               </mat-list-item>
-               <h1>Order Total</h1>
-               <h4>SubTotal: ${{subTotal}}</h4> 
-               <h4>Sales Tax: ${{salesTax}}</h4>  
-               <h2>Total: ${{cartTotal}}</h2>                
-           </mat-list>
-        </mat-card-content></mat-card>
+            <mat-card class='order-details-card'>
+                <mat-card-header>
+                    <mat-card-title>Order Details</mat-card-title>
+                </mat-card-header> 
+                <mat-card-content>
+                    <mat-list>
+                        <div mat-subheader>Sell Order Summary</div>               
+                        <mat-list-item *ngFor="let item of shoppingCart">                   
+                            <div mat-line>{{item.product[0].name}} <span class="material-icons remove" (click)="removeItemFromCart(item.product[0].name)">highlight_off</span></div>
+                            <div mat-line>{{item.product[0].price}}</div>
+                        </mat-list-item>
+                        <h1>Order Total</h1>
+                        <h4>SubTotal: ${{subTotal}}</h4> 
+                        <h4>Sales Tax: ${{salesTax}}</h4>  
+                        <h2>Total: ${{cartTotal}}</h2>                
+                    </mat-list>
+                </mat-card-content>
+                <button mat-raised-button (click)="completePurchase()">Complete Purchase</button>
+            </mat-card>
         </div>
-     </mat-tab>
+    </mat-tab>
     <mat-tab label="Buy"> 
         <div class='card-container'>
             <mat-card class='itemDetailsCard'>
-               <mat-card-header>
-                   <mat-card-title>Item Details</mat-card-title>
-               </mat-card-header> 
-               <mat-card-content>
-                   <form class="buyItemForm">
-                       <mat-form-field >
-                           <mat-label>Item Name</mat-label>
-                           <input matInput [(ngModel)]="name" name="name">
-                       </mat-form-field>
-                       <mat-form-field >
-                           <mat-label>UPC</mat-label>
-                           <input matInput [(ngModel)]="upc" name="upc">
-                       </mat-form-field>
-                       <mat-form-field >
-                           <mat-label>Console</mat-label>
-                           <input matInput [(ngModel)]="console" name="console">
-                       </mat-form-field>
-                       <p><button mat-raised-button (click)="addItemToCart(upc)">Add item to order</button></p>
-                       
-                   </form>
-               </mat-card-content>
-               </mat-card>
+                <mat-card-header>
+                    <mat-card-title>Item Details</mat-card-title>
+                </mat-card-header> 
+                <mat-card-content>
+                    <form class="buyItemForm">
+                        <mat-form-field >
+                            <mat-label>Item Name</mat-label>
+                            <input matInput [(ngModel)]="name" name="name">
+                        </mat-form-field>
+                        <mat-form-field >
+                            <mat-label>UPC</mat-label>
+                            <input matInput [(ngModel)]="upc" name="upc">
+                        </mat-form-field>
+                        <mat-form-field >
+                            <mat-label>Console</mat-label>
+                            <input matInput [(ngModel)]="console" name="console">
+                        </mat-form-field>
+                        <p><button mat-raised-button (click)="addItemToCart(upc)">Add item to order</button></p>                       
+                    </form>
+                </mat-card-content>
+                </mat-card>
             <mat-card class='order-details-card'><mat-card-header>
-               <mat-card-title>Order Details</mat-card-title>
-           </mat-card-header> 
-           <mat-card-content>
+                <mat-card-title>Order Details</mat-card-title>
+            </mat-card-header> 
+            <mat-card-content>
               <mat-list>
-                  <div mat-subheader>Sell Order Summary</div>               
-                  <mat-list-item *ngFor="let item of buyList">                   
-                   <div mat-line>{{item.product[0].name}} <span class="material-icons remove" (click)="removeItemFromCart(item.product[0].name)">highlight_off</span></div>
-                   <div mat-line>{{item.product[0].price}}</div>
-                  </mat-list-item>
-                  <h1>Order Total</h1>
-                  <h4>SubTotal: ${{subTotal}}</h4> 
-                  <h4>Sales Tax: ${{salesTax}}</h4>  
-                  <h2>Total: ${{cartTotal}}</h2>                
-              </mat-list>
-           </mat-card-content></mat-card>
-           </div>
+                    <div mat-subheader>Sell Order Summary</div>               
+                    <mat-list-item *ngFor="let item of buyList">                   
+                        <div mat-line>{{item.product[0].name}} <span class="material-icons remove" (click)="removeItemFromCart(item.product[0].name)">highlight_off</span></div>
+                        <div mat-line>{{item.product[0].price}}</div>
+                    </mat-list-item>
+                    <h1>Order Total</h1>
+                    <h4>SubTotal: ${{subTotal}}</h4> 
+                    <h4>Sales Tax: ${{salesTax}}</h4>  
+                    <h2>Total: ${{cartTotal}}</h2>                
+                </mat-list>
+            </mat-card-content></mat-card>
+        </div>
      </mat-tab>
     
   </mat-tab-group>

@@ -19,7 +19,7 @@ export class AppComponent {
   searchItem: string; // holds the search/filter constraint entered by the user
   showFiller: boolean = false;
   
-  constructor(private search: SearchService, private userLogin: LoginService, private router: Router, private cookies: CookieService){}
+  constructor(private search: SearchService, private userLogin: LoginService, private router: Router, private cookies: CookieService){ }
 
 
   loggedIn: string = this.cookies.get('loggedIn');
@@ -29,10 +29,6 @@ export class AppComponent {
       this.username = this.cookies.get('username');
       this.loggedIn = this.cookies.get('loggedIn');
     }
-    else{
-      this.router.navigate(["/login"]);
-    }
-
   }
 
   // sends the search constraint inputted by the user to the SearchService
@@ -40,9 +36,12 @@ export class AppComponent {
     this.search.sendSearch(searchItem);
   }
 
+  settings(){
+    
+  }
 
-  logout(){
-    this.userLogin.logout()
+  logout(){ 
+    this.userLogin.logout();
   }
 
   
