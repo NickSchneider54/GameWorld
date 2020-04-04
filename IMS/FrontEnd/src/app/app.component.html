@@ -313,7 +313,7 @@
 <!-- <mat-toolbar color="primary" class="toolbar"  > -->
 
 <!-- comment this line for testing  -->
-<mat-toolbar color="primary" class="toolbar" *ngIf="loggedIn" >
+<mat-toolbar color="primary" class="toolbar" *ngIf="loggedIn == 'true'" >
 
   <mat-toolbar-row>    
     <span>
@@ -348,7 +348,7 @@
 <!-- <mat-toolbar color="primary" class="notLoggedInToolbar"  > -->
 
   <!-- comment this line for testing -->
-  <mat-toolbar color="primary" class="notLoggedInToolbar" *ngIf="!loggedIn" >
+  <mat-toolbar color="primary" class="notLoggedInToolbar" *ngIf="loggedIn != 'true'" >
 
     <mat-toolbar-row>
       <span>Game World - Please log In to continue</span>

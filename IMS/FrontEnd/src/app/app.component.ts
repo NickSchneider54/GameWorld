@@ -3,6 +3,8 @@ import { SearchService } from './Services/Search/search.service';
 import { LoginService } from './Services/Login/login.service';
 import { Router } from '@angular/router';
 import { BuySellComponent } from './Components/buy-sell/buy-sell.component';
+import { BehaviorSubject } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -13,29 +15,23 @@ export class AppComponent {
 
   username: string = "";
   level: string = "";
-  title = 'FrontEnd';
-  loggedIn: boolean = false;
+  title = 'FrontEnd';  
   searchItem: string; // holds the search/filter constraint entered by the user
   showFiller: boolean = false;
   
-  constructor(private search: SearchService, private userLogin: LoginService, private router: Router){}
+  constructor(private search: SearchService, private userLogin: LoginService, private router: Router, private cookies: CookieService){}
+
+
+  loggedIn: string = this.cookies.get('loggedIn');
 
   ngOnInit(){
-    this.userLogin.getUser().subscribe(user =>{
-      this.username = user;     
-
-      if(this.username === ""){
-        this.router.navigate(["/login"]);
-      }
-      else{
-        this.loggedIn = true;
-        this.userLogin.getLevel().subscribe(level =>{
-          this.level = level; 
-          console.log(this.level);         
-        })
-        console.log("logged in");
-      }
-    })
+    if(this.cookies.get('loggedIn') == 'true'){
+      this.username = this.cookies.get('username');
+      this.loggedIn = this.cookies.get('loggedIn');
+    }
+    else{
+      this.router.navigate(["/login"]);
+    }
 
   }
 
@@ -46,9 +42,7 @@ export class AppComponent {
 
 
   logout(){
-    this.username = "";
-    this.loggedIn = false;
-    this.router.navigate(['/login']);
+    this.userLogin.logout()
   }
 
   

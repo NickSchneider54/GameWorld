@@ -32,8 +32,6 @@ export class LoginComponent implements OnInit {
     console.log(this.users.length);
     for(var i = 0; i < this.users.length; i++){
       if(username == this.users[i].username && password == this.users[i].password){
-        console.log("logged in");
-        console.log(this.username);
         this.userLogin.setUser(this.username);
         this.userLogin.setLevel(this.users[i].level);
         this.router.navigate(['/buy-sell']);
