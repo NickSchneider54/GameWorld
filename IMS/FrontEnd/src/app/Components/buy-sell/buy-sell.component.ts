@@ -5,6 +5,7 @@ import { Game } from 'src/app/Classes/Game/game';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/Services/Cart/cart.service';
 import { Item } from 'src/app/Classes/Cart-Item/item';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-buy-sell',
@@ -25,19 +26,13 @@ export class BuySellComponent implements OnInit {
   
   @Output() loggedIn = new EventEmitter<boolean>();
 
-  constructor(private userLogin: LoginService, private search: BuySellService, private cart: CartService, private router: Router) { }
+  constructor(private search: BuySellService, private cart: CartService, private router: Router, private cookies: CookieService) { }
 
   ngOnInit() {
     this.updateCart();
-    this.userLogin.getUser().subscribe(user=>{
-      console.log(user);
-      if(user != undefined){
-        this.loggedIn.emit(true);        
-      }
-      else{
-        this.router.navigate(['/login']);
-      }
-    })
+    if(this.cookies.get('loggedIn') != 'true'){       
+      this.router.navigate(['/login']);
+    }
   }
 
   tabClick(tab){    
@@ -57,6 +52,7 @@ export class BuySellComponent implements OnInit {
       }
       this.updateCart();
     })    
+    this.upc = "";
   }
 
   removeItemFromCart(name:string){
@@ -116,5 +112,11 @@ export class BuySellComponent implements OnInit {
   round(total:number): number{
     return Number(Math.round(+(total + 'e' + 2)) + 'e-' + 2);
   }
+
+  completePurchase(){
+    
+  }
+
+  
 
 }

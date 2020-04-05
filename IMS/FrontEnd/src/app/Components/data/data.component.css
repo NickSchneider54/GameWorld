@@ -1,7 +1,10 @@
 .chartsCardContainer{
     display: flex;
     align-items: flex-start;
-    margin: 32px auto;
+    margin-left:16px;
+    margin-right:16px;
+    margin-top:32px;
+    margin-bottom:8px;
     padding: 0 16px;
     max-width: 90%;
     flex-direction:row;
@@ -9,15 +12,38 @@
     justify-content: space-evenly;
     
   }
-  .chartsCard{
-    border-radius: 4px;
-    border: 1px solid #eee;
-    background-color: #fafafa;   
-    margin: 0 8px 16px;
-    padding: 16px;    
-    transition: all 0.2s ease-in-out;
-    line-height: 24px;
-    max-width: 400px ;
-    
-    
-  }
+  /* .chartsCard{
+   
+    } */
+
+    button{
+        margin: 8px;
+    }
+
+    .infoCardContainer{
+        display: flex;
+        align-items: flex-start;
+        margin: 32px 8px;
+        padding: 0 16px;
+        max-width: 80%;
+        flex-direction:row;
+        flex-wrap:wrap;
+        justify-content: space-evenly;
+    }
+
+    .detailsCard{
+        /* max-width: 40%; */
+        margin:8px;
+        flex-grow: 1;
+        flex-shrink:1;
+    }
+    .detailsContainer{
+        display: flex;
+        align-items: flex-start;
+        margin: 32px 16px;
+        padding: 0 16px;
+        /* max-width: 90%; */
+        flex-direction:row;
+        flex-wrap:wrap;
+        justify-content: space-evenly;
+    }
