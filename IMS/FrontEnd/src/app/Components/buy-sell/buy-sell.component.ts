@@ -45,10 +45,10 @@ export class BuySellComponent implements OnInit {
   addItemToCart(upc:string): void{
     this.search.getProduct(upc).subscribe((result: object) =>{
       if(this.currentTab === "Sell"){
-        this.cart.addToCart(new Item(result, 1));
+        this.cart.addToCart(new Item(result));
       }
       if(this.currentTab === "Buy"){
-        this.cart.addToBuyList(new Item(result, 1));
+        this.cart.addToBuyList(new Item(result));
       }
       this.updateCart();
     })    
@@ -89,6 +89,8 @@ export class BuySellComponent implements OnInit {
         this.cartTotal = this.getCartTotal(this.subTotal, this.salesTax);
       }
       this.subTotal = this.round(this.subTotal);
+      this.cookies.set('shoppingCart', JSON.stringify(this.shoppingCart));
+
     }
     if(this.currentTab == "Buy"){
       this.buyList = this.cart.getBuyList();
@@ -114,9 +116,12 @@ export class BuySellComponent implements OnInit {
   }
 
   completePurchase(){
-    
-  }
+    if(this.currentTab == 'Sell'){
+      console.log(this.cookies.get('shoppingCart'));
+    }
+    else if(this.currentTab == 'Buy'){
 
-  
+    }
+  }  
 
 }

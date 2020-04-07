@@ -18,7 +18,7 @@ export class BuySellService {
   }
 
   createSellTicket(){
-    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/search.php?action=ticket`;
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/search.php?action=ticket&f=sell`;
   }
 
   createBuyTicket(){
