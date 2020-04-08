@@ -23,13 +23,15 @@ export class BuySellComponent implements OnInit {
   subTotal: number = 0.00;
   salesTax: number = 0.00;
   cartTotal: number = 0.00;
+
+  cartSell: string;
+  cartBuy: string;
   
   @Output() loggedIn = new EventEmitter<boolean>();
 
   constructor(private search: BuySellService, private cart: CartService, private router: Router, private cookies: CookieService) { }
 
   ngOnInit() {
-    this.updateCart();
     if(this.cookies.get('loggedIn') != 'true'){       
       this.router.navigate(['/login']);
     }
@@ -90,8 +92,9 @@ export class BuySellComponent implements OnInit {
       }
       this.subTotal = this.round(this.subTotal);
       this.cookies.set('shoppingCart', JSON.stringify(this.shoppingCart));
-
+      this.cartSell = this.cookies.get('shoppingCart');
     }
+
     if(this.currentTab == "Buy"){
       this.buyList = this.cart.getBuyList();
       for(var i = 0; i < this.buyList.length; i++){
@@ -100,6 +103,8 @@ export class BuySellComponent implements OnInit {
         this.cartTotal = this.getCartTotal(this.subTotal, this.salesTax);
       }
       this.subTotal = this.round(this.subTotal);
+      this.cookies.set('buyList', JSON.stringify(this.buyList));
+      this.cartBuy = this.cookies.get("buyList");
     }
   }
 
@@ -117,10 +122,17 @@ export class BuySellComponent implements OnInit {
 
   completePurchase(){
     if(this.currentTab == 'Sell'){
-      console.log(this.cookies.get('shoppingCart'));
+      this.search.createSellTicket().subscribe(result=>{
+        
+      });   
+      this.cart.clearCart(); 
+      this.updateCart();   
+      alert("Order Complete");
     }
     else if(this.currentTab == 'Buy'){
-
+      this.search.createBuyTicket();
+      this.cart.clearCart();
+      this.updateCart();
     }
   }  
 

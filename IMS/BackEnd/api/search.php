@@ -1,11 +1,6 @@
 <?php
-    session_start();
 
-    $shoppingCart = array();
-    $buyList = array();
-
-    include "connection.php";  
-
+    include "connection.php";      
     $action = $_GET['action'];  
     switch($action){
         case 'sell':
@@ -14,7 +9,7 @@
         break;
 
         case 'ticket':
-            $function = filter_input(INPUT_GET, 'f');
+            $function = $_GET['f'];
             if($function == 'sell'){
                 createSellTicket();
             }
@@ -40,8 +35,8 @@
         echo $json;
     }
 
-    function createSellTicket(){
-        if(isset($_COOKIE['shoppingCart'])){
+    function createSellTicket(){      
+        if(isset($_COOKIE['shoppingCart']) || isset($_GET['cart'])){
 
             global $pdo;
 
@@ -53,16 +48,16 @@
 
             echo("</br>user: $user</br>");
 
-            // $sql = "INSERT INTO tickets (customerID, userID, ticketType, orderDate) VALUES(?, ?, ?, ?)";
-            // $query = $pdo->prepare($sql);
-            // $query->bindValue(1, $customer);
-            // $query->bindValue(2, $user);
-            // $query->bindValue(3, $type);
-            // $query->bindValue(4, $date);
+            $sql = "INSERT INTO tickets (customerID, userID, ticketType, orderDate) VALUES(?, ?, ?, ?)";
+            $query = $pdo->prepare($sql);
+            $query->bindValue(1, $customer);
+            $query->bindValue(2, $user);
+            $query->bindValue(3, $type);
+            $query->bindValue(4, $date);
+            
+            $query->execute();
 
-            // $query->execute();
-
-            $cart = json_decode($_COOKIE['shoppingCart'], true);
+            $cart = json_decode($_GET['cart'], true);
             
             foreach($cart as $inner){
                 if(is_array($inner)){
@@ -70,8 +65,12 @@
                         if(is_array($product)){
                             foreach($product as $item){
                                 print_r($item);
+                                setcookie("productID", $item['productID']);
+                                echo("</br>");
+                                echo($_COOKIE['productID']);
                                 echo("</br>");
                                 $tickets = getCurrentTicket();
+                                print_r($tickets);
                                 foreach($tickets as $array){
                                     if(is_array($array)){
                                         print_r($array['ticketID']);
@@ -86,22 +85,20 @@
                 }
             }
         }
-    }
-
-    function createBuyTicket(){
-
-    }
+        $message = true;
+        echo json_encode($message);
+    }    
 
     function createTicketItem($ticket, $item){
         global $pdo;
 
         echo("</br>Ticket: $ticket</br>Item: $item</br>");
 
-        $sql = "INSERT INTO ticketitems (ticketID, productID, quantity) VALUES(?, ?, ?)";
+        $sql = "INSERT INTO ticketitems (productID, ticketID, quantity) VALUES(?, ?, ?)";
 
         $query = $pdo->prepare($sql);
-        $query->bindValue(1, $ticket);
-        $query->bindValue(2, $item);
+        $query->bindValue(1, $item);
+        $query->bindValue(2, $ticket);
         $query->bindValue(3, 1);
         
         $query->execute();
@@ -124,7 +121,7 @@
     function getUserByUsername(){
         global $pdo;
 
-        $user = $_COOKIE['username'];
+        $user = $_GET['user'];
         echo("</br>User: $user</br>");
 
         $sql = "SELECT userID FROM users WHERE username = '$user'";
@@ -148,8 +145,6 @@
         $query = $pdo->prepare($sql);
         $query->execute();
     }
-
-
 
 ?>
 
