@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Game } from 'src/app/Classes/Game/game';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';

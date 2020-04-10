@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   private users: User[] = [];
   public username: string;
-  public password: string;
+  public password: string;  
 
   constructor(private userLogin: LoginService, private router: Router, private cookies: CookieService) { }
 
@@ -31,6 +31,17 @@ export class LoginComponent implements OnInit {
         console.log(this.users);
       })
     }
+  }
+
+  ngAfterViewInit(){
+    var submit = document.getElementById('password'); 
+    submit.addEventListener("keyup", function(event){
+      if (event.keyCode === 13) {
+        console.log("inside");
+        event.preventDefault();
+        document.getElementById("loginSubmit").click();
+       }
+    });
   }
 
   login(username:string, password:string){

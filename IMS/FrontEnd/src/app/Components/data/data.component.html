@@ -3,13 +3,13 @@
 <mat-card  class="chartsCard">
     <mat-card-content>
     <canvas class="chart" id="chart1" width="300" height="300"></canvas>
-    <button mat-raised-button color="primary" id='chart1btn1'>button</button><button mat-raised-button color="primary" id='chart1btn2'>button</button>     
+    <button mat-raised-button color="primary" id='chart1btn1'>Weekly</button><button mat-raised-button color="primary" id='chart1btn2'>Monthly</button>     
     </mat-card-content>    
 </mat-card>   
 <mat-card  class="chartsCard">
     <mat-card-content>
     <canvas class="chart" id="chart2" width="300" height="300"></canvas>
-    <button mat-raised-button color="primary" id='chart2btn1'>button</button> <button mat-raised-button color="primary" id='chart2btn2'>button</button>         
+    <button mat-raised-button color="primary" id='chart2btn1'>Weekly</button> <button mat-raised-button color="primary" id='chart2btn2'>Monthly</button>         
     </mat-card-content>    
 </mat-card>
 <mat-card  class="chartsCard">
@@ -22,8 +22,10 @@
 <br>
 <div class="infoCardContainer">
     <mat-card class="infoCard">
-        <mat-card-title><mat-icon>monetization_on</mat-icon>sales</mat-card-title>
+        <mat-card-title><mat-icon>monetization_on</mat-icon>Sales</mat-card-title>
+        <hr>
         <mat-card-content>total sales can go here</mat-card-content>
+        <mat-card-footer><mat-icon>date_range</mat-icon>Monthly</mat-card-footer>
     </mat-card>
     <mat-card class="infocard">
         <mat-card-title><mat-icon>emoji_people</mat-icon>something else</mat-card-title>
@@ -33,7 +35,7 @@
 
 <div class="detailsContainer">
     <mat-card class="detailsCard">
-        <mat-card-title>List of Data</mat-card-title>
+        <mat-card-title>Employee Top Sales</mat-card-title>
         <mat-card-content>
         <mat-list>
             <mat-list-item>some details</mat-list-item>
@@ -46,21 +48,21 @@
         <mat-card-title>most sales by category?</mat-card-title>
         <mat-card-content>
         <mat-tab-group class="detailsTabs">
-            <mat-tab label="tab1">
+            <mat-tab label="Games">
                 <mat-list>
                     <mat-list-item>some details</mat-list-item>
                     <mat-list-item>more details</mat-list-item>
                     <mat-list-item>some more details</mat-list-item>
                 </mat-list>
             </mat-tab>
-            <mat-tab label="tab2">
+            <mat-tab label="Consoles">
                 <mat-list>
                     <mat-list-item>some details</mat-list-item>
                     <mat-list-item>more details</mat-list-item>
                     <mat-list-item>some more details</mat-list-item>
                 </mat-list>
             </mat-tab>
-            <mat-tab label="tab3">
+            <mat-tab label="Miscellaneous">
                 <mat-list>
                     <mat-list-item>some details</mat-list-item>
                     <mat-list-item>more details</mat-list-item>

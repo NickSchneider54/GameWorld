@@ -33,6 +33,8 @@
 
         $json = json_encode($json_array);
         echo $json;
+
+        return $result->fetch(PDO::FETCH_ASSOC);
     }
 
     function createSellTicket(){      
@@ -86,7 +88,8 @@
             }
         }
         $message = true;
-        echo json_encode($message);
+        $json_array[] = $message;
+        echo json_encode($json_array);
     }    
 
     function createTicketItem($ticket, $item){
@@ -94,12 +97,17 @@
 
         echo("</br>Ticket: $ticket</br>Item: $item</br>");
 
-        $sql = "INSERT INTO ticketitems (productID, ticketID, quantity) VALUES(?, ?, ?)";
+        $product = getProduct($item);
+
+        $name = $product['name'];
+
+        $sql = "INSERT INTO ticketitems (productID, ticketID, quantity) VALUES(?, ?, ?, ?)";
 
         $query = $pdo->prepare($sql);
         $query->bindValue(1, $item);
         $query->bindValue(2, $ticket);
-        $query->bindValue(3, 1);
+        $query->bindValue(3, $name);
+        $query->bindValue(4, 1);
         
         $query->execute();
 

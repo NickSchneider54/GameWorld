@@ -1,7 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { LoginService } from 'src/app/Services/Login/login.service';
 import { BuySellService } from 'src/app/Services/Buy-Sell/buy-sell.service';
-import { Game } from 'src/app/Classes/Game/game';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/Services/Cart/cart.service';
 import { Item } from 'src/app/Classes/Cart-Item/item';
