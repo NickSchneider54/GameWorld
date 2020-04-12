@@ -3,18 +3,22 @@ import { NgModule } from '@angular/core';
 import {MyMaterialModule} from './Modules/material.module';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import { AppRoutingModule, RoutingComponent } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { InventoryComponent } from './Components/inventory/inventory.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    RoutingComponent
+    RoutingComponent,
+    InventoryComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +26,10 @@ import { CookieService } from 'ngx-cookie-service';
     BrowserAnimationsModule,
     MyMaterialModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
