@@ -30,6 +30,7 @@ export class BuySellComponent implements OnInit {
   constructor(private search: BuySellService, private cart: CartService, private router: Router, private cookies: CookieService) { }
 
   ngOnInit() {
+    this.savedCarts();
     if(this.cookies.get('loggedIn') != 'true'){       
       this.router.navigate(['/login']);
     }
@@ -132,6 +133,16 @@ export class BuySellComponent implements OnInit {
       this.cart.clearCart();
       this.updateCart();
     }
-  }  
+  } 
+  
+  savedCarts(){
+    if(!this.cookies.get("shoppingCart") && !this.cookies.get("buyList")){
+      this.cookies.set("shoppingCart", JSON.stringify(this.shoppingCart));
+      this.cookies.set("buyList", JSON.stringify(this.buyList));
+    }
+    this.cart.setShoppingCart();
+    this.cart.setBuyList();
+    this.updateCart();
+  }
 
 }
