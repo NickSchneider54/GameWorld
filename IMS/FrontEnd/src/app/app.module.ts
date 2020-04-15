@@ -14,11 +14,13 @@ import { MatSortModule } from '@angular/material/sort';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     RoutingComponent,
-    InventoryComponent
+    InventoryComponent,
+    
   ],
   imports: [
     BrowserModule,

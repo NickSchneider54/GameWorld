@@ -1,1 +1,44 @@
-<p>settings works!</p>
+<mat-card class="settingsCard">
+    <mat-accordion>
+        <mat-expansion-panel class="addNewUserPanel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+               Add An Employee
+              </mat-panel-title>              
+            </mat-expansion-panel-header>
+            <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Username"  required>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input matInput  type="password" placeholder="Password" required>
+              </mat-form-field>              
+              <mat-form-field>
+                <mat-label>Account Level</mat-label>
+                <select matNativeControl required>             
+            <option value="1">Employee</option>
+            <option value="2">Supervisor</option>
+            <option value="3">Manager</option>    
+                </select>
+            </mat-form-field>
+            <button mat-raised-button color="primary" id="addUserBtn" click="">Add Employee</button>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel class="updateUserPanel">
+                <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Modify Existing Employee
+                </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-list class="employees">
+                    <mat-list-item *ngFor="let user of users">
+                        <div mat-line><mat-icon>person</mat-icon>{{user.username}} 
+                         <button mat-raised-button color="primary" >Edit</button></div>
+                        </mat-list-item>
+                </mat-list>
+                   
+                
+            </mat-expansion-panel>
+    </mat-accordion>
+ </mat-card>

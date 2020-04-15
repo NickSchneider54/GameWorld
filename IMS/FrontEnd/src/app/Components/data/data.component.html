@@ -3,22 +3,28 @@
 <mat-card  class="chartsCard">
     <mat-card-content>
         <canvas class="chart" id="chart1" width="300" height="300"></canvas>
+    </mat-card-content> 
+    <mat-card-actions>
         <button mat-raised-button color="primary" id='chart1btn1' (click)="updateChart('Daily Sales','Weekly')">Weekly</button><button mat-raised-button color="primary" id='chart1btn2'(click)="updateChart('Daily Sales','Monthly')">Monthly</button>     
         <mat-label>{{chart1Range}}</mat-label>
-    </mat-card-content>    
+    </mat-card-actions>    
 </mat-card>   
 <mat-card  class="chartsCard">
     <mat-card-content>
         <canvas class="chart" id="chart2" width="300" height="300"></canvas>
+    </mat-card-content> 
+    <mat-card-actions>
         <button mat-raised-button color="primary" id='chart2btn1'>Weekly</button> <button mat-raised-button color="primary" id='chart2btn2'>Monthly</button>         
-        
-    </mat-card-content>    
+    </mat-card-actions>    
 </mat-card>
 <mat-card  class="chartsCard">
     <mat-card-content>
     <canvas class="chart" id="chart3" width="300" height="300"></canvas>
+    </mat-card-content> 
+    <mat-card-actions>
     <button mat-raised-button color="primary" id='chart3btn1' (click)="catWeekly()">Weekly</button> <button mat-raised-button color="primary" id='chart3btn2'>Monthly</button>        
-    </mat-card-content>    
+</mat-card-actions>
+   
 </mat-card>
 </div>
 <br>
