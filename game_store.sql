@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2020 at 03:58 AM
+-- Generation Time: Apr 15, 2020 at 07:26 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.4
 
@@ -58,24 +58,59 @@ INSERT INTO `brands` (`brandID`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `consolegenerations`
+--
+
+CREATE TABLE `consolegenerations` (
+  `generationID` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `consolegenerations`
+--
+
+INSERT INTO `consolegenerations` (`generationID`, `name`) VALUES
+(1, 'Xbox One'),
+(2, 'Playstation 4'),
+(3, 'Switch'),
+(4, 'Nintendo DS');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `consoles`
 --
 
 CREATE TABLE `consoles` (
-  `consoleID` int(11) NOT NULL,
-  `brandID` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
+  `consoleID` varchar(25) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `generationID` int(11) NOT NULL,
+  `brandID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `consoles`
 --
 
-INSERT INTO `consoles` (`consoleID`, `brandID`, `name`) VALUES
-(1, 3, 'Xbox One'),
-(2, 4, 'Playstation 4'),
-(3, 5, 'Switch'),
-(4, 5, 'Nintendo DS');
+INSERT INTO `consoles` (`consoleID`, `name`, `generationID`, `brandID`) VALUES
+('025001458612', 'Nintendo DS', 4, 5),
+('045496590093', 'Switch', 3, 5),
+('711719511793', 'Playstation 4', 2, 4),
+('885370808278', 'Xbox One', 1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `equipment`
+--
+
+CREATE TABLE `equipment` (
+  `equipmentID` varchar(25) NOT NULL,
+  `consoleID` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -86,9 +121,20 @@ INSERT INTO `consoles` (`consoleID`, `brandID`, `name`) VALUES
 CREATE TABLE `games` (
   `gameID` varchar(25) NOT NULL,
   `consoleID` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `releaseDate` date DEFAULT NULL,
   `genre` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `games`
+--
+
+INSERT INTO `games` (`gameID`, `consoleID`, `name`, `releaseDate`, `genre`) VALUES
+('045496590420', 3, 'Zelda Breath of the Wild', '2017-03-03', 'adventure'),
+('045496741273', 4, 'Pokemon Black', '2010-09-18', 'adventure'),
+('711719506133', 2, 'God of War', '2018-04-20', 'adventure'),
+('885370928518', 1, 'Halo 5: Guardians', '2015-10-27', 'sci-fi');
 
 -- --------------------------------------------------------
 
@@ -110,11 +156,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`productID`, `name`, `description`, `price`, `used`, `stock`) VALUES
-('045496590420', 'Zelda Breath of the Wild', 'Zelda game', 49.99, 0, 9),
-('045496741273', 'Pokemon Black', 'pokemon game', 46.95, 0, 3),
-('711719506133', 'God of War', 'Newest installment of the God of War series', 19.99, 0, 10),
-('885370808278', 'Xbox One', 'Console - Standard Edition without Kinect', 299, 0, 3),
-('885370928518', 'Halo 5: Guardians', 'Halo\'s 5th installment in the series', 9.99, 0, 10);
+('025001458612', 'Nintendo DS', 'Nintendo Hand-held device ', 49.99, 1, 7),
+('045496590093', 'Nintendo Switch', 'Switch console', 199.99, 0, 3),
+('045496590420', 'Zelda Breath of the Wild', 'Zelda game', 49.99, 0, 8),
+('045496741273', 'Pokemon Black', 'pokemon game', 46.95, 0, 7),
+('711719506133', 'God of War', 'Newest installment of the God of War series', 19.99, 0, 8),
+('711719511793', 'Playstation 4', 'Sony Playstation 4 Console 1TB', 299.99, 0, 5),
+('885370808278', 'Xbox One', 'Console - Standard Edition without Kinect', 299.99, 0, 10),
+('885370928518', 'Halo 5: Guardians', 'Halo\'s 5th installment in the series', 9.99, 0, 7);
 
 -- --------------------------------------------------------
 
@@ -123,6 +172,7 @@ INSERT INTO `products` (`productID`, `name`, `description`, `price`, `used`, `st
 --
 
 CREATE TABLE `ticketitems` (
+  `itemID` int(11) NOT NULL,
   `productID` varchar(25) NOT NULL,
   `name` varchar(100) NOT NULL,
   `ticketID` int(11) NOT NULL,
@@ -133,10 +183,18 @@ CREATE TABLE `ticketitems` (
 -- Dumping data for table `ticketitems`
 --
 
-INSERT INTO `ticketitems` (`productID`, `name`, `ticketID`, `quantity`) VALUES
-('045496741273', 'Pokemon Black', 1, 1),
-('885370808278', 'Xbox One', 2, 1),
-('885370928518', 'Halo 5: Guardians', 1, 1);
+INSERT INTO `ticketitems` (`itemID`, `productID`, `name`, `ticketID`, `quantity`) VALUES
+(1, '045496590420', 'Zelda Breath of the Wild', 5, 1),
+(2, '045496741273', 'Pokemon Black', 1, 1),
+(3, '711719506133', 'God of War', 5, 1),
+(4, '885370808278', 'Xbox One', 2, 1),
+(5, '885370928518', 'Halo 5: Guardians', 1, 1),
+(6, '711719506133', 'God of War', 6, 1),
+(7, '045496590420', 'Zelda Breath of the Wild', 6, 1),
+(8, '045496741273', 'Pokemon Black', 6, 1),
+(9, '885370928518', 'Halo 5: Guardians', 6, 1),
+(10, '885370928518', 'Halo 5: Guardians', 7, 1),
+(11, '045496741273', 'Pokemon Black', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -157,8 +215,13 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`ticketID`, `customerID`, `userID`, `ticketType`, `orderDate`) VALUES
-(1, 1, 1, 'sale', '2020-04-08 00:00:00'),
-(2, 1, 1, 'sale', '2020-04-08 00:00:00');
+(1, 1, 1, 'sale', '2020-04-09 00:00:00'),
+(2, 1, 1, 'sale', '2020-04-08 00:00:00'),
+(3, 1, 1, 'sale', '2020-04-14 00:00:00'),
+(4, 1, 1, 'sale', '2020-04-14 00:00:00'),
+(5, 1, 1, 'sale', '2020-04-14 00:00:00'),
+(6, 1, 1, 'sale', '2020-04-14 00:00:00'),
+(7, 1, 1, 'sale', '2020-04-14 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -200,19 +263,33 @@ ALTER TABLE `brands`
   ADD PRIMARY KEY (`brandID`);
 
 --
+-- Indexes for table `consolegenerations`
+--
+ALTER TABLE `consolegenerations`
+  ADD PRIMARY KEY (`generationID`);
+
+--
 -- Indexes for table `consoles`
 --
 ALTER TABLE `consoles`
   ADD PRIMARY KEY (`consoleID`),
-  ADD KEY `brandID` (`brandID`);
+  ADD KEY `generationID` (`generationID`),
+  ADD KEY `brandID` (`brandID`) USING BTREE;
+
+--
+-- Indexes for table `equipment`
+--
+ALTER TABLE `equipment`
+  ADD PRIMARY KEY (`equipmentID`),
+  ADD KEY `consoleID` (`consoleID`);
 
 --
 -- Indexes for table `games`
 --
 ALTER TABLE `games`
   ADD PRIMARY KEY (`gameID`),
-  ADD KEY `consoles` (`consoleID`),
-  ADD KEY `genres` (`genre`);
+  ADD KEY `genres` (`genre`),
+  ADD KEY `consoleID` (`consoleID`);
 
 --
 -- Indexes for table `products`
@@ -224,7 +301,7 @@ ALTER TABLE `products`
 -- Indexes for table `ticketitems`
 --
 ALTER TABLE `ticketitems`
-  ADD PRIMARY KEY (`productID`),
+  ADD PRIMARY KEY (`itemID`),
   ADD KEY `ticketID` (`ticketID`);
 
 --
@@ -250,16 +327,22 @@ ALTER TABLE `brands`
   MODIFY `brandID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `consoles`
+-- AUTO_INCREMENT for table `consolegenerations`
 --
-ALTER TABLE `consoles`
-  MODIFY `consoleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `consolegenerations`
+  MODIFY `generationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `ticketitems`
+--
+ALTER TABLE `ticketitems`
+  MODIFY `itemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `ticketID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ticketID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -276,20 +359,35 @@ ALTER TABLE `users`
 --
 ALTER TABLE `accessories`
   ADD CONSTRAINT `accessories_ibfk_1` FOREIGN KEY (`accessoryID`) REFERENCES `products` (`productID`),
-  ADD CONSTRAINT `console` FOREIGN KEY (`consoleID`) REFERENCES `consoles` (`consoleID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `accessories_ibfk_2` FOREIGN KEY (`consoleID`) REFERENCES `consoles` (`generationID`);
 
 --
 -- Constraints for table `consoles`
 --
 ALTER TABLE `consoles`
-  ADD CONSTRAINT `consoles_ibfk_2` FOREIGN KEY (`brandID`) REFERENCES `brands` (`brandID`);
+  ADD CONSTRAINT `consoles_ibfk_1` FOREIGN KEY (`consoleID`) REFERENCES `products` (`productID`),
+  ADD CONSTRAINT `consoles_ibfk_2` FOREIGN KEY (`generationID`) REFERENCES `consolegenerations` (`generationID`),
+  ADD CONSTRAINT `consoles_ibfk_3` FOREIGN KEY (`brandID`) REFERENCES `brands` (`brandID`);
+
+--
+-- Constraints for table `equipment`
+--
+ALTER TABLE `equipment`
+  ADD CONSTRAINT `equipment_ibfk_1` FOREIGN KEY (`equipmentID`) REFERENCES `products` (`productID`),
+  ADD CONSTRAINT `equipment_ibfk_2` FOREIGN KEY (`consoleID`) REFERENCES `consoles` (`generationID`);
 
 --
 -- Constraints for table `games`
 --
 ALTER TABLE `games`
-  ADD CONSTRAINT `games_ibfk_2` FOREIGN KEY (`consoleID`) REFERENCES `consoles` (`consoleID`),
-  ADD CONSTRAINT `games_ibfk_3` FOREIGN KEY (`gameID`) REFERENCES `products` (`productID`);
+  ADD CONSTRAINT `games_ibfk_3` FOREIGN KEY (`gameID`) REFERENCES `products` (`productID`),
+  ADD CONSTRAINT `games_ibfk_4` FOREIGN KEY (`consoleID`) REFERENCES `consoles` (`generationID`);
+
+--
+-- Constraints for table `ticketitems`
+--
+ALTER TABLE `ticketitems`
+  ADD CONSTRAINT `ticketitems_ibfk_1` FOREIGN KEY (`ticketID`) REFERENCES `tickets` (`ticketID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
