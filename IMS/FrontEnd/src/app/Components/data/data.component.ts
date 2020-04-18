@@ -12,12 +12,16 @@ export class DataComponent implements OnInit {
   saleDays: number[] = [];
   saleGames: number[] = [];
   games: string[] = [];
+  categorySales: number[] = [];
+
+  totalSales: number;
 
   chart1;
   chart2;
-  chart1Range: string;
-  chart2Range: string;
-  chart3Range: string;
+  chart3;
+  chart1Range: string = 'Weekly';
+  chart2Range: string = 'Weekly';
+  chart3Range: string = 'Weekly';
   canvas1: any; 
   canvas2: any;
   canvas3: any; 
@@ -26,24 +30,36 @@ export class DataComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.getTopDays('Weekly').subscribe((result: number[]) =>{
+    this.dataService.getTopDays(this.chart1Range).subscribe((result: number[]) =>{
       this.saleDays = result;
       this.chart1.data.datasets[0].data = this.saleDays;
       this.chart1.update();
       console.log(this.saleDays);
     });
 
-    this.dataService.getTopGames('Weekly').subscribe((result: any[]) =>{
+    this.dataService.getTopGames(this.chart2Range).subscribe((result: any[]) =>{
       this.games = result;
       this.chart2.data.labels = this.games;
       this.chart2.update();
     });
 
-    this.dataService.getTopGameSales('Weekly').subscribe((result: any[]) =>{
+    this.dataService.getTopGameSales(this.chart2Range).subscribe((result: any[]) =>{
       this.saleGames = result;
       this.chart2.data.datasets[0].data = this.saleGames;
       this.chart2.update();
     });
+
+    this.dataService.getTopCategories(this.chart3Range).subscribe((result: any[]) =>{
+      console.log(result);
+      this.categorySales = result;
+      this.chart3.data.datasets[0].data = this.categorySales;
+      this.chart3.update();
+      console.log(this.categorySales);
+    });
+
+    this.dataService.getSales('Monthly').subscribe((result: any) =>{
+      this.totalSales = Number(Math.round(+(result + 'e' + 2)) + 'e-' + 2);
+    })
 
     // Top Sales Days
     this.canvas1 = document.getElementById('chart1');
@@ -100,12 +116,12 @@ export class DataComponent implements OnInit {
     // Top selling Categories
     this.canvas3 = document.getElementById('chart3');
     this.ctx = this.canvas3.getContext('2d');
-    let chart3 = new Chart(this.ctx,{
+    this.chart3 = new Chart(this.ctx,{
       type:'doughnut',
       data:{
         labels: ["Games","Consoles","Equipment","Misc."],
         datasets:[{
-          label: 'label',
+          label: 'Sales by Category',
           data: [1,2,3,4]
         }]      
         },
@@ -131,6 +147,27 @@ export class DataComponent implements OnInit {
           this.chart1.update();
           this.chart1Range = range;
           console.log('update');
+        });
+      }
+      else if(chart == this.chart2.data.datasets[0].label){
+        this.dataService.getTopGames(range).subscribe((result: any[]) =>{
+          this.games = result;
+          this.chart2.data.labels = this.games;
+          this.chart2.update();
+        });
+        this.dataService.getTopGameSales(range).subscribe((result: number[]) =>{
+          this.saleGames = result;
+          this.chart2.data.datasets[0].data = this.saleGames;
+          this.chart2.update();
+          this.chart2Range = range;
+        });
+      }
+      else if(chart == this.chart3.data.datasets[0].label){
+        this.dataService.getTopCategories(range).subscribe((result: number[]) =>{
+          this.categorySales = result;
+          this.chart3.data.datasets[0].data = this.categorySales;
+          this.chart3.update();
+          this.chart3Range = range;
         });
       }
   }

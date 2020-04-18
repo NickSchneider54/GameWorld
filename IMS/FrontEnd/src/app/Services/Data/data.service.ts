@@ -21,20 +21,24 @@ export class DataService {
     return this.http.get(this.ping);
   }
 
-  getTopConsoles(){
-    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=consoles`;
+  getTopConsoles(range:string){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=consoles&range=${range}`;
+    return this.http.get(this.ping);
   }
 
-  getTopCategories(){
-    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=categories`;
+  getTopCategories(range:string){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=categories&range=${range}`;
+    return this.http.get(this.ping);
   }
 
-  getTopEmployees(){
-    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=employees`;
+  getTopEmployees(range:string){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=employees&range=${range}`;
+    return this.http.get(this.ping);
   }
 
-  getSales(){
-    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=sales`;
+  getSales(range:string){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=sales&range=${range}`;
+    return this.http.get(this.ping);
   }
 
   getTopDays(range:string){
