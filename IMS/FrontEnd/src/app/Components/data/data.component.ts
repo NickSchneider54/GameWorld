@@ -1,24 +1,35 @@
-import { Component, OnInit,AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import { DataService } from 'src/app/Services/Data/data.service';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortable, Sort } from '@angular/material/sort';
+import { User } from 'src/app/Interfaces/Users/user';
+import { DataItem } from 'src/app/Interfaces/Data-Items/data-item';
 
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',
   styleUrls: ['./data.component.css']
 })
-export class DataComponent implements OnInit {
+export class DataComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatSort) sort: MatSort;
 
   saleDays: number[] = [];
   saleGames: number[] = [];
   games: string[] = [];
   categorySales: number[] = [];
+  employeeSales: User[] = [];
+  gameSales: DataItem[] = [];
+  consoleSales: DataItem[] = [];
+  equipmentSales: DataItem[] = [];
+  miscSales: DataItem[] = [];
 
   totalSales: number;
 
-  chart1;
-  chart2;
-  chart3;
+  chart1: Chart;
+  chart2: Chart;
+  chart3: Chart;
   chart1Range: string = 'Weekly';
   chart2Range: string = 'Weekly';
   chart3Range: string = 'Weekly';
@@ -26,6 +37,21 @@ export class DataComponent implements OnInit {
   canvas2: any;
   canvas3: any; 
   ctx: any;
+
+  employeeData = new MatTableDataSource<User>();
+  userColumns = ['username', 'userSales'];
+
+  gameData = new MatTableDataSource<DataItem>();
+  gameColumns = ['upc', 'name', 'unitSold'];
+
+  consoleData = new MatTableDataSource<DataItem>();
+  consoleColumns = ['upc', 'name', 'unitSold'];
+
+  equipData = new MatTableDataSource<DataItem>();
+  equipColumns = ['upc', 'name', 'unitSold'];
+
+  miscData = new MatTableDataSource<DataItem>();
+  miscColumns = ['upc', 'name', 'unitSold'];
 
   constructor(private dataService: DataService) { }
 
@@ -60,6 +86,50 @@ export class DataComponent implements OnInit {
     this.dataService.getSales('Monthly').subscribe((result: any) =>{
       this.totalSales = Number(Math.round(+(result + 'e' + 2)) + 'e-' + 2);
     })
+
+    this.dataService.getTopEmployees().subscribe((result: User[]) =>{
+      for(var i = 0; i < result.length; i++){
+        this.employeeSales.push(result[i]);
+      }   
+      this.employeeData.data = this.employeeSales;
+    });
+
+    this.dataService.getAllTimeGames().subscribe((result: DataItem[]) =>{
+      console.log(result);
+      for(var i = 0; i < result.length; i++){
+        this.gameSales.push(result[i]);
+      }
+      console.log(this.consoleSales);
+      this.gameData.data = this.gameSales;
+      this.setDefaultSort(this.gameData);
+    });
+    
+    this.dataService.getTopConsoles().subscribe((result: DataItem[]) =>{
+      console.log(result);
+      for(var i = 0; i < result.length; i++){
+        this.consoleSales.push(result[i]);
+      }
+      console.log(this.consoleSales);
+      this.consoleData.data = this.consoleSales;
+    });
+
+    this.dataService.getAllTimeEquipment().subscribe((result: DataItem[]) =>{
+      console.log(result);
+      for(var i = 0; i < result.length; i++){
+        this.equipmentSales.push(result[i]);
+      }
+      console.log(this.consoleSales);
+      this.equipData.data = this.equipmentSales;
+    });
+
+    this.dataService.getAllTimeMisc().subscribe((result: DataItem[]) =>{
+      console.log(result);
+      for(var i = 0; i < result.length; i++){
+        this.miscSales.push(result[i]);
+      }
+      this.miscData.data = this.miscSales;
+    });
+    
 
     // Top Sales Days
     this.canvas1 = document.getElementById('chart1');
@@ -130,6 +200,10 @@ export class DataComponent implements OnInit {
     })
   }  
 
+  ngAfterViewInit(): void {    
+    this.employeeData.sort = this.sort;
+  }
+
   addData(chart, data){
     console.log(data);
     chart.data.datasets.foreach((dataset) =>{
@@ -139,14 +213,12 @@ export class DataComponent implements OnInit {
   }
 
   updateChart(chart:string, range:string){
-    console.log('in function');
       if(chart == this.chart1.data.datasets[0].label){
         this.dataService.getTopDays(range).subscribe((result: number[]) =>{
           this.saleDays = result;
           this.chart1.data.datasets[0].data = this.saleDays;
           this.chart1.update();
           this.chart1Range = range;
-          console.log('update');
         });
       }
       else if(chart == this.chart2.data.datasets[0].label){
@@ -172,8 +244,27 @@ export class DataComponent implements OnInit {
       }
   }
 
-  catWeekly(){
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.gameData.filter = filterValue.trim().toLowerCase();
+    this.consoleData.filter = filterValue.trim().toLowerCase();
+    this.equipData.filter = filterValue.trim().toLowerCase();
+    this.miscData.filter = filterValue.trim().toLowerCase();
+  }
 
+  sortData(sort: Sort, data: MatTableDataSource<DataItem>){
+    if(sort.direction === 'asc'){
+      this.sort.sort(({ id: 'sales', start: 'desc'}) as MatSortable);      
+    }
+    else{
+      this.sort.sort(({ id: 'sales', start: 'asc'}) as MatSortable);
+    }
+    data.sort = this.sort;
+  }
+
+  setDefaultSort(data: MatTableDataSource<DataItem>){
+    this.sort.sort(({ id: 'sales', start: 'desc'}) as MatSortable);
+    data.sort = this.sort;
   }
     
 }

@@ -47,3 +47,12 @@
         flex-wrap:wrap;
         justify-content: space-evenly;
     }
+
+
+.salesData{
+    width: 100%;
+}
+
+.detailsCard{
+    min-height: 35vh !important;
+}

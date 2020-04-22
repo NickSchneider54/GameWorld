@@ -2,8 +2,9 @@
 
     include "connection.php";  
 
-    // error_reporting(0);
-    // ini_set('display_errors', 0);
+    error_reporting(0);
+    ini_set('display_errors', 0);
+    
     
     $week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $sales = array();
@@ -11,6 +12,8 @@
     $consoles = array();
     $equipment = array();
     $misc = array();
+    $users = array();
+    $product = array();
     $categories = [0, 0, 0, 0];
     $totalSales = 0;
     $action = $_GET['action'];    
@@ -48,7 +51,7 @@
                 break;
 
                 case 'consoles':
-
+                    getTopConsoles();
                 break;
 
                 case 'categories':
@@ -56,7 +59,7 @@
                 break;
 
                 case 'employees':
-
+                    getUserSales();
                 break;
 
                 case 'sales':
@@ -66,6 +69,22 @@
                 case 'days':
                     initSales();
                     getTopOrderDays();
+                break;
+
+                case 'topgames':
+                    getAllTimeGames();
+                break;
+
+                case 'topconsoles':
+                    getAllTimeConsoles();
+                break;
+
+                case 'topequip':
+                    getAllTimeEquipment();
+                break;
+
+                case 'topmisc':
+                    getAllTimeMisc();
                 break;
             }
     }  
@@ -88,6 +107,10 @@
                 }
             break;
         }
+    }
+
+    function initUsers(){
+        
     }
 
     function getGames(){
@@ -299,6 +322,14 @@
                 return $query->fetchAll();
             } 
         }
+        else{
+            $sql = "SELECT ticketID FROM tickets";
+
+                $query = $pdo->prepare($sql);
+                $query->execute();
+
+                return $query->fetchAll();
+        }
                
     }
 
@@ -344,6 +375,7 @@
         global $pdo;
         global $games;
         global $sales;
+        global $product;
 
         if($_GET['f'] == 'sales'){
             $sql = "SELECT productID FROM ticketitems WHERE ticketID = $ticket";
@@ -478,6 +510,50 @@
         return $query->fetchAll();
     }
 
+    function getAllSoldGames($id){
+        global $pdo;
+
+        $sql = "SELECT gameID, name FROM games WHERE gameID = $id";
+
+        $query = $pdo->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll();
+    }
+
+    function getAllSoldConsoles($id){
+        global $pdo;
+
+        $sql = "SELECT consoleID, name FROM consoles WHERE consoleID = $id";
+
+        $query = $pdo->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll();
+    }
+
+    function getAllSoldEquipment($id){
+        global $pdo;
+
+        $sql = "SELECT equipmentID, name FROM equipment WHERE equipmentID = $id";
+
+        $query = $pdo->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll();
+    }
+
+    function getAllSoldMisc($id){
+        global $pdo;
+
+        $sql = "SELECT productID, name FROM products WHERE productID = $id";
+
+        $query = $pdo->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll();
+    }
+
     function getTotalSales(){
         global $pdo;
         global $totalSales;
@@ -503,6 +579,249 @@
 
         $itemPrice = $query->fetch();
         $totalSales += $itemPrice['price'];
+    }
+
+    function getUserSales(){
+        global $pdo;
+        global $users;
+
+        $tickets = getAllTicketIDs();
+
+        foreach($tickets as $ticket){
+            getUserID($ticket['ticketID']);
+        }
+
+        $json = json_encode($users);
+
+        echo $json;
+    }
+
+    function getUserID($ticket){
+        global $pdo;
+        global $users;
+        global $totalSales;
+
+        $sql = "SELECT userID FROM tickets WHERE ticketID = $ticket";
+
+        $query = $pdo->prepare($sql);
+        $query->execute();
+
+        $results = $query->fetchAll();
+        $user = $results[0]['userID'];
+        $userInfo = getUserByID($user);
+        $username = $userInfo['username'];
+
+        if(sizeOf($users) > 0){
+            for($i = 0; $i < sizeOf($users); $i++){
+                if($username == $users[$i]->user){
+                    $users[$i]->sales += 1;
+                    break;
+                }
+                else{      
+                    array_push($users, (object)["user"=>$username, "sales"=>0]);
+                    break;
+                }
+            }
+        }
+        else{
+            array_push($users, (object)["user"=>$username, "sales"=>0]);
+        }        
+    }
+
+    function getUserByID($id){
+        global $pdo;
+
+        $sql = "SELECT username FROM users WHERE userID = '$id'";
+
+        $query = $pdo->prepare($sql);
+        $query->execute();
+
+        return $query->fetch();
+    }
+
+    function getTicketItemInfo($ticket){
+        global $pdo;
+
+        $sql = "SELECT productID, name FROM ticketitems WHERE ticketID = $ticket";
+
+        $query = $pdo->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    function getTopConsoles(){
+        global $pdo;
+        global $consoles;
+        global $product;
+
+        $tickets = getAllTicketIDs();
+
+        foreach($tickets as $ticket){
+            getConsoleSales($ticket['ticketID']);
+        }     
+
+        $json = json_encode($consoles);
+
+        echo $json;
+    }
+
+    function getConsoleSales($ticket){
+        global $pdo;
+        global $consoles;
+
+        $order = getTicketItemInfo($ticket);
+
+        foreach($order as $item){
+            $result = getAllSoldConsoles($item['productID']);
+            
+            foreach($result as $console){
+
+                if(sizeOf($consoles) > 0){
+                    for($i = 0; $i < sizeOf($consoles); $i++){
+                        if($console['consoleID'] == $consoles[$i]->upc){
+                            $consoles[$i]->sales += 1;
+                            break;
+                        }
+                        else{      
+                            array_push($consoles, (object)["upc"=>$console['consoleID'], "name"=>$console['name'], "sales"=>1]);
+                            break;
+                        }
+                    }
+                }
+                else{
+                    array_push($consoles, (object)["upc"=>$console['consoleID'], "name"=>$console['name'], "sales"=>1]);
+                }
+            }            
+        }        
+    }
+
+    function getAllTimeGames(){
+        global $pdo;
+        global $games;
+
+        $tickets = getAllTicketIDs();
+
+        foreach($tickets as $ticket){
+            getGameSales($ticket['ticketID']);
+        }     
+
+        $json = json_encode($games);
+
+        echo $json;
+    }
+
+    function getGameSales($ticket){
+        global $pdo;
+        global $games;
+        
+        $order = getTicketItemInfo($ticket);
+
+        foreach($order as $item){
+            $game = getAllSoldGames($item['productID']);            
+            if($game){
+                if(sizeOf($games) > 0){
+                    for($i = 0; $i < sizeOf($games); $i++){    
+                        if($game[0]['gameID'] == $games[$i]->upc){
+                            $games[$i]->sales += 1;
+                            break;
+                        }
+                        else if($i == sizeof($games) - 1){      
+                            array_push($games, (object)["upc"=>$game[0]['gameID'], "name"=>$game[0]['name'], "sales"=>1]);
+                            break;
+                        }
+                    }
+                }
+                else{
+                    array_push($games, (object)["upc"=>$game[0]['gameID'], "name"=>$game[0]['name'], "sales"=>1]);
+                }
+            } 
+        }          
+    }
+
+    function getAllTimeEquipment(){
+        global $pdo;
+        global $equipment;
+
+        $tickets = getAllTicketIDs();
+
+        foreach($tickets as $ticket){
+            getEquipmentSales($ticket['ticketID']);
+        }     
+
+        $json = json_encode($equipment);
+
+        echo $json;
+    }
+
+    function getEquipmentSales($ticket){
+        global $pdo;
+        global $equipment;
+        
+        $order = getTicketItemInfo($ticket);
+
+        foreach($order as $item){
+            $equip = getAllSoldEquipment($item['productID']);            
+            if($equip){
+                if(sizeOf($equipment) > 0){
+                    for($i = 0; $i < sizeOf($equipment); $i++){    
+                        if($equip[0]['equipmentID'] == $equipment[$i]->upc){
+                            $equipment[$i]->sales += 1;
+                            break;
+                        }
+                        else if($i == sizeof($equipment) - 1){      
+                            array_push($equipment, (object)["upc"=>$equip[0]['equipmentID'], "name"=>$equip[0]['name'], "sales"=>1]);
+                            break;
+                        }
+                    }
+                }
+                else{
+                    array_push($equipment, (object)["upc"=>$equip[0]['equipmentID'], "name"=>$equip[0]['name'], "sales"=>1]);
+                }
+            } 
+        }          
+    }
+
+    function getAllTimeMisc(){
+        global $pdo;
+        global $misc;
+
+        $tickets = getAllTicketIDs();
+
+        foreach($tickets as $ticket){
+            getGameSales($ticket['ticketID']);
+        }     
+
+        $json = json_encode($misc);
+
+        echo $json;
+    }
+
+    function getMiscSales($ticket){
+        global $pdo;
+        global $misc;
+        
+        $order = getTicketItemInfo($ticket);
+
+        foreach($order as $item){
+            $product = getAllSoldGames($item['productID']);            
+            if($product){
+                if(sizeOf($misc) > 0){
+                    for($i = 0; $i < sizeOf($misc); $i++){    
+                        if($product[0]['productID'] == $misc[$i]->upc){
+                            $misc[$i]->sales += 1;
+                            break;
+                        }
+                        else if($i == sizeof($misc) - 1){      
+                            array_push($misc, (object)["upc"=>$product[0]['miscID'], "product"=>$product[0]['name'], "sales"=>1]);
+                            break;
+                        }
+                    }
+                }
+                else{
+                    array_push($misc, (object)["upc"=>$product[0]['miscID'], "name"=>$product[0]['name'], "sales"=>1]);
+                }
+            } 
+        }          
     }
 
 ?>

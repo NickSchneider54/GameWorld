@@ -53,14 +53,15 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
   }
 
   ngOnInit() {
+    /*
+      Grabs all items in current Inventory and sets dataSource 
+    */
     this.inv.getInventory().subscribe((result: InventoryItem[]) =>{
       for(var i = 0; i < result.length; i++){
         this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
       }
       this.dataSource.data = this.INVENTORY;
-    });
-
-    
+    });   
 
     console.log(this.INVENTORY)
   }
