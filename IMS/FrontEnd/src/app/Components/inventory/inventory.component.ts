@@ -1,11 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 // import { InventoryItem } from 'src/app/Classes/Inventory-Item/inventory-item';
 export interface InventoryItem {
   id: string;
@@ -16,9 +17,15 @@ export interface InventoryItem {
   stock: number;
 }
 
+export interface DialogData {
+  name: string;
+  description: string;
+  price: number;
+  used: number;
+  stock: number;
+}
+
 // TODO: replace this with real data from the API call. Also TODO: create api call.
-
-
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
@@ -43,9 +50,10 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'description', 'price', 'used', 'stock', 'action'];
   
-  constructor(private inv: InventoryService) {
+  constructor(private inv: InventoryService, public dialog: MatDialog) {
     super();
   }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -127,6 +135,26 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
         default: return 0;
       }
     });
+  }
+}
+
+
+@Component({
+  selector: 'edit-dialog',
+  templateUrl: 'edit-dialog.html',
+})
+export class EditDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<EditDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  
+  openDialog() {
+    this.dialog.open(EditDialog);
   }
 
 }
