@@ -26,24 +26,19 @@
 <div class="infoCardContainer">
     <mat-card class="infoCard">
         <mat-card-title><mat-icon>monetization_on</mat-icon>Sales</mat-card-title>
-        <hr>
-        <mat-card-content><h1>${{totalSales}}</h1></mat-card-content>
-        <mat-card-footer><mat-icon>date_range</mat-icon>Monthly</mat-card-footer>
+        <mat-divider [inset]="true"></mat-divider>
+        <mat-card-content class="infoCardContent"><h1>${{totalSales}}</h1>              
+      </mat-card-content>
+        <mat-card-footer class="infoFooter"><mat-icon>date_range</mat-icon>Month</mat-card-footer>
     </mat-card>
-    <mat-card class="infocard">
-        <mat-card-title><mat-icon>emoji_people</mat-icon>something else</mat-card-title>
-        <mat-card-content> another piece of info here</mat-card-content>
-    </mat-card>
+       
 </div>
 
 <div class="detailsContainer">
     <mat-card class="detailsCard">
         <mat-card-title>Employee Top Sales</mat-card-title>
         <mat-card-content>
-        <!-- <mat-list>
-            <mat-list-item>some details</mat-list-item>
-        </mat-list> -->
-
+       
         <table [dataSource]="employeeData" mat-table class="full-width-table salesData" matSort aria-label="Elements">
                     
             <!-- Name Column -->
