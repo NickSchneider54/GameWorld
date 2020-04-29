@@ -14,6 +14,7 @@ export class EditInventoryComponent implements OnInit {
 
   constructor(private search: BuySellService, public dialogRef: MatDialogRef<EditInventoryComponent>, @Inject(MAT_DIALOG_DATA) data) { 
     this.id = data.id;
+    console.log(this.id);
   }
 
   close() {
@@ -26,6 +27,7 @@ export class EditInventoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.search.getProduct(this.id).subscribe((result: object) =>{
+      console.log(result);
       this.product = result;
     });
   }

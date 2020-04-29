@@ -136,15 +136,16 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     });
   }
 
-  openDialog(id): void {
+  openDialog(upc): void {
     const dialogConfig = new MatDialogConfig();
+
+    console.log(upc)
   
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
   
     dialogConfig.data = {
-      id: 1,
-      data: id
+      id: upc
     };
   
     this.dialog.open(EditInventoryComponent, dialogConfig);
