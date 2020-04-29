@@ -11,6 +11,9 @@ import { InventoryComponent } from './Components/inventory/inventory.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { OverrideAuthorizationComponent } from './Components/shared/override-authorization/override-authorization.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditInventoryComponent } from './Components/shared/edit-inventory/edit-inventory.component';
 
 
 
@@ -20,6 +23,8 @@ import { MatSortModule } from '@angular/material/sort';
     AppComponent,
     RoutingComponent,
     InventoryComponent,
+    OverrideAuthorizationComponent,
+    EditInventoryComponent,
     
   ],
   imports: [
@@ -31,7 +36,8 @@ import { MatSortModule } from '@angular/material/sort';
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

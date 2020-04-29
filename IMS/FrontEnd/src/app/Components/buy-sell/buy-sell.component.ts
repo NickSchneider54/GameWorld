@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { CartService } from 'src/app/Services/Cart/cart.service';
 import { Item } from 'src/app/Classes/Cart-Item/item';
 import { CookieService } from 'ngx-cookie-service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
+import { OverrideAuthorizationComponent } from '../shared/override-authorization/override-authorization.component';
 
 @Component({
   selector: 'app-buy-sell',
@@ -24,10 +26,11 @@ export class BuySellComponent implements OnInit {
 
   cartSell: string;
   cartBuy: string;
+  authorization: boolean;
   
   @Output() loggedIn = new EventEmitter<boolean>();
 
-  constructor(private search: BuySellService, private cart: CartService, private router: Router, private cookies: CookieService) { }
+  constructor(private search: BuySellService, private cart: CartService, private router: Router, private cookies: CookieService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.savedCarts();
@@ -129,9 +132,15 @@ export class BuySellComponent implements OnInit {
       alert("Order Complete");
     }
     else if(this.currentTab == 'Buy'){
-      this.search.createBuyTicket();
-      this.cart.clearCart();
-      this.updateCart();
+      if(this.cookies.get("level") == "master" || this.authorization == true){
+        this.search.createBuyTicket().subscribe(result=>{});   
+        this.cart.clearBuyList();
+        this.updateCart();
+        alert("Order Complete");
+      }
+      else{
+        this.openDialog();
+      }
     }
   } 
   
@@ -143,6 +152,36 @@ export class BuySellComponent implements OnInit {
     this.cart.setShoppingCart();
     this.cart.setBuyList();
     this.updateCart();
+  }
+
+  openDialog(): void {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      id: 1,
+      data: this.authorization
+    };
+
+    this.dialog.open(OverrideAuthorizationComponent, dialogConfig);
+    
+    const dialogRef = this.dialog.open(OverrideAuthorizationComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe( data =>{
+      console.log("Dialog output:", data);
+      
+      this.search.getAuthprizartionCode().subscribe((result: any[]) =>{
+        for(var i = 0; i < result.length; i++){
+          if(data == result[i].password){
+            this.authorization = true;
+          }
+        }
+        this.completePurchase();
+      });
+
+    });     
   }
 
 }

@@ -5,6 +5,8 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortable, Sort } from '@angular/material/sort';
 import { User } from 'src/app/Interfaces/Users/user';
 import { DataItem } from 'src/app/Interfaces/Data-Items/data-item';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-data',
@@ -53,9 +55,13 @@ export class DataComponent implements OnInit, AfterViewInit {
   miscData = new MatTableDataSource<DataItem>();
   miscColumns = ['upc', 'name', 'unitSold'];
 
-  constructor(private dataService: DataService) { }
+  constructor(private cookies: CookieService, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
+    if(this.cookies.get('loggedIn') != 'true'){       
+      this.router.navigate(['/login']);
+    }
+
     this.dataService.getTopDays(this.chart1Range).subscribe((result: number[]) =>{
       this.saleDays = result;
       this.chart1.data.datasets[0].data = this.saleDays;

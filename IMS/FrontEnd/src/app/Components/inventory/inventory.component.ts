@@ -6,7 +6,11 @@ import { DataSource } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
+import { OverrideAuthorizationComponent } from '../shared/override-authorization/override-authorization.component';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { EditInventoryComponent } from '../shared/edit-inventory/edit-inventory.component';
 // import { InventoryItem } from 'src/app/Classes/Inventory-Item/inventory-item';
 export interface InventoryItem {
   id: string;
@@ -37,20 +41,12 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
   // @ViewChild(MatTable) table: MatTable<InventoryItem>;
   dataSource = new MatTableDataSource<InventoryItem>();
 
-  private INVENTORY: InventoryItem[] = [
-
-    // {id: '045496590420', name: 'Zelda Breath of the Wild', description: 'Zelda game', price: 49.99, used: 0, stock: 9},
-    // {id: '045496741273', name:'Pokemon Black', description:'pokemon game', price: 46.95, used: 0, stock: 3},
-    // {id: '711719506133', name:'God of War', description:'Newest installment of the God of War series', price: 19.99, used: 0, stock: 10},
-    // {id: '885370808278', name:'Xbox One', description:'Console - Standard Edition without Kinect', price: 299, used: 0, stock: 3},
-    // {id: '885370928518', name:'Halo 5: Guardians', description:'Halos 5th installment in the series', price: 9.99, used: 0, stock: 10}
-  
-  ];
+  private INVENTORY: InventoryItem[] = [];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'description', 'price', 'used', 'stock', 'action'];
   
-  constructor(private inv: InventoryService, public dialog: MatDialog) {
+  constructor(private cookies: CookieService, private router: Router, private inv: InventoryService, public dialog: MatDialog) {
     super();
   }
 
@@ -64,6 +60,9 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     /*
       Grabs all items in current Inventory and sets dataSource 
     */
+    if(this.cookies.get('loggedIn') != 'true'){       
+      this.router.navigate(['/login']);
+    }
     this.inv.getInventory().subscribe((result: InventoryItem[]) =>{
       for(var i = 0; i < result.length; i++){
         this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
@@ -136,28 +135,53 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
       }
     });
   }
-}
 
-
-@Component({
-  selector: 'edit-dialog',
-  templateUrl: 'edit-dialog.html',
-})
-export class EditDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<EditDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+  openDialog(id): void {
+    const dialogConfig = new MatDialogConfig();
   
-  openDialog() {
-    this.dialog.open(EditDialog);
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+  
+    dialogConfig.data = {
+      id: 1,
+      data: id
+    };
+  
+    this.dialog.open(EditInventoryComponent, dialogConfig);
+    
+    const dialogRef = this.dialog.open(EditInventoryComponent, dialogConfig);
+  
+    dialogRef.afterClosed().subscribe( data =>{
+      console.log("Dialog output:", data);
+
+    });     
   }
 
+
 }
+
+
+
+
+// @Component({
+//   selector: 'edit-dialog',
+//   templateUrl: 'edit-dialog.html',
+// })
+// export class EditDialog {
+
+//   constructor(
+//     public dialogRef: MatDialogRef<EditDialog>,
+//     @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {}
+
+//   onNoClick(): void {
+//     this.dialogRef.close();
+//   }
+  
+//   openDialog() {
+//     this.dialog.open(EditDialog);
+//   }
+
+// }
 
 function compare(a: string | number, b: string | number, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

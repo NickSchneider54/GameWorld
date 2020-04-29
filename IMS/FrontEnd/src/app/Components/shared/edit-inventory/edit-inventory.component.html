@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Edit Inventory Item</h1>
+<div mat-dialog-content>
+    <form class='form'>
+        <mat-form-field>
+            <input matInput placeholder="UPC" name="upc" required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput id="name" type="text" placeholder="Product Name" name="name" required>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Cancel</button> 
+  <button mat-button (click)="override()">Ok</button>
+</div>

@@ -26,7 +26,7 @@
       <mat-icon>person</mat-icon>&nbsp; {{username}} &nbsp;
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon> </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="settings()">Settings</button>
+        <button *ngIf="level === 'master'" mat-menu-item [routerLink]="'/settings'">Settings</button>
         <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
     
@@ -54,9 +54,8 @@
       <mat-nav-list #sidenav>
         <a mat-list-item [routerLink]="'/buy-sell'"> Buy/Sell </a>
         <a mat-list-item [routerLink]="'/inventory'"> Inventory </a>
-        <a mat-list-item [routerLink]="'/data'"> Data </a>
+        <a *ngIf="level === 'master'" mat-list-item [routerLink]="'/data'"> Data </a>
         <a mat-list-item [routerLink]="'/price-charting'"> Price Charting </a>
-        <a mat-list-item [routerLink]="'/settings'">User Settings</a>
         <a mat-list-item (click)="drawer.toggle()">Close</a>
       </mat-nav-list>
   </mat-drawer>

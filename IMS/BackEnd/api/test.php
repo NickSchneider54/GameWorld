@@ -25,13 +25,7 @@
         break;
 
         case 'ticket':
-            $function = $_GET['f'];
-            if($function == 'sell'){
-                createSellTicket();
-            }
-            else if($function == 'buy'){
-                createBuyTicket();
-            }
+            createTicket();
         break;
 
         case 'inventory':
@@ -174,16 +168,22 @@
         }
     }
 
-    function createSellTicket(){      
-        if(isset($_COOKIE['shoppingCart']) || isset($_GET['cart'])){
+    function createTicket(){      
+        if(isset($_GET['cart'])){
 
             global $pdo;
 
             $users = getUserByUsername();
             $user = $users[0];
-            $customer = 1;
-            $type = 'sale';
+            $customer = 1;            
             $date = date("Y-m-d");
+
+            if($_GET['f'] == 'sell'){
+                $type = 'sale';
+            }
+            if($_GET['f'] == 'buy'){
+                $type = 'buy';
+            }
             
             $sql = "INSERT INTO tickets (customerID, userID, ticketType, orderDate) VALUES(?, ?, ?, ?)";
             $query = $pdo->prepare($sql);
@@ -240,7 +240,9 @@
         
         $query->execute();        
 
-        updateInventory($item);
+        if($_GET['f'] == 'buy'){
+            updateInventory($item);
+        }
     }
 
     function getCurrentTicket(){
@@ -601,12 +603,13 @@
         global $users;
         global $totalSales;
 
-        $sql = "SELECT userID FROM tickets WHERE ticketID = $ticket";
+        $sql = "SELECT userID FROM tickets WHERE ticketID = $ticket AND ticketType = 'sale'";
 
         $query = $pdo->prepare($sql);
         $query->execute();
 
         $results = $query->fetchAll();
+
         $user = $results[0]['userID'];
         $userInfo = getUserByID($user);
         $username = $userInfo['username'];
@@ -617,14 +620,14 @@
                     $users[$i]->sales += 1;
                     break;
                 }
-                else{      
-                    array_push($users, (object)["user"=>$username, "sales"=>0]);
+                else if($i == sizeof($users) - 1 && $username != null){      
+                    array_push($users, (object)["user"=>$username, "sales"=>1]);
                     break;
                 }
             }
         }
         else{
-            array_push($users, (object)["user"=>$username, "sales"=>0]);
+            array_push($users, (object)["user"=>$username, "sales"=>1]);
         }        
     }
 
@@ -675,14 +678,13 @@
             $result = getAllSoldConsoles($item['productID']);
             
             foreach($result as $console){
-
                 if(sizeOf($consoles) > 0){
                     for($i = 0; $i < sizeOf($consoles); $i++){
                         if($console['consoleID'] == $consoles[$i]->upc){
                             $consoles[$i]->sales += 1;
                             break;
                         }
-                        else{      
+                        else if($i == sizeof($consoles) - 1){      
                             array_push($consoles, (object)["upc"=>$console['consoleID'], "name"=>$console['name'], "sales"=>1]);
                             break;
                         }

@@ -28,6 +28,7 @@ export class AppComponent {
     if(this.cookies.get('loggedIn') == 'true'){
       this.username = this.cookies.get('username');
       this.loggedIn = this.cookies.get('loggedIn');
+      this.level = this.cookies.get('level');
     }
   }
 
