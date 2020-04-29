@@ -2,10 +2,10 @@
 <div mat-dialog-content>
     <form class='form'>
         <mat-form-field>
-            <input matInput placeholder="UPC" name="upc" required>
+            <input matInput value="{{product.id}}" name="upc" required>
         </mat-form-field>
         <mat-form-field>
-            <input matInput id="name" type="text" placeholder="Product Name" name="name" required>
+            <input matInput id="name" type="text" value="{{product.name}}" name="name" required>
         </mat-form-field>
     </form>
 </div>
