@@ -152,10 +152,7 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     
     const dialogRef = this.dialog.open(EditInventoryComponent, dialogConfig);
   
-    dialogRef.afterClosed().subscribe( data =>{
-      console.log("Dialog output:", data);
-
-    });     
+    // dialogRef.afterClosed().subscribe( data =>{});     
   }
 
 

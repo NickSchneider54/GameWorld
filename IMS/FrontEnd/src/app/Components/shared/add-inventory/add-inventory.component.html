@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Edit Inventory Item</h1>
+<div mat-dialog-content>
+    <form class='form'>
+        <mat-form-field>
+            <mat-label>UPC</mat-label>
+            <input matInput id="upc" type="text" name="upc" required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput id="name" type="text" name="name" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput id="description" type="text" name="description" required></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Price</mat-label>
+            <input matInput id="price" type="text" name="price" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Used</mat-label>
+            <input matInput id="used" type="text" name="used" required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Stock</mat-label>
+            <input matInput id="stock" type="text" name="stock" required>
+        </mat-form-field>
+    </form>
+</div>
+<div class="buttons" mat-dialog-actions>
+  <!-- <button mat-button (click)="close()">Cancel</button> 
+  <button mat-button (click)="update()">Update</button> -->
+</div>

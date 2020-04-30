@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject, NgZone } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { BuySellService } from 'src/app/Services/Buy-Sell/buy-sell.service';
 import { InventoryItem } from 'src/app/Interfaces/Inventory-Items/inventory-item';
 import { CookieService } from 'ngx-cookie-service';
+import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
 
 @Component({
   selector: 'app-edit-inventory',
@@ -14,18 +15,26 @@ export class EditInventoryComponent implements OnInit {
   id: string;
   product: InventoryItem;
 
-  constructor(private ngZone: NgZone, private search: BuySellService, private cookies: CookieService, public dialogRef: MatDialogRef<EditInventoryComponent>, @Inject(MAT_DIALOG_DATA) data) { 
+  constructor(private search: BuySellService, private inventory: InventoryService, private cookies: CookieService, public dialogRef: MatDialogRef<EditInventoryComponent>, @Inject(MAT_DIALOG_DATA) data) { 
     this.id = data.id;
     console.log(this.id);
   }
 
   close() {
-    this.ngZone.run(() =>{
-      this.dialogRef.close();
-    });
+    this.dialogRef.close();
   }
 
   update(){
+    if(this.product.used === 'New'){
+      this.product.used = '1';
+    }
+    else{
+      this.product.used = '0';
+    }
+    this.cookies.set("editedProduct", JSON.stringify(this.product));
+    this.inventory.updateInventoryItem().subscribe(result =>{
+      console.log(result);
+    });
     this.dialogRef.close();
   }
 
@@ -33,7 +42,7 @@ export class EditInventoryComponent implements OnInit {
     this.search.getProduct(this.id).subscribe((result: object) =>{
       var used;
       if(result[0]['used'] == 1){
-        used = 'No';
+        used = 'New';
       }
       else{
         used = 'Yes';

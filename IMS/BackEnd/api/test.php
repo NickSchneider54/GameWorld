@@ -835,7 +835,7 @@
         global $pdo;
 
         if(isset($_GET['product'])){
-            $product = json_decode($_GET['product']);
+            $product = json_decode($_GET['product']);           
 
             $sql = "UPDATE (name, description, price, used, stock) VALUES(?, ?, ?, ?, ?) WHERE productID=$product->id";
             $query = $pdo->prepare($sql);
@@ -849,7 +849,7 @@
 
             $message = "updated";
             
-            $json = json_encode($json);
+            $json = json_encode($message);
 
             echo $json;
 

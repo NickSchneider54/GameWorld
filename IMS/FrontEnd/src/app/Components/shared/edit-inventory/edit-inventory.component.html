@@ -7,25 +7,28 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Name</mat-label>
-            <input matInput id="name" type="text" value="{{product.name}}" name="name" required>
+            <input matInput id="name" [(ngModel)]="product.name" type="text" name="name" required>
         </mat-form-field>
         <br>
         <mat-form-field>
             <mat-label>Description</mat-label>
-            <textarea matInput id="name" type="text" value="{{product.description}}" name="name" required></textarea>
+            <textarea matInput id="description" [(ngModel)]="product.description" type="text" name="description" required></textarea>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Price</mat-label>
-            <input matInput id="name" type="text" value="{{product.price}}" name="name" required>
+            <input matInput id="price" [(ngModel)]="product.price" type="text" name="price" required>
         </mat-form-field>
         <br>
         <mat-form-field>
-            <mat-label>Used</mat-label>
-            <input matInput id="name" type="text" value="{{product.used}}" name="name" required>
+            <mat-label>Condition</mat-label>
+            <mat-select id="used" [(ngModel)]="product.used" name="used" required>
+                <mat-option value="New">New</mat-option>
+                <mat-option value="Used">Used</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Stock</mat-label>
-            <input matInput id="name" type="text" value="{{product.stock}}" name="name" required>
+            <input matInput id="stock" [(ngModel)]="product.stock" type="text" name="stock" required>
         </mat-form-field>
     </form>
 </div>
