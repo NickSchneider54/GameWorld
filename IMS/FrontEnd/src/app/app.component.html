@@ -4,7 +4,7 @@
 <!-- <mat-toolbar color="primary" class="toolbar"  > -->
 
 <!-- comment this line for testing  -->
-<mat-toolbar color="primary" class="toolbar" *ngIf="loggedIn == 'true'" >
+<mat-toolbar class="toolbar" *ngIf="loggedIn == 'true'" >
 
   <mat-toolbar-row>    
     <span>
@@ -13,24 +13,23 @@
       </button>
     </span>
     <span>Game World</span>
+    <mat-icon class="headerIcon">public</mat-icon>
     <span class="filler"></span>
-    <span>
+    <!-- <span>
       <form>
         <mat-form-field class="search-bar"><input matInput placeholder="search" (keydown.enter)="sendSearch($event)">
         </mat-form-field>
         <mat-icon>search</mat-icon>
       </form>
-    </span>
-    <span class="filler"></span>
-    <span>      
-      <mat-icon>person</mat-icon>&nbsp; {{username}} &nbsp;
+    </span> -->
+    <span class="filler"></span>    
+      <mat-icon class="personIcon">person</mat-icon><span>&nbsp; {{username}} &nbsp;</span>
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon> </button>
       <mat-menu #menu="matMenu">
         <button *ngIf="level === 'master'" mat-menu-item [routerLink]="'/settings'">Settings</button>
         <button mat-menu-item (click)="logout()">Logout</button>
       </mat-menu>
     
-    </span>    
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -39,10 +38,11 @@
 <!-- <mat-toolbar color="primary" class="notLoggedInToolbar"  > -->
 
   <!-- comment this line for testing -->
-  <mat-toolbar color="primary" class="notLoggedInToolbar" *ngIf="loggedIn != 'true'" >
+  <mat-toolbar color="primary" class="toolbar" *ngIf="loggedIn != 'true'" >
 
     <mat-toolbar-row>
-      <span>Game World - Please log In to continue</span>
+      <span>Game World</span>
+      <mat-icon class="headerIcon">public</mat-icon>
     </mat-toolbar-row>
    </mat-toolbar>   
     
@@ -52,11 +52,11 @@
 <mat-drawer-container class="dashContainer" autosize  >
   <mat-drawer #drawer class="sidenav" mode="side">
       <mat-nav-list #sidenav>
-        <a mat-list-item [routerLink]="'/buy-sell'"> Buy/Sell </a>
-        <a mat-list-item [routerLink]="'/inventory'"> Inventory </a>
-        <a *ngIf="level === 'master'" mat-list-item [routerLink]="'/data'"> Data </a>
-        <a mat-list-item [routerLink]="'/price-charting'"> Price Charting </a>
-        <a mat-list-item (click)="drawer.toggle()">Close</a>
+        <a mat-list-item class="sideNavItem" [routerLink]="'/buy-sell'"> <mat-icon class="sidebarIcons">shopping_cart</mat-icon> Buy/Sell </a>
+        <a mat-list-item class="sideNavItem" [routerLink]="'/inventory'"> <mat-icon class="sidebarIcons">store</mat-icon>  Inventory </a>
+        <a *ngIf="level === 'master'" class="sideNavItem" mat-list-item [routerLink]="'/data'"> <mat-icon class="sidebarIcons">trending_up</mat-icon> Data </a>
+        <a mat-list-item class="sideNavItem" [routerLink]="'/price-charting'"> <mat-icon class="sidebarIcons">sports_esports</mat-icon>  Price Charting </a>
+        <a mat-list-item class="sideNavItem" (click)="drawer.toggle()"> <mat-icon class="sidebarIcons">clear</mat-icon>  Close</a>
       </mat-nav-list>
   </mat-drawer>
 

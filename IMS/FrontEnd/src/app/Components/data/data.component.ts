@@ -146,7 +146,8 @@ export class DataComponent implements OnInit, AfterViewInit {
         labels: ["Mon","Tue","Wed", "Th", "Fri", "Sat", "Sun"],
         datasets:[{
           label: 'Daily Sales',
-          data: [1,2,3,4,5,6,7]
+          data: [1,2,3,4,5,6,7],
+          backgroundColor: "#02c39a"
         }]      
         },
         options: {
@@ -161,6 +162,7 @@ export class DataComponent implements OnInit, AfterViewInit {
             }]
           }
       }
+
     })
 
     // Top Selling Items
