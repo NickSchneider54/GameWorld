@@ -11,6 +11,7 @@ import { OverrideAuthorizationComponent } from '../shared/override-authorization
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { EditInventoryComponent } from '../shared/edit-inventory/edit-inventory.component';
+import { AddInventoryComponent } from '../shared/add-inventory/add-inventory.component';
 // import { InventoryItem } from 'src/app/Classes/Inventory-Item/inventory-item';
 export interface InventoryItem {
   id: string;
@@ -153,6 +154,18 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     const dialogRef = this.dialog.open(EditInventoryComponent, dialogConfig);
   
     // dialogRef.afterClosed().subscribe( data =>{});     
+  }
+
+  addItem(){
+    const dialogConfig = new MatDialogConfig();
+  
+    dialogConfig.width = '600px';
+    dialogConfig.height = '600px';
+    dialogConfig.data = {
+      id: 1
+    };
+    
+    const dialogRef = this.dialog.open(AddInventoryComponent, dialogConfig);
   }
 
 

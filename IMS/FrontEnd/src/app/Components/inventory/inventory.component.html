@@ -1,8 +1,8 @@
 <div class="mat-elevation-z8">
   <mat-form-field class="search">
-    <input matInput (keyup)="applyFilter($event)" placeholder="Search" class="searchBar">
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search" class="searchBar">    
   </mat-form-field>
-
+  <button mat-button (click)="addItem()">Add Product</button>
   <table [dataSource]="dataSource" mat-table class="full-width-table" matSort aria-label="Elements">
     <!-- Id Column -->
     <ng-container matColumnDef="id">

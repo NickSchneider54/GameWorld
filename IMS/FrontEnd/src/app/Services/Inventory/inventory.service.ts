@@ -12,13 +12,34 @@ export class InventoryService {
   constructor(private http: HttpClient, private cookies: CookieService) { }
 
   getInventory(){
-    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory`;
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=getall`;
+    return this.http.get(this.ping);
+  }
+
+  getConsoles(){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=getconsoles`
+    return this.http.get(this.ping);
+  }
+
+  getGenerations(){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=getgenerations`
+    return this.http.get(this.ping);
+  }
+
+  getBrands(){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=getbrands`
     return this.http.get(this.ping);
   }
 
   updateInventoryItem(){    
     // %7B%22id%22%3A%22025001458612%22%2C%22name%22%3A%22Nintendo%20DS%22%2C%22description%22%3A%22Nintendo%20Hand-held%20device%20%22%2C%22price%22%3A49.99%2C%22used%22%3A%22No%22%2C%22stock%22%3A7%7D
-    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=update&product=${encodeURIComponent(this.cookies.get('editedProduct'))}`;
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=update&product=${encodeURIComponent(this.cookies.get('product'))}`;
+    return this.http.get(this.ping);
+  }
+
+  addProduct(){    
+    // %7B%22id%22%3A%22025001458612%22%2C%22name%22%3A%22Nintendo%20DS%22%2C%22description%22%3A%22Nintendo%20Hand-held%20device%20%22%2C%22price%22%3A49.99%2C%22used%22%3A%22New%22%2C%22stock%22%3A7%7D
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=add&product=${encodeURIComponent(this.cookies.get('product'))}`;
     return this.http.get(this.ping);
   }
 

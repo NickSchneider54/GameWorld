@@ -31,7 +31,7 @@ export class EditInventoryComponent implements OnInit {
     else{
       this.product.used = '0';
     }
-    this.cookies.set("editedProduct", JSON.stringify(this.product));
+    this.cookies.set("product", JSON.stringify(this.product));
     this.inventory.updateInventoryItem().subscribe(result =>{
       console.log(result);
     });
@@ -45,13 +45,13 @@ export class EditInventoryComponent implements OnInit {
         used = 'New';
       }
       else{
-        used = 'Yes';
+        used = 'Used';
       }
       this.product = {id: result[0]['productID'], name: result[0]['name'], description: result[0]['description'], price : Number(result[0]['price']), used: used, stock: Number(result[0]['stock'])};
       console.log(this.product);
 
-      this.cookies.set("editedProduct", JSON.stringify(this.product));
-      console.log(encodeURIComponent(this.cookies.get('editedProduct')))
+      this.cookies.set("product", JSON.stringify(this.product));
+      console.log(encodeURIComponent(this.cookies.get('product')))
     });    
   }
 

@@ -1,35 +1,67 @@
-<h1 mat-dialog-title>Edit Inventory Item</h1>
+<h1 mat-dialog-title>Add Product to Inventory</h1>
 <div mat-dialog-content>
     <form class='form'>
         <mat-form-field>
             <mat-label>UPC</mat-label>
-            <input matInput id="upc" type="text" name="upc" required>
+            <input matInput id="upc" [(ngModel)]="upc" type="text" name="upc" required>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Name</mat-label>
-            <input matInput id="name" type="text" name="name" required>
+            <input matInput id="name" [(ngModel)]="name" type="text" name="name" required>
         </mat-form-field>
         <br>
         <mat-form-field>
             <mat-label>Description</mat-label>
-            <textarea matInput id="description" type="text" name="description" required></textarea>
+            <textarea matInput id="description" [(ngModel)]="description" type="text" name="description" required></textarea>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Price</mat-label>
-            <input matInput id="price" type="text" name="price" required>
+            <input matInput id="price" [(ngModel)]="price" type="text" name="price" required>
         </mat-form-field>
         <br>
         <mat-form-field>
-            <mat-label>Used</mat-label>
-            <input matInput id="used" type="text" name="used" required>
+            <mat-label>Condition</mat-label>
+            <mat-select id="used" [(ngModel)]="used" name="used" required>
+                <mat-option value="New">New</mat-option>
+                <mat-option value="Used">Used</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Stock</mat-label>
-            <input matInput id="stock" type="text" name="stock" required>
+            <input matInput id="stock" [(ngModel)]="stock" type="text" name="stock" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select id="genre" [(ngModel)]="genre" name="genre" required>
+                <mat-option value="games">Game</mat-option>
+                <mat-option value="consoles">Consoles</mat-option>
+                <mat-option value="equipment">Equipment</mat-option>
+                <mat-option value="consoles">Consoles</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Console</mat-label>
+            <mat-select id="genre" [(ngModel)]="console" name="genre" required>
+                <mat-option value="games">Game</mat-option>
+                <mat-option value="consoles">Consoles</mat-option>
+                <mat-option value="equipment">Equipment</mat-option>
+                <mat-option value="consoles">Consoles</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Console</mat-label>
+            <mat-select id="genre" [(ngModel)]="generation" name="genre" required>
+                <mat-option value="games">Game</mat-option>
+                <mat-option value="consoles">Consoles</mat-option>
+                <mat-option value="equipment">Equipment</mat-option>
+                <mat-option value="consoles">Consoles</mat-option>
+            </mat-select>
         </mat-form-field>
     </form>
 </div>
 <div class="buttons" mat-dialog-actions>
-  <!-- <button mat-button (click)="close()">Cancel</button> 
-  <button mat-button (click)="update()">Update</button> -->
+  <button mat-button (click)="close()">Cancel</button> 
+  <button mat-button (click)="addProduct()">Add Product</button>
 </div>

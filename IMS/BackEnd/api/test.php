@@ -2,8 +2,8 @@
 
     include "connection.php";  
 
-    error_reporting(0);
-    ini_set('display_errors', 0);
+    // error_reporting(0);
+    // ini_set('display_errors', 0);
     
     
     $week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -29,12 +29,36 @@
         break;
 
         case 'inventory':
-            getAllProducts();
-        break;
+            switch($_GET['f']){
+                case 'getall':
+                    getAllProducts();
+                break;
 
-        case 'update':
-            editInventoryItem();
-        break;
+                case 'getconsoles':
+                    getAllConsoles();
+                break;
+
+                case 'getgames':
+                    getAllGames();
+                break;
+
+                case 'getgenerations':
+                    getAllGenerations();
+                break;
+
+                case 'getbrands':
+                    getAllBrands();
+                break;
+
+                case 'update':
+                    editInventoryItem();
+                break;
+                
+                case 'add':
+                    addProductToInventory();
+                break;
+            }
+        break;        
 
         case 'data':
             switch($_GET['f']){
@@ -830,30 +854,80 @@
         }          
     }
 
-
     function editInventoryItem(){
         global $pdo;
 
         if(isset($_GET['product'])){
-            $product = json_decode($_GET['product']);           
+            $product = json_decode($_GET['product']);   
 
-            $sql = "UPDATE (name, description, price, used, stock) VALUES(?, ?, ?, ?, ?) WHERE productID=$product->id";
+            $id = $product->id;
+            $name = $product->name;
+            $description = $product->description;
+            $price = $product->price;
+            $used = $product->used;
+            $stock = $product->stock;
+
+            $sql = "UPDATE products SET name=?, description=?, price=?, used=?, stock=? WHERE productID='$id'";
             $query = $pdo->prepare($sql);
-            $query->bindvalue(1, $product->name);
-            $query->bindvalue(2, $product->description);
-            $query->bindvalue(3, $product->price);
-            $query->bindvalue(4, $product->used);
-            $query->bindvalue(5, $product->stock);
+            $query->bindValue(1, $name);
+            $query->bindValue(2, $description);
+            $query->bindValue(3, $price);
+            $query->bindValue(4, $used);
+            $query->bindValue(5, $stock);
 
-            $query->execute();
-
-            $message = "updated";
+            if($query->execute()){
+                $message = "updated";
             
-            $json = json_encode($message);
-
-            echo $json;
+                $json = json_encode($message);
+    
+                echo $json;
+            }           
 
         }
+    }
+
+    function GetAllConsoles(){
+        global $pdo;
+        $sql ="SELECT * FROM consoles";
+        $query = $pdo->query($sql);
+        $query->execute();
+        $consoles = $query->fetchAll();  
+        
+        $json = json_encode($consoles);
+        echo $json;
+    }
+
+    function GetAllGames(){
+        global $pdo;
+        $sql ="SELECT * FROM games";
+        $query = $pdo->query($sql);
+        $query->execute();
+        $games = $query->fetchAll();  
+        
+        $json = json_encode($games);
+        echo $json;
+    }
+
+    function GetAllGenerations(){
+        global $pdo;
+        $sql ="SELECT * FROM consolegenerations";
+        $query = $pdo->query($sql);
+        $query->execute();
+        $generations = $query->fetchAll();  
+        
+        $json = json_encode($generations);
+        echo $json;
+    }
+
+    function GetAllBrands(){
+        global $pdo;
+        $sql ="SELECT * FROM brands";
+        $query = $pdo->query($sql);
+        $query->execute();
+        $brands = $query->fetchAll();  
+        
+        $json = json_encode($brands);
+        echo $json;
     }
 
 ?>

@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { BuySellService } from 'src/app/Services/Buy-Sell/buy-sell.service';
+import { InventoryItem } from 'src/app/Interfaces/Inventory-Items/inventory-item';
+import { CookieService } from 'ngx-cookie-service';
+import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
 
 @Component({
   selector: 'app-add-inventory',
@@ -7,9 +12,60 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddInventoryComponent implements OnInit {
 
-  constructor() { }
+  genre;
+  console;
+  generation
+  upc;
+  name;
+  description;
+  price;
+  used;
+  stock;
+
+  generations = [];
+  consoles = [];
+  brands = [];
+  product: Object;
+
+  constructor(private inventory: InventoryService, private cookies: CookieService, public dialogRef: MatDialogRef<AddInventoryComponent>, @Inject(MAT_DIALOG_DATA) data) { 
+
+  }
 
   ngOnInit(): void {
+    this.inventory.getConsoles().subscribe((result: []) =>{
+      for(var i = 0; i < result.length; i++){
+        this.consoles.push(result[i]['name']);
+      }
+      console.log(this.consoles);
+    });
+
+    this.inventory.getGenerations().subscribe((result: []) =>{
+      for(var i = 0; i < result.length; i++){
+        this.generations.push(result[i]['name']);
+      }
+      console.log(this.generations);
+    });
+
+    this.inventory.getBrands().subscribe((result: []) =>{
+      for(var i = 0; i < result.length; i++){
+        this.brands.push(result[i]['name']);
+      }
+      console.log(this.brands);
+    });
+
+  }
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  addProduct(){
+    this.product = { id: this.upc, name: this.name, description: this.description, price: this.price, used: this.used, stock: this.stock, genre: this.genre };
+    console.log(this.product);
+    this.cookies.set("product", JSON.stringify(this.product));
+    this.inventory.addProduct().subscribe(result =>{
+      console.log(result);
+    });
   }
 
 }
