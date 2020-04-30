@@ -2,14 +2,34 @@
 <div mat-dialog-content>
     <form class='form'>
         <mat-form-field>
-            <input matInput value="{{product.id}}" name="upc" required>
+            <mat-label>UPC</mat-label>
+            <input matInput value="{{product.id}}" name="upc" required disabled>
         </mat-form-field>
         <mat-form-field>
+            <mat-label>Name</mat-label>
             <input matInput id="name" type="text" value="{{product.name}}" name="name" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput id="name" type="text" value="{{product.description}}" name="name" required></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Price</mat-label>
+            <input matInput id="name" type="text" value="{{product.price}}" name="name" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Used</mat-label>
+            <input matInput id="name" type="text" value="{{product.used}}" name="name" required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Stock</mat-label>
+            <input matInput id="name" type="text" value="{{product.stock}}" name="name" required>
         </mat-form-field>
     </form>
 </div>
-<div mat-dialog-actions>
+<div class="buttons" mat-dialog-actions>
   <button mat-button (click)="close()">Cancel</button> 
-  <button mat-button (click)="override()">Ok</button>
+  <button mat-button (click)="update()">Update</button>
 </div>

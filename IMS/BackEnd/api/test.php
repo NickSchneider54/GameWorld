@@ -32,6 +32,10 @@
             getAllProducts();
         break;
 
+        case 'update':
+            editInventoryItem();
+        break;
+
         case 'data':
             switch($_GET['f']){
                 case 'games':
@@ -824,6 +828,32 @@
                 }
             } 
         }          
+    }
+
+
+    function editInventoryItem(){
+        global $pdo;
+
+        if(isset($_GET['product'])){
+            $product = json_decode($_GET['product']);
+
+            $sql = "UPDATE (name, description, price, used, stock) VALUES(?, ?, ?, ?, ?) WHERE productID=$product->id";
+            $query = $pdo->prepare($sql);
+            $query->bindvalue(1, $product->name);
+            $query->bindvalue(2, $product->description);
+            $query->bindvalue(3, $product->price);
+            $query->bindvalue(4, $product->used);
+            $query->bindvalue(5, $product->stock);
+
+            $query->execute();
+
+            $message = "updated";
+            
+            $json = json_encode($json);
+
+            echo $json;
+
+        }
     }
 
 ?>

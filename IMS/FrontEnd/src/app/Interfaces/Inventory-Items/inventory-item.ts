@@ -3,6 +3,6 @@ export interface InventoryItem {
     name: string;
     description: string;
     price: number;
-    used: number;
+    used: string;
     stock: number;
   }

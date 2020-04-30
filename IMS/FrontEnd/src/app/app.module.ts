@@ -14,6 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { OverrideAuthorizationComponent } from './Components/shared/override-authorization/override-authorization.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditInventoryComponent } from './Components/shared/edit-inventory/edit-inventory.component';
+import { AddInventoryComponent } from './add-inventory/add-inventory.component';
 
 
 
@@ -25,6 +26,7 @@ import { EditInventoryComponent } from './Components/shared/edit-inventory/edit-
     InventoryComponent,
     OverrideAuthorizationComponent,
     EditInventoryComponent,
+    AddInventoryComponent,
     
   ],
   imports: [

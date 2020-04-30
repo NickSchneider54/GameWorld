@@ -141,14 +141,14 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
 
     console.log(upc)
   
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
+    // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
   
+    dialogConfig.width = '600px';
+    dialogConfig.height = '400px';
     dialogConfig.data = {
       id: upc
     };
-  
-    this.dialog.open(EditInventoryComponent, dialogConfig);
     
     const dialogRef = this.dialog.open(EditInventoryComponent, dialogConfig);
   
@@ -160,29 +160,6 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
 
 
 }
-
-
-
-
-// @Component({
-//   selector: 'edit-dialog',
-//   templateUrl: 'edit-dialog.html',
-// })
-// export class EditDialog {
-
-//   constructor(
-//     public dialogRef: MatDialogRef<EditDialog>,
-//     @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {}
-
-//   onNoClick(): void {
-//     this.dialogRef.close();
-//   }
-  
-//   openDialog() {
-//     this.dialog.open(EditDialog);
-//   }
-
-// }
 
 function compare(a: string | number, b: string | number, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

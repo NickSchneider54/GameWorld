@@ -164,8 +164,6 @@ export class BuySellComponent implements OnInit {
       id: 1,
       data: this.authorization
     };
-
-    this.dialog.open(OverrideAuthorizationComponent, dialogConfig);
     
     const dialogRef = this.dialog.open(OverrideAuthorizationComponent, dialogConfig);
 
