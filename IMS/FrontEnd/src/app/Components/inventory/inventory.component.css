@@ -2,6 +2,7 @@
   margin-top: 30px;
   margin-right: 5px;
   margin-left: 5px;
+  padding-top: 10px;
 }
 
 .full-width-table {
@@ -9,7 +10,8 @@
 }
 
 .search {
-  width: 15%;
-  margin-left: 5px;
-  margin-top: 5px;
+  width: 18%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

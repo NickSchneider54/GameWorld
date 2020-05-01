@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 
 export interface Employee{
@@ -6,6 +8,7 @@ export interface Employee{
   password:string;
   level: number;
   id:number;
+  show:boolean;
   
 }
 
@@ -16,29 +19,40 @@ export interface Employee{
 })
 export class SettingsComponent implements OnInit {
 
+  //todo: save updated employee to database
+  updateEmployee(username:string,password:string,level:number ){
+  }
+  
+  //todo: get employee data from database
+  
   // test data
   users: Employee[] =[
     {
       username: 'employee1',
       password: 'password',
       level: 1,
-      id:1
+      id:1,
+      show:false
       
     },
     {
       username: 'employee2',
       password: 'password',
       level: 2,
-      id:2
+      id:2,
+      show:false
       
     }
   ]
-  constructor() {}
+  constructor(private cookies: CookieService, private router: Router) {}
   
  
    
 
   ngOnInit(): void {
+    if(this.cookies.get('loggedIn') != 'true'){       
+      this.router.navigate(['/login']);
+    }
   }
 
 }

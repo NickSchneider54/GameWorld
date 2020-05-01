@@ -23,18 +23,22 @@ export class DataService {
 
   getTopConsoles(){
     this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=consoles`;
+    return this.http.get(this.ping);
   }
 
-  getTopCategories(){
-    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=categories`;
+  getTopCategories(range:string){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=categories&range=${range}`;
+    return this.http.get(this.ping);
   }
 
   getTopEmployees(){
     this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=employees`;
+    return this.http.get(this.ping);
   }
 
-  getSales(){
-    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=sales`;
+  getSales(range:string){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=sales&range=${range}`;
+    return this.http.get(this.ping);
   }
 
   getTopDays(range:string){
@@ -42,6 +46,19 @@ export class DataService {
     return this.http.get(this.ping);
   }
 
-  
+  getAllTimeGames(){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=topgames`;
+    return this.http.get(this.ping);
+  }
+
+  getAllTimeEquipment(){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=topequip`;
+    return this.http.get(this.ping);
+  }
+
+  getAllTimeMisc(){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=data&f=topmisc`;
+    return this.http.get(this.ping);
+  }
 
 }

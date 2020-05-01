@@ -1,3 +1,4 @@
+<div class="loginCardContainer">
 <mat-card >
 <mat-card-header>
     <mat-card-title>
@@ -6,10 +7,10 @@
 </mat-card-header>
 <mat-card-content>
     <form class='login-form'>
-        <mat-form-field>
+        <mat-form-field class="loginField">
             <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="loginField">
             <input matInput id="password" type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
         </mat-form-field>
     </form>
@@ -18,3 +19,4 @@
     <button mat-button id="loginSubmit" (click)="login(username, password)">Login</button>
 </mat-card-actions>
 </mat-card>
+</div>

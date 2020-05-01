@@ -37,7 +37,7 @@ export class LoginService {
     logout(){
       this.cookieService.set('username', '');
       this.cookieService.set('level', '');
-      this.setLoginState('false');
+      this.setLoginState('false');    
       this.router.navigate(['/login']);
     }
   

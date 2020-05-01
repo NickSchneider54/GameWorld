@@ -17,9 +17,9 @@
               <mat-form-field>
                 <mat-label>Account Level</mat-label>
                 <select matNativeControl required>             
-            <option value="1">Employee</option>
-            <option value="2">Supervisor</option>
-            <option value="3">Manager</option>    
+                  <option value="1">Employee</option>
+                  <option value="2">Supervisor</option>
+                  <option value="3">Manager</option>    
                 </select>
             </mat-form-field>
             <button mat-raised-button color="primary" id="addUserBtn" click="">Add Employee</button>
@@ -32,9 +32,31 @@
                 </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-list class="employees">
-                    <mat-list-item *ngFor="let user of users">
+                    <mat-list-item *ngFor="let user of users; ">
                         <div mat-line><mat-icon>person</mat-icon>{{user.username}} 
-                         <button mat-raised-button color="primary" >Edit</button></div>
+                         <button mat-raised-button color="primary" (click)="user.show='true'" >Edit</button></div>
+                         <div class="editUser" *ngIf="user.show == 'true'" >
+                           <div mat-line>
+                            <mat-form-field>
+                                <mat-label>Username</mat-label>
+                                <input matInput #username value={{user.username}}  required>
+                              </mat-form-field>
+                              <mat-form-field>
+                                <mat-label>Password</mat-label>
+                                <input matInput #password type="password" value={{user.password}} required>
+                              </mat-form-field>              
+                              <mat-form-field>
+                                <mat-label>Account Level</mat-label>
+                                <select matNativeControl #level required [value]="user.level">             
+                            <option value="1">Employee</option>
+                            <option value="2">Supervisor</option>
+                            <option value="3">Manager</option>    
+                                </select>
+                            </mat-form-field>
+                       
+                            <button mat-raised-button color="primary" id="addUserBtn" (click)="updateEmployee(username.value,password.value,level.value);user.show='false'">Save Changes</button>
+                        </div>
+                        </div>
                         </mat-list-item>
                 </mat-list>
                    

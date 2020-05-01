@@ -1,10 +1,18 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
+import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
+import { OverrideAuthorizationComponent } from '../shared/override-authorization/override-authorization.component';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { EditInventoryComponent } from '../shared/edit-inventory/edit-inventory.component';
+import { AddInventoryComponent } from '../shared/add-inventory/add-inventory.component';
+// import { InventoryItem } from 'src/app/Classes/Inventory-Item/inventory-item';
 export interface InventoryItem {
   id: string;
   name: string;
@@ -14,17 +22,15 @@ export interface InventoryItem {
   stock: number;
 }
 
+export interface DialogData {
+  name: string;
+  description: string;
+  price: number;
+  used: number;
+  stock: number;
+}
+
 // TODO: replace this with real data from the API call. Also TODO: create api call.
-const INVENTORY: InventoryItem[] = [
-  {id: '045496590420', name: 'Zelda Breath of the Wild', description: 'Zelda game', price: 49.99, used: 0, stock: 9},
-  {id: '045496741273', name:'Pokemon Black', description:'pokemon game', price: 46.95, used: 0, stock: 3},
-  {id: '711719506133', name:'God of War', description:'Newest installment of the God of War series', price: 19.99, used: 0, stock: 10},
-  {id: '885370808278', name:'Xbox One', description:'Console - Standard Edition without Kinect', price: 299, used: 0, stock: 3},
-  {id: '885370928518', name:'Halo 5: Guardians', description:'Halos 5th installment in the series', price: 9.99, used: 0, stock: 10}
-
-
-];
-
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
@@ -33,16 +39,18 @@ const INVENTORY: InventoryItem[] = [
 export class InventoryComponent extends DataSource<InventoryItem> implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<InventoryItem>;
-  dataSource = new MatTableDataSource(INVENTORY);
-  data: InventoryItem[] = INVENTORY;
+  // @ViewChild(MatTable) table: MatTable<InventoryItem>;
+  dataSource = new MatTableDataSource<InventoryItem>();
+
+  private INVENTORY: InventoryItem[] = [];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'description', 'price', 'used', 'stock', 'action'];
   
-  constructor() {
+  constructor(private cookies: CookieService, private router: Router, private inv: InventoryService, public dialog: MatDialog) {
     super();
   }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -50,13 +58,26 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(INVENTORY);
+    /*
+      Grabs all items in current Inventory and sets dataSource 
+    */
+    if(this.cookies.get('loggedIn') != 'true'){       
+      this.router.navigate(['/login']);
+    }
+    this.inv.getInventory().subscribe((result: InventoryItem[]) =>{
+      for(var i = 0; i < result.length; i++){
+        this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+      }
+      this.dataSource.data = this.INVENTORY;
+    });   
+
+    console.log(this.INVENTORY)
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    // this.table.dataSource = this.dataSource;
   }
 
    /*
@@ -68,13 +89,13 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
-      observableOf(this.data),
+      observableOf(this.dataSource.data),
       this.paginator.page,
       this.sort.sortChange
     ];
 
     return merge(...dataMutations).pipe(map(() => {
-      return this.getPagedData(this.getSortedData([...this.data]));
+      return this.getPagedData(this.getSortedData([...this.dataSource.data]));
     }));
   }
 
@@ -115,6 +136,38 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
       }
     });
   }
+
+  openDialog(upc): void {
+    const dialogConfig = new MatDialogConfig();
+
+    console.log(upc)
+  
+    // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
+  
+    dialogConfig.width = '600px';
+    dialogConfig.height = '400px';
+    dialogConfig.data = {
+      id: upc
+    };
+    
+    const dialogRef = this.dialog.open(EditInventoryComponent, dialogConfig);
+  
+    // dialogRef.afterClosed().subscribe( data =>{});     
+  }
+
+  addItem(){
+    const dialogConfig = new MatDialogConfig();
+  
+    dialogConfig.width = '600px';
+    dialogConfig.height = '600px';
+    dialogConfig.data = {
+      id: 1
+    };
+    
+    const dialogRef = this.dialog.open(AddInventoryComponent, dialogConfig);
+  }
+
 
 }
 

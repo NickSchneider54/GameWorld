@@ -1,11 +1,12 @@
 <div class="sidenav-content">
 <mat-tab-group class ='buySellTabs' (selectedTabChange)="tabClick($event)">
-    <mat-tab label="Sell">
+    <mat-tab label="Sales">
         <div class='card-container'>
             <mat-card class='itemDetailsCard'>
                 <mat-card-header>
                     <mat-card-title>Item Details</mat-card-title>
                 </mat-card-header> 
+                <mat-divider [inset]="true"></mat-divider>
                 <mat-card-content>
                     <form class="buyItemForm">
                         <mat-form-field >
@@ -20,37 +21,41 @@
                             <mat-label>Console</mat-label>
                             <input matInput [(ngModel)]="console" name="console">
                         </mat-form-field>
-                        <p><button mat-raised-button (click)="addItemToCart(upc)">Add item to order</button></p>                        
+                        <p><button mat-raised-button class="addItemBtn" (click)="addItemToCart(upc)">Add item to order</button></p>                        
                     </form>
                 </mat-card-content>
             </mat-card>
             <mat-card class='order-details-card'>
                 <mat-card-header>
-                    <mat-card-title>Order Details</mat-card-title>
+                    <mat-card-title>Order Details</mat-card-title>                    
                 </mat-card-header> 
+                <mat-divider [inset]="true"></mat-divider>
                 <mat-card-content>
                     <mat-list>
-                        <div mat-subheader>Sell Order Summary</div>               
+                        <div mat-subheader>Sale Summary</div>               
                         <mat-list-item *ngFor="let item of shoppingCart">                   
                             <div mat-line>{{item.product[0].name}} <span class="material-icons remove" (click)="removeItemFromCart(item.product[0].name)">highlight_off</span></div>
                             <div mat-line>{{item.product[0].price}}</div>
                         </mat-list-item>
                         <h1>Order Total</h1>
+                        <mat-divider [inset]="true"></mat-divider>
                         <h4>SubTotal: ${{subTotal}}</h4> 
-                        <h4>Sales Tax: ${{salesTax}}</h4>  
+                        <h4>Sales Tax: ${{salesTax}}</h4> 
+                        <mat-divider [inset]="true"></mat-divider> 
                         <h2>Total: ${{cartTotal}}</h2>                
                     </mat-list>
                 </mat-card-content>
-                <button mat-raised-button (click)="completePurchase()">Complete Purchase</button>
+                <button mat-raised-button class="completePurchaseBtn" (click)="completePurchase()">Complete Sale</button>
             </mat-card>
         </div>
     </mat-tab>
-    <mat-tab label="Buy"> 
+    <mat-tab label="Purchases"> 
         <div class='card-container'>
             <mat-card class='itemDetailsCard'>
                 <mat-card-header>
                     <mat-card-title>Item Details</mat-card-title>
                 </mat-card-header> 
+                <mat-divider [inset]="true"></mat-divider>
                 <mat-card-content>
                     <form class="buyItemForm">
                         <mat-form-field >
@@ -65,30 +70,35 @@
                             <mat-label>Console</mat-label>
                             <input matInput [(ngModel)]="console" name="console">
                         </mat-form-field>
-                        <p><button mat-raised-button (click)="addItemToCart(upc)">Add item to order</button></p>                       
+                        <p><button mat-raised-button class="addItemBtn" (click)="addItemToCart(upc)">Add item to order</button></p>                       
                     </form>
                 </mat-card-content>
                 </mat-card>
             <mat-card class='order-details-card'><mat-card-header>
                 <mat-card-title>Order Details</mat-card-title>
             </mat-card-header> 
+            <mat-divider [inset]="true"></mat-divider>
             <mat-card-content>
               <mat-list>
-                    <div mat-subheader>Sell Order Summary</div>               
+                    <div mat-subheader>Purchase Summary</div>               
                     <mat-list-item *ngFor="let item of buyList">                   
                         <div mat-line>{{item.product[0].name}} <span class="material-icons remove" (click)="removeItemFromCart(item.product[0].name)">highlight_off</span></div>
                         <div mat-line>{{item.product[0].price}}</div>
                     </mat-list-item>
                     <h1>Order Total</h1>
+                    <mat-divider [inset]="true"></mat-divider>
                     <h4>SubTotal: ${{subTotal}}</h4> 
                     <h4>Sales Tax: ${{salesTax}}</h4>  
+                    <mat-divider [inset]="true"></mat-divider>
                     <h2>Total: ${{cartTotal}}</h2>                
                 </mat-list>
             </mat-card-content>
-            <button mat-raised-button (click)="completePurchase()">Complete Buyback</button>
+            <button mat-raised-button class="completePurchaseBtn" (click)="completePurchase()">Complete Buyback</button>
         </mat-card>
         </div>
      </mat-tab>
     
   </mat-tab-group>
 </div>
+
+

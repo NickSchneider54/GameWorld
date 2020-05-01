@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table'; 
+import {MatDialogModule} from '@angular/material/dialog'
 
  
 
@@ -31,6 +32,7 @@ import {MatTableModule} from '@angular/material/table';
     MatExpansionModule,
     MatSelectModule,
     MatTableModule,
+    MatDialogModule
     
     
     ],
@@ -48,7 +50,7 @@ import {MatTableModule} from '@angular/material/table';
     MatExpansionModule,
     MatSelectModule,
     MatTableModule,
-    
+    MatDialogModule
     
     ]
 })
