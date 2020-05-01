@@ -7,11 +7,11 @@ import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
-import { OverrideAuthorizationComponent } from '../shared/override-authorization/override-authorization.component';
+import { OverrideAuthorizationComponent } from '../dialogs/override-authorization/override-authorization.component';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { EditInventoryComponent } from '../shared/edit-inventory/edit-inventory.component';
-import { AddInventoryComponent } from '../shared/add-inventory/add-inventory.component';
+import { EditInventoryComponent } from '../dialogs/edit-inventory/edit-inventory.component';
+import { AddInventoryComponent } from '../dialogs/add-inventory/add-inventory.component';
 // import { InventoryItem } from 'src/app/Classes/Inventory-Item/inventory-item';
 export interface InventoryItem {
   id: string;

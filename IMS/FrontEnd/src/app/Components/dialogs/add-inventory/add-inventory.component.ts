@@ -13,15 +13,15 @@ import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
 export class AddInventoryComponent implements OnInit {
 
   genre = "";
-  console;
-  generation
+  console = "";
+  generation = "";
   upc;
   name;
   description;
   price;
   used;
   stock;
-  brand;
+  brand = "";
   category;
 
   generations = [];
@@ -71,9 +71,9 @@ export class AddInventoryComponent implements OnInit {
     this.product = { id: this.upc, name: this.name, description: this.description, price: this.price, used: this.used, stock: this.stock, category: this.category, genre: this.genre, console: this.console, brand: this.brand };
     console.log(this.product);
     this.cookies.set("product", JSON.stringify(this.product));
-    // this.inventory.addProduct().subscribe(result =>{
-    //   console.log(result);
-    // });
+    this.inventory.addProduct().subscribe(result =>{
+      console.log(result);
+    });
   }
 
 }

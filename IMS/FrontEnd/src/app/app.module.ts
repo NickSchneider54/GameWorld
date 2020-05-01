@@ -11,10 +11,10 @@ import { InventoryComponent } from './Components/inventory/inventory.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { OverrideAuthorizationComponent } from './Components/shared/override-authorization/override-authorization.component';
+import { OverrideAuthorizationComponent } from './Components/dialogs/override-authorization/override-authorization.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { EditInventoryComponent } from './Components/shared/edit-inventory/edit-inventory.component';
-import { AddInventoryComponent } from './Components/shared/add-inventory/add-inventory.component';
+import { EditInventoryComponent } from './Components/dialogs/edit-inventory/edit-inventory.component';
+import { AddInventoryComponent } from './Components/dialogs/add-inventory/add-inventory.component';
 
 
 

@@ -5,7 +5,7 @@ import { CartService } from 'src/app/Services/Cart/cart.service';
 import { Item } from 'src/app/Classes/Cart-Item/item';
 import { CookieService } from 'ngx-cookie-service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
-import { OverrideAuthorizationComponent } from '../shared/override-authorization/override-authorization.component';
+import { OverrideAuthorizationComponent } from '../dialogs/override-authorization/override-authorization.component';
 
 @Component({
   selector: 'app-buy-sell',
