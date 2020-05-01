@@ -22,8 +22,8 @@
         <mat-form-field>
             <mat-label>Condition</mat-label>
             <mat-select id="used" [(ngModel)]="used" name="used" required>
-                <mat-option value="New">New</mat-option>
-                <mat-option value="Used">Used</mat-option>
+                <mat-option value="1">New</mat-option>
+                <mat-option value="0">Used</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
@@ -33,31 +33,32 @@
         <br>
         <mat-form-field>
             <mat-label>Category</mat-label>
-            <mat-select id="genre" [(ngModel)]="genre" name="genre" required>
+            <mat-select id="categorye" [(ngModel)]="category" name="category" required>
                 <mat-option value="games">Game</mat-option>
                 <mat-option value="consoles">Consoles</mat-option>
                 <mat-option value="equipment">Equipment</mat-option>
-                <mat-option value="consoles">Consoles</mat-option>
+                <mat-option value="specialty">Specialty</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field>
-            <mat-label>Console</mat-label>
-            <mat-select id="genre" [(ngModel)]="console" name="genre" required>
-                <mat-option value="games">Game</mat-option>
-                <mat-option value="consoles">Consoles</mat-option>
-                <mat-option value="equipment">Equipment</mat-option>
-                <mat-option value="consoles">Consoles</mat-option>
+        <mat-form-field *ngIf="category == 'games'">
+            <mat-label>Genre</mat-label>
+            <mat-select id="genre" [(ngModel)]="genre" name="genre" required>
+                <mat-option value="action">Action</mat-option>
+                <mat-option value="adventure">Adventure</mat-option>
+                <mat-option value="sci-fi">Science Fiction</mat-option>
+                <mat-option value="horror">Horror</mat-option>
             </mat-select>
         </mat-form-field>
         <br>
-        <mat-form-field>
+        <mat-form-field *ngIf="category">
             <mat-label>Console</mat-label>
-            <mat-select id="genre" [(ngModel)]="generation" name="genre" required>
-                <mat-option value="games">Game</mat-option>
-                <mat-option value="consoles">Consoles</mat-option>
-                <mat-option value="equipment">Equipment</mat-option>
-                <mat-option value="consoles">Consoles</mat-option>
+            <mat-select id="genre" [(ngModel)]="console" name="genre" (ngModelChange)="setConsoleInfo($event)" required>
+                <mat-option *ngFor="let option of consoles" [value]="option">{{option}}</mat-option>
             </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="category">
+            <mat-label>Brand</mat-label>
+            <input matInput id="brand" [(ngModel)]="brand" type="text" name="brand" disabled required>
         </mat-form-field>
     </form>
 </div>

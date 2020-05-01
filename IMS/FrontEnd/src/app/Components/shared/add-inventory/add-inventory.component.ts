@@ -12,7 +12,7 @@ import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
 })
 export class AddInventoryComponent implements OnInit {
 
-  genre;
+  genre = "";
   console;
   generation
   upc;
@@ -21,6 +21,8 @@ export class AddInventoryComponent implements OnInit {
   price;
   used;
   stock;
+  brand;
+  category;
 
   generations = [];
   consoles = [];
@@ -59,13 +61,19 @@ export class AddInventoryComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  setConsoleInfo(console){
+    this.inventory.getBrandByConsole(console).subscribe((result: any) =>{
+      this.brand = result;
+    });
+  }
+
   addProduct(){
-    this.product = { id: this.upc, name: this.name, description: this.description, price: this.price, used: this.used, stock: this.stock, genre: this.genre };
+    this.product = { id: this.upc, name: this.name, description: this.description, price: this.price, used: this.used, stock: this.stock, category: this.category, genre: this.genre, console: this.console, brand: this.brand };
     console.log(this.product);
     this.cookies.set("product", JSON.stringify(this.product));
-    this.inventory.addProduct().subscribe(result =>{
-      console.log(result);
-    });
+    // this.inventory.addProduct().subscribe(result =>{
+    //   console.log(result);
+    // });
   }
 
 }
