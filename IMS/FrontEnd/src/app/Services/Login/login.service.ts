@@ -15,7 +15,7 @@ export class LoginService {
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) { }
 
     getUsers():Observable<Object>{
-      this.ping = "http://localhost:8013/GameWorld/IMS/BackEnd/api/users.php";
+      this.ping = "http://localhost:80/GameWorld/IMS/BackEnd/api/users.php";
       return this.http.get(this.ping);
     }
 
