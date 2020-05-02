@@ -8,21 +8,21 @@
             </mat-expansion-panel-header>
             <mat-form-field>
                 <mat-label>Username</mat-label>
-                <input matInput placeholder="Username"  required>
+                <input matInput [(ngModel)]="username" placeholder="Username"  required>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Password</mat-label>
-                <input matInput  type="password" placeholder="Password" required>
+                <input matInput [(ngModel)]="password" type="password" placeholder="Password" required>
               </mat-form-field>              
               <mat-form-field>
                 <mat-label>Account Level</mat-label>
-                <select matNativeControl required>             
-                  <option value="1">Employee</option>
-                  <option value="2">Supervisor</option>
-                  <option value="3">Manager</option>    
+                <select matNativeControl [(ngModel)]="level" required>             
+                  <option value="employee">Employee</option>
+                  <option value="manager">Manager</option>
+                  <option value="Master">Master</option>    
                 </select>
             </mat-form-field>
-            <button mat-raised-button color="primary" id="addUserBtn" click="">Add Employee</button>
+            <button mat-raised-button color="primary" id="addUserBtn" (click)="addEmployee(username, password, level)">Add Employee</button>
             </mat-expansion-panel>
 
             <mat-expansion-panel class="updateUserPanel">
@@ -39,22 +39,22 @@
                            <div mat-line>
                             <mat-form-field>
                                 <mat-label>Username</mat-label>
-                                <input matInput #username value={{user.username}}  required>
+                                <input matInput #username [(ngModel)]="user.username"  required>
                               </mat-form-field>
                               <mat-form-field>
                                 <mat-label>Password</mat-label>
-                                <input matInput #password type="password" value={{user.password}} required>
+                                <input matInput #password [(ngModel)]="user.password" type="password" required>
                               </mat-form-field>              
                               <mat-form-field>
                                 <mat-label>Account Level</mat-label>
-                                <select matNativeControl #level required [value]="user.level">             
-                            <option value="1">Employee</option>
-                            <option value="2">Supervisor</option>
-                            <option value="3">Manager</option>    
+                                <select matNativeControl #level required [(ngModel)]="user.level">             
+                                  <option value="employee">Employee</option>
+                                  <option value="manager">Manager</option>
+                                  <option value="master">Master</option>    
                                 </select>
-                            </mat-form-field>
-                       
-                            <button mat-raised-button color="primary" id="addUserBtn" (click)="updateEmployee(username.value,password.value,level.value);user.show='false'">Save Changes</button>
+                            </mat-form-field>                       
+                            <button mat-raised-button color="primary" id="addUserBtn" (click)="updateEmployee(user); user.show='false'">Save Changes</button>
+                            <button mat-raised-button color="primary" id="deleteUserBtn" (click)="deleteEmployee(user); user.show='false'">Deleet User</button>
                         </div>
                         </div>
                         </mat-list-item>

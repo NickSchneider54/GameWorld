@@ -29,6 +29,18 @@
             createTicket();
         break;
 
+        case 'users':
+            switch($_GET['f']){
+                case 'update':
+                    updateUserInfo();
+                break;
+                
+                case 'add':
+                    addUser();
+                break;
+            }
+        break;
+
         case 'inventory':
             switch($_GET['f']){
                 case 'getall':
@@ -61,6 +73,26 @@
                 
                 case 'add':
                     addInventoryItem();
+                break;
+
+                case 'search':
+                    switch($_GET['cat']){
+                        case 'games':
+                            getSearchGames();
+                        break;
+
+                        case 'consoles':
+                            getSearchConsoles();
+                        break;
+
+                        case 'equipment':
+                            getSearchEquipment();
+                        break;
+
+                        case 'specialty':
+                            getSearchSpecialty();
+                        break;
+                    }
                 break;
             }
         break;        
@@ -114,6 +146,7 @@
                     getAllTimeMisc();
                 break;
             }
+        break;
     }  
 ?>
 

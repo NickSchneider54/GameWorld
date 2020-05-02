@@ -27,7 +27,7 @@
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon> </button>
       <mat-menu #menu="matMenu">
         <button *ngIf="level === 'master'" mat-menu-item [routerLink]="'/settings'">Settings</button>
-        <button mat-menu-item (click)="logout()">Logout</button>
+        <button mat-menu-item (click)="drawer.toggle(); logout()">Logout</button>
       </mat-menu>
     
   </mat-toolbar-row>
@@ -49,7 +49,7 @@
     
 
 
-<mat-drawer-container class="dashContainer" autosize  >
+<mat-drawer-container class="dashContainer" autosize>
   <mat-drawer #drawer class="sidenav" mode="side">
       <mat-nav-list #sidenav>
         <a mat-list-item class="sideNavItem" [routerLink]="'/buy-sell'"> <mat-icon class="sidebarIcons">shopping_cart</mat-icon> Buy/Sell </a>

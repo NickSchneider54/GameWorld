@@ -30,7 +30,6 @@ export interface DialogData {
   stock: number;
 }
 
-// TODO: replace this with real data from the API call. Also TODO: create api call.
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
@@ -42,6 +41,8 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
   // @ViewChild(MatTable) table: MatTable<InventoryItem>;
   dataSource = new MatTableDataSource<InventoryItem>();
 
+  category: string = "products";
+  searchItem: string;
   private INVENTORY: InventoryItem[] = [];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -49,12 +50,6 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
   
   constructor(private cookies: CookieService, private router: Router, private inv: InventoryService, public dialog: MatDialog) {
     super();
-  }
-
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit() {
@@ -78,6 +73,62 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     // this.table.dataSource = this.dataSource;
+  }
+
+  clearSearch(){
+    this.category = 'products';
+    this.searchItem = '';
+    this.resetArray();
+    this.ngOnInit();
+  }
+
+  resetArray(){
+    this.INVENTORY = [];
+  }
+
+  getCategory($event: Event){
+    this.resetArray();
+    if(this.category == 'games'){      
+      this.inv.searchInventory(this.category).subscribe((result: InventoryItem[]) =>{
+        for(var i = 0; i < result.length; i++){
+          this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+        }
+        console.log(this.INVENTORY);
+        this.dataSource.data = this.INVENTORY;
+      });
+    } 
+    if(this.category == 'consoles'){
+      this.inv.searchInventory(this.category).subscribe((result: InventoryItem[]) =>{
+        for(var i = 0; i < result.length; i++){
+          this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+        }
+        console.log(this.INVENTORY);
+        this.dataSource.data = this.INVENTORY;
+      });
+    }
+    if(this.category == 'equipment'){
+      this.inv.searchInventory(this.category).subscribe((result: InventoryItem[]) =>{
+        for(var i = 0; i < result.length; i++){
+          this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+        }
+        console.log(this.INVENTORY);
+        this.dataSource.data = this.INVENTORY;
+      });
+    }
+    if(this.category == 'specialty'){
+      this.inv.searchInventory(this.category).subscribe((result: InventoryItem[]) =>{
+        for(var i = 0; i < result.length; i++){
+          this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+        }
+        console.log(this.INVENTORY);
+        this.dataSource.data = this.INVENTORY;
+      });
+    }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
    /*
@@ -139,11 +190,6 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
 
   openDialog(upc): void {
     const dialogConfig = new MatDialogConfig();
-
-    console.log(upc)
-  
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
   
     dialogConfig.width = '600px';
     dialogConfig.height = '400px';
@@ -152,8 +198,6 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     };
     
     const dialogRef = this.dialog.open(EditInventoryComponent, dialogConfig);
-  
-    // dialogRef.afterClosed().subscribe( data =>{});     
   }
 
   addItem(){

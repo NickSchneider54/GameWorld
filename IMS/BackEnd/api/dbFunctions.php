@@ -4,9 +4,9 @@ include "connection.php";
 
 //Pass it a table name and return all records
 function GetAll($stableName){
-    global $connect;
+    global $pdo;
     $sql = "SELECT * from $stableName";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     $array = $pdostate->fetchAll();
     return $array;
 }
@@ -32,33 +32,31 @@ function initSales(){
 }
 //*******************Only use for table that have used*******************
 function GetAllUsed($stableName){
-    global $connect;
+    global $pdo;
     $sql = "SELECT * from $stableName WHERE Used = 1";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     $array = $pdostate->fetchAll();
     return $array;
 }
 function GetAllNew($stableName){
-    global $connect;
+    global $pdo;
     $sql = "SELECT * from $stableName WHERE Used =0";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     $array = $pdostate->fetchAll();
     return $array;
 }
 //*************************************************************************
 function Delete($stableName,$sID,$NameID){
-    global $connect;
+    global $pdo;
     $sqlDelete = "DELETE FROM $stableName WHERE $NameID = $sID";
-    $pdos = $connect->query($sqlDelete);
+    $pdos = $pdo->query($sqlDelete);
 }
 
 //Products******************************************
 function getAllProducts(){
     global $pdo;
     $inventory = array();
-
     $sql = "SELECT * FROM products";
-
     $query = $pdo->prepare($sql);        
     $query->execute();
 
@@ -67,23 +65,19 @@ function getAllProducts(){
     }
 
     $json = json_encode($inventory);
-
     echo $json;
 }
 function getProduct($upc){   
     global $pdo;
 
     $sql = "SELECT * FROM products WHERE productID = '$upc'";
-
     $result = $pdo->query($sql);
     
     if($_GET['action'] == 'sell'){
         $json_array = array();
-
         while($row = $result->fetch(PDO::FETCH_ASSOC)){
             $json_array[] = $row;
         }
-
         $json = json_encode($json_array);
         echo $json;
     }
@@ -96,21 +90,18 @@ function getProductPrice($product){
     global $pdo;
     global $totalSales;
     $sql = "SELECT price FROM products WHERE productID = '$product'";
-
     $query = $pdo->prepare($sql);
     $query->execute();
-
     $itemPrice = $query->fetch();
     $totalSales += $itemPrice['price'];
 }
 
 //Customers******************************************
 function GetCustomerByCustID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM customer WHERE customerID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
-
 }
 
 //Brands*************************************
@@ -129,12 +120,11 @@ function GetBrandByID($sID){
     $sql ="SELECT * FROM brands WHERE brandID =$sID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
-
 }
 function GetBrandByName($sName){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM brands WHERE name like $sName";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 }
 function getBrandID($brand){
@@ -162,14 +152,11 @@ function getConsoleBrand($sName){
     $sql = "SELECT brandID from consoles WHERE name = '$sName'";
     $query = $pdo->prepare($sql);
     $query->execute();
-
     $result = $query->fetch();
     $brand = $result['brandID'];
 
-    $result = GetBrandByID($brand);
-    
+    $result = GetBrandByID($brand);    
     $json = json_encode($result['name']);
-
     echo $json;
 
 }
@@ -181,9 +168,9 @@ function getConsoleID($console){
     return $query->fetch();
 }
 function GetConsoles($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM consoles WHERE consoleID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 
 }
@@ -191,41 +178,34 @@ function getAllConsoleIDs(){
     global $pdo;
 
     $sql = "SELECT consoleID FROM consoles";
-
     $query = $pdo->prepare($sql);
     $query->execute();
-
     return $query->fetchAll();
 }
 function GetConsolesByBrandID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM consoles WHERE brandID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
-
 }
 function GetConsolesByGenID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM consoles WHERE generationID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
-
 }
 function GetConsolesByName($sName){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM consoles WHERE name like $sName";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
-
 }
 function getAllSoldConsoles($id){
     global $pdo;
 
     $sql = "SELECT consoleID, name FROM consoles WHERE consoleID = $id";
-
     $query = $pdo->prepare($sql);
     $query->execute();
-
     return $query->fetchAll();
 }
 function getTopConsoles(){
@@ -234,13 +214,11 @@ function getTopConsoles(){
     global $product;
 
     $tickets = getAllTicketIDs();
-
     foreach($tickets as $ticket){
         getConsoleSales($ticket['ticketID']);
     }     
 
     $json = json_encode($consoles);
-
     echo $json;
 }
 function getConsoleSales($ticket){
@@ -277,57 +255,55 @@ function getAllEquipmentIDs(){
     global $pdo;
 
     $sql = "SELECT equipmentID FROM equipment";
-
     $query = $pdo->prepare($sql);
     $query->execute();
-
     return $query->fetchAll();
 }
 function GetEquipmentByID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM equipment WHERE equipmentID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 
 }function GetEquipmentByConsoleID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM equipment WHERE consoleID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetEquipmentByBrandID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM equipment WHERE BrandID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetEquipmentByTypeID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM equipment WHERE typeID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetEquipmentTypeByID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM equipmenttype WHERE eqTypeID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 
 }
 function GetEquipmentTypeByGameID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM equipmenttype WHERE gameID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetEquipmentByName($sName){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM equipmenttype WHERE name like$sName";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
@@ -335,10 +311,8 @@ function getAllSoldEquipment($id){
     global $pdo;
 
     $sql = "SELECT equipmentID, name FROM equipment WHERE equipmentID = $id";
-
     $query = $pdo->prepare($sql);
     $query->execute();
-
     return $query->fetchAll();
 }
 function getAllTimeEquipment(){
@@ -346,13 +320,11 @@ function getAllTimeEquipment(){
     global $equipment;
 
     $tickets = getAllTicketIDs();
-
     foreach($tickets as $ticket){
         getEquipmentSales($ticket['ticketID']);
-    }     
+    }  
 
     $json = json_encode($equipment);
-
     echo $json;
 }
 function getEquipmentSales($ticket){
@@ -395,62 +367,46 @@ function addEquipment($product){
     $query->bindValue(5, $product->genre);
 }
 
-//GameName***********************************
-function GetGameNameID($sID){
-    global $connect;
-    $sql ="SELECT * FROM gamenames WHERE gameNameID =$sID";
-    $pdostate = $connect->query($sql);
-    return $pdostate->fetch();
-
-}
-function GetGameNameByID($sID){
-    global $connect;
-    $sql ="SELECT * FROM gamenames WHERE gameNameID =$sID";
-    $pdostate = $connect->query($sql);
-    return $pdostate->fetch();
-
-}
-
 //Games***********************************
 function GetGamesByGameID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM games WHERE gameID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->prepare($sql);
     return $pdostate->fetch();
-
 }
 function GetGamesByConsoleID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM games WHERE consoleID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetGamesByName($sName){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM games WHERE name like $sName";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->prepare($sql);
+    $pdostate->execute();
     return $pdostate->fetchAll();
 
 }
 function GetGamesByDate($sDate){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM games WHERE releaseDate like $sDate";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetGamesByGenre($sGenre){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM games WHERE genre like $sGenre";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetGamesByBrandID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM games WHERE gameID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
@@ -554,8 +510,17 @@ function GetAllGames(){
     $query->execute();
     $games = $query->fetchAll();  
     
-    $json = json_encode($games);
-    echo $json;
+    if($_GET['f'] == 'getgames'){
+        $json = json_encode($games);
+        echo $json;
+    }
+    else{
+        $result = array();
+        foreach($games as $game){
+            array_push($result, $game['gameID']);
+        }
+        return $result;
+    }
 }
 function addGame($product){
     global $pdo;
@@ -582,37 +547,37 @@ function addGame($product){
 
 //SoldItems***********************************
 function GetSoldItemByID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM solditems WHERE soldItemsID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 
 }
 function GetSoldItemByTicketID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM solditems WHERE ticketID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetSoldItemByEquipmentID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM solditems WHERE equipmentID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetSoldItemByGamesID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM solditems WHERE gamesID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetSoldItemBySpecialID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM solditems WHERE specialID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }  
@@ -696,23 +661,21 @@ function getAllAccessoryIDs(){
     global $pdo;
 
     $sql = "SELECT accessoryID FROM accessories";
-
     $query = $pdo->prepare($sql);
     $query->execute();
 
     return $query->fetchAll();
 }
 function GetSpecialByID($sID){
-    global $connect;
-    $sql ="SELECT * FROM special WHERE specialID =$sID";
-    $pdostate = $connect->query($sql);
+    global $pdo;
+    $sql ="SELECT * FROM accessories WHERE accessoryID =$sID";
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 }
 function getAllSoldMisc($id){
     global $pdo;
-
-    $sql = "SELECT productID, name FROM products WHERE productID = $id";
-
+    
+    $sql = "SELECT accessoryID, name FROM accessories WHERE accessoryID = '$id'";
     $query = $pdo->prepare($sql);
     $query->execute();
 
@@ -725,7 +688,7 @@ function getAllTimeMisc(){
     $tickets = getAllTicketIDs();
 
     foreach($tickets as $ticket){
-        getGameSales($ticket['ticketID']);
+        getMiscSales($ticket['ticketID']);
     }     
 
     $json = json_encode($misc);
@@ -739,22 +702,22 @@ function getMiscSales($ticket){
     $order = getTicketItemInfo($ticket);
 
     foreach($order as $item){
-        $product = getAllSoldGames($item['productID']);            
+        $product = getAllSoldMisc($item['productID']);       
         if($product){
             if(sizeOf($misc) > 0){
                 for($i = 0; $i < sizeOf($misc); $i++){    
-                    if($product[0]['productID'] == $misc[$i]->upc){
+                    if($product[0]['accessoryID'] == $misc[$i]->upc){
                         $misc[$i]->sales += 1;
                         break;
                     }
                     else if($i == sizeof($misc) - 1){      
-                        array_push($misc, (object)["upc"=>$product[0]['miscID'], "product"=>$product[0]['name'], "sales"=>1]);
+                        array_push($misc, (object)["upc"=>$product[0]['accessoryID'], "product"=>$product[0]['name'], "sales"=>1]);
                         break;
                     }
                 }
             }
             else{
-                array_push($misc, (object)["upc"=>$product[0]['miscID'], "name"=>$product[0]['name'], "sales"=>1]);
+                array_push($misc, (object)["upc"=>$product[0]['accessoryID'], "name"=>$product[0]['name'], "sales"=>1]);
             }
         } 
     }          
@@ -869,23 +832,23 @@ function getAllTicketIDs(){
            
 }
 function GetTicketByID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM ticket WHERE ticketID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 
 }
 function GetTicketByCustomerID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM ticket WHERE customerID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
 function GetTicketByUserID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM ticket WHERE userID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();    
 }
 
@@ -947,9 +910,9 @@ function getUserByID($id){
     return $query->fetch();
 }
 function GetUserByLevel($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM users WHERE level =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
@@ -964,6 +927,78 @@ function getUserByUsername(){
 
     return $query->fetch();
 }
+function updateUserInfo(){
+    global $pdo;
+
+    $user = json_decode($_GET['user']);
+    
+    $id = $user->id;
+    $username = $user->username;
+    $password = $user->password;
+    $level = $user->level;
+
+    $sql = "UPDATE users SET username=?, password=?, level=? WHERE userID='$user->id'";
+    $query = $pdo->prepare($sql);
+    $query->bindValue(1, $user->username);
+    $query->bindValue(2, $user->password);
+    $query->bindValue(3, $user->level);
+
+    if($query->execute()){
+        $message = "User Updated";
+        $json = json_encode($message);
+        echo $json;
+    }
+    else{
+        $message = "Update Failed";
+        $json = json_encode($message);
+        echo $json;
+    }
+}
+function addUser(){
+    global $pdo;
+
+    $user = json_decode($_GET['user']);
+    
+    $id = $user->id;
+    $username = $user->username;
+    $password = $user->password;
+    $level = $user->level;
+
+    $sql = "INSERT INTO users SET username=?, password=?, level=?";
+    $query = $pdo->prepare($sql);
+    $query->bindValue(1, $user->username);
+    $query->bindValue(2, $user->password);
+    $query->bindValue(3, $user->level);
+
+    if($query->execute()){
+        $message = "User Added";
+        $json = json_encode($message);
+        echo $json;
+    }
+    else{
+        $message = "Failed to Add User";
+        $json = json_encode($message);
+        echo $json;
+    }
+}
+function deleteUser(){
+    global $pdo;
+
+    $sql = "UPDATE users SET employed=? WHERE userID='$user->id'";
+    $query = $pdo->prepare($sql);
+    $query->bindValue(1, false);
+
+    if($query->execute()){
+        $message = "User Deleted";
+        $json = json_encode($message);
+        echo $json;
+    }
+    else{
+        $message = "Failed to Delete User";
+        $json = json_encode($message);
+        echo $json;
+    }
+}
 
 //Generations*******************************************
 function GetAllGenerations(){
@@ -977,36 +1012,36 @@ function GetAllGenerations(){
     echo $json;
 }
 function GetGenByID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM consolegenerations WHERE generationID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
 function GetGenByName($sName){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM consolegenerations WHERE name like$sName";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
 
 //Accessories*******************************************
 function GetAccessByID($sID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM accessories WHERE accessoryID =$sID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
 
 function GetAccessByConsole($sConsoleID){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM accessories WHERE consoleID =$sConsoleID";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
 function GetAccessByDesc($sDesc){
-    global $connect;
+    global $pdo;
     $sql ="SELECT * FROM accessories WHERE description =$sDesc";
-    $pdostate = $connect->query($sql);
+    $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
 
@@ -1017,11 +1052,8 @@ function getCategory($ticket){
     
     $items = getTicketItem($ticket);  
     $gameIDs = getAllGameIDs();
-
     $consoleIDs = getAllConsoleIDs();
-
     $equipmentIDs = getAllEquipmentIDs();
-
     $miscIDs = getAllAccessoryIDs();
 
     for($i = 0; $i < sizeof($gameIDs) + 1; $i++){
@@ -1055,8 +1087,7 @@ function getTotalCategorySales(){
         getCategory($ticket['ticketID']);
     }
     
-    $json = json_encode($categories);
-    
+    $json = json_encode($categories);    
     echo $json;
 }
 function addToCategory($product){
@@ -1375,5 +1406,46 @@ function SearchBrands($sID="",$sName=""){
     if(!empty($sName)){
         return GetBrandByName($sName);
     }
+}
+
+
+function getSearchGames(){
+    $games = GetAllGames();
+    $results = array();
+    foreach($games as $game){
+        array_push($results, getProduct($game));
+    }
+    $json = json_encode($results);
+    echo $json;
+}
+
+function getSearchConsoles(){
+    $consoles = GetAllConsoleIDs();
+    $results = array();
+    foreach($consoles as $console){
+        array_push($results, getProduct($console['consoleID']));
+    }
+    $json = json_encode($results);
+    echo $json;
+}
+
+function getSearchEquipment(){
+    $equipment = GetAllEquipmentIDs();
+    $results = array();
+    foreach($equipment as $item){
+        array_push($results, getProduct($item['equipmentID']));
+    }
+    $json = json_encode($results);
+    echo $json;
+}
+
+function getSearchSpecialty(){
+    $specialty = GetAllAccessoryIDs();
+    $results = array();
+    foreach($specialty as $misc){
+        array_push($results, getProduct($misc['accessoryID']));
+    }
+    $json = json_encode($results);
+    echo $json;
 }
 

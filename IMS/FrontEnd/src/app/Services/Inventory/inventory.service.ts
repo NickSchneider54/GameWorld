@@ -16,6 +16,11 @@ export class InventoryService {
     return this.http.get(this.ping);
   }
 
+  getGames(){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=getgames`
+    return this.http.get(this.ping);
+  }
+
   getConsoles(){
     this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=getconsoles`
     return this.http.get(this.ping);
@@ -33,6 +38,11 @@ export class InventoryService {
 
   getBrandByConsole(console){
     this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=getbrand&console=${console}`
+    return this.http.get(this.ping);
+  }
+
+  searchInventory(category){
+    this.ping = `http://localhost:8013/GameWorld/IMS/BackEnd/api/test.php?action=inventory&f=search&cat=${category}`;
     return this.http.get(this.ping);
   }
 

@@ -44,8 +44,6 @@ export class AppComponent {
   logout(){ 
     this.userLogin.logout();
   }
-
-  
   
 
 }
