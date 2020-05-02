@@ -15,3 +15,9 @@
 .loginField{
     margin:8px;
 }
+
+#loginSubmit{
+    margin-left: 40%;
+    margin-bottom: 16px;
+   
+}

@@ -224,6 +224,11 @@
     align-items: center;
   }
 
+  #icon{
+    width:48px;
+    height:48px;
+  }
+
   ::ng-deep .mat-focused .mat-form-field-label {
     /*change color of label*/
     color: #00a896 !important;

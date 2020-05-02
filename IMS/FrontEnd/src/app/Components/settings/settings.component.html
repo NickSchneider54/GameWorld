@@ -1,11 +1,7 @@
 <mat-card class="settingsCard">
-    <mat-accordion>
-        <mat-expansion-panel class="addNewUserPanel">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-               Add An Employee
-              </mat-panel-title>              
-            </mat-expansion-panel-header>
+    
+             <h2>  Add An Employee</h2>
+             
             <mat-form-field>
                 <mat-label>Username</mat-label>
                 <input matInput [(ngModel)]="username" placeholder="Username"  required>
@@ -23,14 +19,8 @@
                 </select>
             </mat-form-field>
             <button mat-raised-button color="primary" id="addUserBtn" (click)="addEmployee(username, password, level)">Add Employee</button>
-            </mat-expansion-panel>
-
-            <mat-expansion-panel class="updateUserPanel">
-                <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Modify Existing Employee
-                </mat-panel-title>
-                </mat-expansion-panel-header>
+            <mat-divider [inset]="true"></mat-divider>
+            <h2>Modify Existing Employee</h2>                
                 <mat-list class="employees">
                     <mat-list-item *ngFor="let user of users; ">
                         <div mat-line><mat-icon>person</mat-icon>{{user.username}} 
@@ -56,11 +46,11 @@
                             <button mat-raised-button color="primary" id="addUserBtn" (click)="updateEmployee(user); user.show='false'">Save Changes</button>
                             <button mat-raised-button color="primary" id="deleteUserBtn" (click)="deleteEmployee(user); user.show='false'">Deleet User</button>
                         </div>
-                        </div>
+                        </div>        
+                        <mat-divider [inset]="true"></mat-divider>                
                         </mat-list-item>
+                        
                 </mat-list>
                    
-                
-            </mat-expansion-panel>
-    </mat-accordion>
+       
  </mat-card>
