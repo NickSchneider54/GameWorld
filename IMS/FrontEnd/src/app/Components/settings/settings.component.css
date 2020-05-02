@@ -10,3 +10,7 @@ mat-card{
 mat-list-item{
     margin:16px;
 }
+#deleteUserBtn{
+    background-color: rgb(151, 0, 0) !important;
+    margin-left: 3px;
+}
