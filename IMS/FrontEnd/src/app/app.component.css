@@ -225,8 +225,8 @@
   }
 
   #icon{
-    width:48px;
-    height:48px;
+    width:54px;
+    height:54px;
   }
 
   ::ng-deep .mat-focused .mat-form-field-label {
