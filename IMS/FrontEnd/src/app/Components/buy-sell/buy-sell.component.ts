@@ -34,7 +34,7 @@ export class BuySellComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.savedCarts();
-    if(this.cookies.get('loggedIn') == 'true'){       
+    if(this.cookies.get('loggedIn') != 'true'){       
       this.router.navigate(['/login']);
     }
    }
