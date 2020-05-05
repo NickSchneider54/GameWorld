@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,8 +6,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
-import { OverrideAuthorizationComponent } from '../dialogs/override-authorization/override-authorization.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { EditInventoryComponent } from '../dialogs/edit-inventory/edit-inventory.component';
