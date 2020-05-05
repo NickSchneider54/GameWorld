@@ -2,10 +2,9 @@
 <mat-tab-group class ='buySellTabs' (selectedTabChange)="tabClick($event)">
     <mat-tab label="Sales">
         <div class='card-container'>
-            <mat-card class='SellCard'>                
-                    <h2>Add Item To Sale Order</h2>                
-                <mat-divider [inset]="true"></mat-divider>
+            <mat-card class='SellCard'> 
                 <mat-card-content>
+                <div class="addItemContainer">                                 
                     <form class="buyItemForm">
                         <!-- <mat-form-field >
                             <mat-label>Item Name</mat-label>
@@ -18,9 +17,10 @@
                       <!--  <mat-form-field >
                             <mat-label>Console</mat-label>
                             <input matInput [(ngModel)]="console" name="console">
-                        </mat-form-field> -->
-                        <p><button mat-raised-button class="addItemBtn" (click)="addItemToCart(upc)">Add item to order</button></p>                        
+                        </mat-form-field> -->                                              
                     </form> 
+                    <button mat-raised-button class="addItemBtn" (click)="addItemToCart(upc)">Add item to order</button>
+                </div>   
                     <mat-divider [inset]="true"></mat-divider>               
                     <h2>Order Details</h2>                  
                 <mat-divider [inset]="true"></mat-divider>
