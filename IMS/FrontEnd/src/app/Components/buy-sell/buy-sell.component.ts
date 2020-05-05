@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { BuySellService } from 'src/app/Services/Buy-Sell/buy-sell.service';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/Services/Cart/cart.service';
@@ -14,10 +14,10 @@ import { OverrideAuthorizationComponent } from '../dialogs/override-authorizatio
 })
 export class BuySellComponent implements OnInit {
 
-  currentTab: string = "Sell";
+  currentTab: string = "Sales";
   name: string = "";
   upc: string = "";
-  console: string = "";
+  price: string = "";
   shoppingCart: Item[] = [];
   buyList: Item[] = [];
   subTotal: number = 0.00;
@@ -44,23 +44,46 @@ export class BuySellComponent implements OnInit {
     console.log(this.currentTab);
     this.updateCart();
     this.upc = "";
+    if(this.currentTab == 'Purchases'){
+      var submit = document.getElementById('upc'); 
+      submit.addEventListener("keydown", function(event){
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("getProdBtn").click();
+        }
+      });
+    }
+  }
+
+  getProduct(){
+    this.search.getProduct(this.upc).subscribe((result: object) =>{
+      console.log(result);
+      this.name = result[0].name;
+      this.price = result[0].price;
+      console.log(this.name);
+      console.log(this.price);
+    }) 
   }
 
   addItemToCart(upc:string): void{
     this.search.getProduct(upc).subscribe((result: object) =>{
-      if(this.currentTab === "Sell"){
+      if(this.currentTab === "Sales"){
         this.cart.addToCart(new Item(result));
       }
-      if(this.currentTab === "Buy"){
-        this.cart.addToBuyList(new Item(result));
+      if(this.currentTab === "Purchases"){
+        var item = new Item(result);
+        if(item.product[0].price != this.price){
+          item.product[0].price = this.price;
+        }
+        console.log(item)
+        this.cart.addToBuyList(item);
       }
       this.updateCart();
-    })    
-    this.upc = "";
+    })
   }
 
   removeItemFromCart(name:string){
-    if(this.currentTab == "Sell"){
+    if(this.currentTab == "Sales"){
       for(var i = 0; i < this.shoppingCart.length; i++){
         if(this.shoppingCart[i].product[0].name === name){
           this.shoppingCart.splice(i, 1);
@@ -68,7 +91,7 @@ export class BuySellComponent implements OnInit {
         }
       }
     }
-    else if(this.currentTab == "Buy"){
+    else if(this.currentTab == "Purchases"){
       for(var i = 0; i < this.buyList.length; i++){
         if(this.buyList[i].product[0].name === name){
           this.buyList.splice(i, 1);
@@ -83,7 +106,7 @@ export class BuySellComponent implements OnInit {
     this.subTotal = 0;
     this.salesTax = 0;
     this.cartTotal = 0;
-    if(this.currentTab == "Sell"){
+    if(this.currentTab == "Sales"){
       this.shoppingCart = this.cart.getShoppingCart();
       console.log(this.shoppingCart);
       for(var i = 0; i < this.shoppingCart.length; i++){
@@ -97,17 +120,18 @@ export class BuySellComponent implements OnInit {
       this.cartSell = this.cookies.get('shoppingCart');
     }
 
-    if(this.currentTab == "Buy"){
+    if(this.currentTab == "Purchases"){
       this.buyList = this.cart.getBuyList();
       for(var i = 0; i < this.buyList.length; i++){
-        this.subTotal += parseFloat(this.buyList[i].product[0].price);
-        this.salesTax = this.getSalesTax(this.subTotal);
-        this.cartTotal = this.getCartTotal(this.subTotal, this.salesTax);
+        this.cartTotal += parseFloat(this.buyList[i].product[0].price);
       }
       this.subTotal = this.round(this.subTotal);
       this.cookies.set('buyList', JSON.stringify(this.buyList));
       this.cartBuy = this.cookies.get("buyList");
-    }
+    }        
+    this.upc = "";
+    this.name = "";
+    this.price = "";
   }
 
   getSalesTax(total:number): number{
@@ -123,7 +147,7 @@ export class BuySellComponent implements OnInit {
   }
 
   completePurchase(){
-    if(this.currentTab == 'Sell'){
+    if(this.currentTab == 'Sales'){
       this.search.createSellTicket().subscribe(result=>{
         
       });   
@@ -131,7 +155,7 @@ export class BuySellComponent implements OnInit {
       this.updateCart();   
       alert("Order Complete");
     }
-    else if(this.currentTab == 'Buy'){
+    else if(this.currentTab == 'Purchases'){
       if(this.cookies.get("level") == "master" || this.authorization == true){
         this.search.createBuyTicket().subscribe(result=>{});   
         this.cart.clearBuyList();

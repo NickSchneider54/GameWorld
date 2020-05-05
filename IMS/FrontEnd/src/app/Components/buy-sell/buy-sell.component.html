@@ -50,18 +50,19 @@
                 <mat-divider [inset]="true"></mat-divider>
                 <mat-card-content>
                     <form class="buyItemForm">
-                        <!-- <mat-form-field >
+                        <mat-form-field >
                             <mat-label>Item Name</mat-label>
                             <input matInput [(ngModel)]="name" name="name">
-                        </mat-form-field> -->
+                        </mat-form-field>
                         <mat-form-field >
                             <mat-label>UPC</mat-label>
-                            <input matInput [(ngModel)]="upc" name="upc">
+                            <input matInput [(ngModel)]="upc" name="upc" id="upc">
                         </mat-form-field>
-                        <!-- <mat-form-field >
-                            <mat-label>Console</mat-label>
-                            <input matInput [(ngModel)]="console" name="console">
-                        </mat-form-field> -->
+                        <mat-form-field >
+                            <mat-label>Price</mat-label>
+                            <input matInput [(ngModel)]="price" name="price">
+                        </mat-form-field>
+                        <button style="display:none" id="getProdBtn" (click)="getProduct()">Get Product</button>
                         <p><button mat-raised-button class="addItemBtn" (click)="addItemToCart(upc)">Add item to order</button></p>                       
                     </form>
                 </mat-card-content>
@@ -78,9 +79,6 @@
                         <div mat-line>{{item.product[0].price}}</div>
                     </mat-list-item>
                     <h2>Order Total</h2>
-                    <mat-divider [inset]="true"></mat-divider>
-                    <h4>SubTotal: ${{subTotal}}</h4> 
-                    <h4>Sales Tax: ${{salesTax}}</h4>  
                     <mat-divider [inset]="true"></mat-divider>
                     <h2>Total: ${{cartTotal}}</h2>                
                 </mat-list>

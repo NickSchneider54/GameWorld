@@ -27,9 +27,20 @@
     <mat-card class="infoCard">
         <mat-card-title><mat-icon>monetization_on</mat-icon>Sales</mat-card-title>
         <mat-divider [inset]="true"></mat-divider>
-        <mat-card-content class="infoCardContent"><h1>${{totalSales}}</h1>              
+        <mat-card-content class="infoCardContent">
+          <mat-tab-group class="salesTabs" (selectedTabChange)="tabClick($event)">
+            <mat-tab label="Weekly">
+              <h1>{{totalSales}}</h1>
+            </mat-tab>
+            <mat-tab label="Monthly">
+              <h1>{{totalSales}}</h1>
+            </mat-tab>
+            <mat-tab label="Yearly">
+              <h1>{{totalSales}}</h1>
+            </mat-tab>
+          </mat-tab-group>           
       </mat-card-content>
-        <mat-card-footer class="infoFooter"><mat-icon>date_range</mat-icon>Month</mat-card-footer>
+        <mat-card-footer class="infoFooter"><mat-icon>date_range</mat-icon>{{salesTab}}</mat-card-footer>
     </mat-card>
        
 </div>

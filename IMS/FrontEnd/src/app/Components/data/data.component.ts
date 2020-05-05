@@ -27,6 +27,7 @@ export class DataComponent implements OnInit, AfterViewInit {
   equipmentSales: DataItem[] = [];
   miscSales: DataItem[] = [];
 
+  salesTab: string;
   totalSales: number;
 
   chart1: Chart;
@@ -89,7 +90,7 @@ export class DataComponent implements OnInit, AfterViewInit {
       console.log(this.categorySales);
     });
 
-    this.dataService.getSales('Monthly').subscribe((result: any) =>{
+    this.dataService.getSales('Weekly').subscribe((result: any) =>{
       this.totalSales = Number(Math.round(+(result + 'e' + 2)) + 'e-' + 2);
     })
 
@@ -274,6 +275,27 @@ export class DataComponent implements OnInit, AfterViewInit {
     this.sort.sort(({ id: 'sales', start: 'desc'}) as MatSortable);
     data.sort = this.sort;
   }
+
+  tabClick(tab){    
+    this.salesTab = tab.tab.textLabel;
+    console.log(this.salesTab);
+    if(this.salesTab == 'Weekly'){
+      this.dataService.getSales('Weekly').subscribe((result: any) =>{
+        this.totalSales = Number(Math.round(+(result + 'e' + 2)) + 'e-' + 2);
+      });
+    }
+    if(this.salesTab == 'Monthly'){
+      this.dataService.getSales('Monthly').subscribe((result: any) =>{
+        this.totalSales = Number(Math.round(+(result + 'e' + 2)) + 'e-' + 2);
+      });
+    }
+    if(this.salesTab == 'Yearly'){
+      this.dataService.getSales('Yearly').subscribe((result: any) =>{
+        this.totalSales = Number(Math.round(+(result + 'e' + 2)) + 'e-' + 2);
+      });
+    }
+  }
+
     
 }
 

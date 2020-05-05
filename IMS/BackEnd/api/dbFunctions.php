@@ -800,8 +800,9 @@ function getAllTicketIDs(){
     global $pdo;
 
     $currentDay = date('Y-m-d');
-    $weekAgo = date('Y-m-d', strtotime('-7 days'));
-    $monthAgo = date('Y-m-d', strtotime('-30 days'));
+    $weekAgo = date("Y-m-d", strtotime("previous monday"));
+    $monthAgo = date('Y-m').'-01';
+    $yearlySales = date('Y').'-01-01';
 
     if(isset($_GET['range'])){
         if($_GET['range'] == 'Weekly'){
@@ -812,7 +813,7 @@ function getAllTicketIDs(){
 
             return $query->fetchAll();
         }
-        else{
+        else if($_GET['range'] == 'Monthly'){
             $sql = $sql = "SELECT ticketID FROM tickets WHERE orderDate BETWEEN '$monthAgo' AND '$currentDay'";
             
             $query = $pdo->prepare($sql);
@@ -820,6 +821,14 @@ function getAllTicketIDs(){
 
             return $query->fetchAll();
         } 
+        else{
+            $sql = $sql = "SELECT ticketID FROM tickets WHERE orderDate BETWEEN '$yearlySales' AND '$currentDay'";
+            
+            $query = $pdo->prepare($sql);
+            $query->execute();
+
+            return $query->fetchAll();
+        }
     }
     else{
         $sql = "SELECT ticketID FROM tickets";
