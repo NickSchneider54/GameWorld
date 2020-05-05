@@ -27,7 +27,7 @@ export class DataComponent implements OnInit, AfterViewInit {
   equipmentSales: DataItem[] = [];
   miscSales: DataItem[] = [];
 
-  salesTab: string;
+  salesTab: string = 'Weekly';
   totalSales: number;
 
   chart1: Chart;
@@ -71,13 +71,11 @@ export class DataComponent implements OnInit, AfterViewInit {
     });
 
     this.dataService.getTopGames(this.chart2Range).subscribe((result: any[]) =>{
-      this.games = result;
+      for(var i = 0; i < result.length; i++){
+        this.games[i] = result[i].name;
+        this.saleGames[i] = result[i].sales;
+      }
       this.chart2.data.labels = this.games;
-      this.chart2.update();
-    });
-
-    this.dataService.getTopGameSales(this.chart2Range).subscribe((result: any[]) =>{
-      this.saleGames = result;
       this.chart2.data.datasets[0].data = this.saleGames;
       this.chart2.update();
     });
@@ -232,12 +230,11 @@ export class DataComponent implements OnInit, AfterViewInit {
       }
       else if(chart == this.chart2.data.datasets[0].label){
         this.dataService.getTopGames(range).subscribe((result: any[]) =>{
-          this.games = result;
+          for(var i = 0; i < result.length; i++){
+            this.games[i] = result[i].name;
+            this.saleGames[i] = result[i].sales;
+          }
           this.chart2.data.labels = this.games;
-          this.chart2.update();
-        });
-        this.dataService.getTopGameSales(range).subscribe((result: number[]) =>{
-          this.saleGames = result;
           this.chart2.data.datasets[0].data = this.saleGames;
           this.chart2.update();
           this.chart2Range = range;

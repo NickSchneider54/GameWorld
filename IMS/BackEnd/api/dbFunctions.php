@@ -414,14 +414,30 @@ function getGames(){
     global $pdo;
     global $games;
 
-    $sql = "SELECT name FROM games";
+    $currentDay = date('Y-m-d');
+    if($_GET['range'] == 'Weekly'){
+        $range = date("Y-m-d", strtotime("previous monday"));          
+    }
+    else if($_GET['range'] == 'Monthly'){
+        $range = date('Y-m').'-01';  
+    }
+    else{
+        $range = date('Y').'-01-01';
+    }
+
+    $sql = "SELECT games.name, COUNT(productID) AS sales FROM games
+            JOIN ticketitems on games.gameID = ticketitems.productID
+            JOIN tickets on tickets.ticketID = ticketItems.ticketID
+            WHERE tickets.orderDate BETWEEN '$range' AND '$currentDay'
+            GROUP BY games.name
+            ORDER BY sales DESC";
 
     $query = $pdo->prepare($sql);
     $query->execute();
 
     $result = $query->fetchAll();
     for($i = 0; $i < sizeof($result); $i++){
-        $games[$i] = $result[$i]['name'];
+        $games[$i] = (object) array( name=>$result[$i]['name'], sales=>$result[$i]['sales']);
     }
 
     if($_GET['f'] == 'games'){

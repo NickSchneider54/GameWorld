@@ -13,7 +13,7 @@
                         </mat-form-field> -->
                         <mat-form-field >
                             <mat-label>UPC</mat-label>
-                            <input matInput [(ngModel)]="upc" name="upc" >
+                            <input matInput [(ngModel)]="upc" name="upc" (change)="addItemToCart(upc)">
                          </mat-form-field>
                       <!--  <mat-form-field >
                             <mat-label>Console</mat-label>
@@ -56,7 +56,7 @@
                         </mat-form-field>
                         <mat-form-field >
                             <mat-label>UPC</mat-label>
-                            <input matInput [(ngModel)]="upc" name="upc" id="upc" (onkeyup)="getProduct()">
+                            <input matInput [(ngModel)]="upc" name="upc" id="upc" (change)="getProduct()">
                         </mat-form-field>
                         <mat-form-field >
                             <mat-label>Price</mat-label>
