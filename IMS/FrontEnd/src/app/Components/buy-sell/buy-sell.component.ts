@@ -12,7 +12,7 @@ import { OverrideAuthorizationComponent } from '../dialogs/override-authorizatio
   templateUrl: './buy-sell.component.html',
   styleUrls: ['./buy-sell.component.css']
 })
-export class BuySellComponent implements OnInit {
+export class BuySellComponent implements OnInit, AfterViewInit {
 
   currentTab: string = "Sales";
   name: string = "";
@@ -39,6 +39,11 @@ export class BuySellComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit(){
+    var input = document.querySelector('input');
+    input.addEventListener('change', this.getProduct);
+  }
+
   tabClick(tab){    
     this.currentTab = tab.tab.textLabel;
     console.log(this.currentTab);
@@ -53,6 +58,12 @@ export class BuySellComponent implements OnInit {
         }
       });
     }
+  }
+
+  clearProduct(){
+    this.upc = "";
+    this.name = "";
+    this.price = "";
   }
 
   getProduct(){
