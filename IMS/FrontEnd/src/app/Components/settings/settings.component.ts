@@ -70,9 +70,16 @@ export class SettingsComponent extends DataSource<User> implements OnInit {
     console.log("in function")
     var user = {username: username, password: password, level: level};
     console.log(user);
-    this.update.addUser(encodeURIComponent(JSON.stringify(user))).subscribe((result) =>{
-      console.log(result);
-      alert(result);
+    this.update.addUser(encodeURIComponent(JSON.stringify(user))).subscribe((result) =>{});
+    this.username = "";
+    this.password = "";
+    this.level = "";
+    this.user.getUsers().subscribe((result: Employee[])=>{
+      for(var i = 0; i < result.length; i++){
+        this.users[i] = {id: result[i]['userID'], username: result[i]['username'], password: result[i]['password'], level: result[i]['level'], show: true};
+        
+      }
+      this.dataSource.data = this.users;
     });
   }
 

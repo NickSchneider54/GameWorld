@@ -5,6 +5,7 @@ export class Item {
 
     constructor(product:object){
         this.product = product;
+        this.qty = 1;
     }
 
 }

@@ -16,8 +16,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EditInventoryComponent } from './Components/dialogs/edit-inventory/edit-inventory.component';
 import { AddInventoryComponent } from './Components/dialogs/add-inventory/add-inventory.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {EditUserComponent} from './Components/dialogs/edit-user/edit-user.component'
-
+import { EditUserComponent } from './Components/dialogs/edit-user/edit-user.component'
+import { MatGridListModule } from '@angular/material/grid-list'
 
 
 
@@ -44,6 +44,7 @@ import {EditUserComponent} from './Components/dialogs/edit-user/edit-user.compon
     MatSortModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatGridListModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

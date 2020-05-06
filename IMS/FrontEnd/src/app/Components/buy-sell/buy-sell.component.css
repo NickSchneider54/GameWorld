@@ -32,8 +32,6 @@
     display: flex;
     flex-direction: column;
     min-width: 85%;
-    justify-content: left;
-    align-items: left;
     transition: all 0.2s ease-in-out;
     line-height: 24px;
 }
@@ -68,4 +66,51 @@
     align-items:center;
     flex-wrap: nowrap;
     justify-content: center;
+}
+
+#clearBtn{
+    background-color: rgb(2,128,144);
+    color: white;
+}
+
+.SellCard{
+    overflow: hidden;
+}
+
+.SellCard h2{
+    padding-left: 35%;
+}
+
+.SellCard .mat-subheader{
+    width: 9%;
+    margin: auto;
+}
+
+.SellCard h4{
+    padding-left: 35%;
+}
+
+.SellCard mat-list-item{
+    text-align: left;
+    padding-left: 40%;
+    padding-bottom: 0;
+    min-height: fit-content;
+    max-height: 50px;
+}
+
+#saleBtn{
+    display: block;
+    margin: auto;
+}
+
+#price, #qty{
+    padding-left: .5%;
+}
+
+#orderTotal{
+    margin-top: 40px;
+}
+
+.remove, #qty{
+    padding-right: .5%;
 }

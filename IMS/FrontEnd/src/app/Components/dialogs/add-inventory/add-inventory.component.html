@@ -40,6 +40,7 @@
                 <mat-option value="specialty">Specialty</mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-form-field *ngIf="category == 'games'">
             <mat-label>Genre</mat-label>
             <mat-select id="genre" [(ngModel)]="genre" name="genre" required>
@@ -49,40 +50,48 @@
                 <mat-option value="horror">Horror</mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-form-field *ngIf="category == 'equipment'">
             <mat-label>Type</mat-label>
             <mat-select id="type" [(ngModel)]="genre" name="type" required>
-                <mat-option value="action">Action</mat-option>
-                <mat-option value="adventure">Adventure</mat-option>
-                <mat-option value="sci-fi">Science Fiction</mat-option>
-                <mat-option value="horror">Horror</mat-option>
+                <mat-option value="controller">Controller</mat-option>
+                <mat-option value="cases">Case</mat-option>
+                <mat-option value="headset">Headset</mat-option>
+                <mat-option value="cables">Cables</mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-form-field *ngIf="category == 'specialty'">
             <mat-label>Type</mat-label>
             <mat-select id="type" [(ngModel)]="genre" name="type" required>
-                <mat-option value="action">Controller</mat-option>
-                <mat-option value="adventure">Game Guide</mat-option>
-                <mat-option value="sci-fi">Headset</mat-option>
-                <mat-option value="horror">Cables</mat-option>
+                <mat-option value="figures">Figure</mat-option>
+                <mat-option value="guidebook">Game Guide</mat-option>
+                <mat-option value="posters">Poster</mat-option>
+                <mat-option value="apparel">Apparel</mat-option>
             </mat-select>
         </mat-form-field>
         <br>
-        <mat-form-field *ngIf="category && category != 'equipment' && category != 'specialty'">
+
+        <mat-form-field *ngIf="category && category != 'specialty' && category != 'consoles'">
             <mat-label>Console</mat-label>
             <mat-select id="genre" [(ngModel)]="console" name="genre" (ngModelChange)="setConsoleInfo($event)" required>
                 <mat-option *ngFor="let option of consoles" [value]="option">{{option}}</mat-option>
             </mat-select>
         </mat-form-field>
+
+        <mat-form-field *ngIf="category && category == 'consoles'">
+            <mat-label>Generation</mat-label>
+            <mat-select id="genre" [(ngModel)]="generation" name="genre" (ngModelChange)="setGenerationInfo($event)" required>
+                <mat-option *ngFor="let option of generations" [value]="option">{{option}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
         <mat-form-field *ngIf="category && category != 'specialty'">
             <mat-label>Brand</mat-label>
-            <input *ngIf="category != 'equipment'" matInput id="brand" [(ngModel)]="brand" type="text" name="brand" disabled required>
-            <mat-select *ngIf="category == 'equipment'" [(ngModel)]="brand" name="brand" required>
-                <mat-option value="action">Action</mat-option>
-                <mat-option value="adventure">Adventure</mat-option>
-                <mat-option value="sci-fi">Science Fiction</mat-option>
-                <mat-option value="horror">Horror</mat-option>
-            </mat-select>
+            <input *ngIf="category" matInput id="brand" [(ngModel)]="brand" type="text" name="brand" disabled required>
+            <!-- <mat-select *ngIf="category == 'equipment'" [(ngModel)]="brand" name="brand" required>
+                <mat-option *ngFor="let option of brands" [value]="option">{{option}}</mat-option>
+            </mat-select> -->
         </mat-form-field>
     </form>
 </div>

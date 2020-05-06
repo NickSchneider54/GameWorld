@@ -250,6 +250,30 @@ function getConsoleSales($ticket){
     }        
 }
 
+function addConsole($product){
+    global $pdo;
+
+    $result = getGenerationID($product->generation);
+    $generation = $result['generationID'];
+    $brand = getGenerationBrand($product->generation);
+    $id = $product->id;
+    $name = $product->name;
+
+    $sql = "INSERT INTO consoles VALUES(?, ?, ?, ?)";
+    $query = $pdo->prepare($sql);
+    $query->bindValue(1, $id);
+    $query->bindValue(2, $name);
+    $query->bindValue(3, $generation);
+    $query->bindValue(4, $brand);
+
+    if($query->execute()){
+        echo "Console Added";
+    }
+    else{
+        echo "Failed";
+    }
+}
+
 //Equipment***********************************
 function getAllEquipmentIDs(){
     global $pdo;
@@ -357,14 +381,20 @@ function getEquipmentSales($ticket){
 function addEquipment($product){
     global $pdo;
 
-    $console = getConsoleID($product->console);
+    $id = $product->id;
+    $result = getConsoleID($product->console);
+    $console = $result['generationID'];
+    $name = $product->name;
+    $type = $product->genre;
 
     $sql = "INSERT INTO equipment VALUES(?, ?, ?, ?)";
     $query = $pdo->prepare($sql);
-    $query->bindValue(1, $product->id);
+    $query->bindValue(1, $id);
     $query->bindValue(2, $console);
-    $query->bindValue(3, $product->name);
-    $query->bindValue(5, $product->genre);
+    $query->bindValue(3, $name);
+    $query->bindValue(4, $type);
+
+    $query->execute();
 }
 
 //Games***********************************
@@ -741,13 +771,19 @@ function getMiscSales($ticket){
 function addSpecialty($product){
     global $pdo;
 
-    $brand = getBrandID($product->brand);
+    $id = $product->id;
+    $name = $product->name;
+    $description = $product->description;
+    $type = $product->genre;
 
-    $sql = "INSERT INTO specialty VALUES(?, ?, ?)";
+    $sql = "INSERT INTO accessories VALUES(?, ?, ?, ?)";
     $query = $pdo->prepare($sql);
-    $query->bindValue(1, $product->id);
-    $query->bindValue(2, $product->name);
-    $query->bindValue(3, $brand);
+    $query->bindValue(1, $id);
+    $query->bindValue(2, $name);
+    $query->bindValue(3, $description);
+    $query->bindValue(4, $type);
+
+    $query->execute();
 }
 
 //Ticket*****************************
@@ -788,7 +824,9 @@ function createTicket(){
                             $tickets = getCurrentTicket();
                             foreach($tickets as $array){
                                 if(is_array($array)){
-                                    createTicketItem($array['ticketID'], $item['productID']);
+                                    for($i = 0; $i < $inner['qty']; $i++){
+                                        createTicketItem($array['ticketID'], $item['productID']);
+                                    }                                    
                                 break;
                                 }
                             }           
@@ -1044,9 +1082,36 @@ function GetGenByID($sID){
 }
 function GetGenByName($sName){
     global $pdo;
-    $sql ="SELECT * FROM consolegenerations WHERE name like$sName";
+    $sql ="SELECT * FROM consolegenerations WHERE name like $sName";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
+}
+function getGenerationBrand($sName){    
+    global $pdo;
+
+    $sql = "SELECT brandID from consolegenerations WHERE name = '$sName'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    $result = $query->fetch();
+    $brand = $result['brandID'];
+
+    if($_GET['f'] == 'getbrand'){
+        $result = GetBrandByID($brand);    
+        $json = json_encode($result['name']);
+        echo $json;
+    }
+    else{
+        return $brand;
+    }
+}
+function getGenerationID($sName){
+    global $pdo;
+
+    $sql = "SELECT generationID FROM consolegenerations WHERE name = '$sName'";
+    $query = $pdo->prepare($sql);
+    $query->execute();
+
+    return $query->fetch();
 }
 
 //Accessories*******************************************
@@ -1115,6 +1180,9 @@ function getTotalCategorySales(){
     $json = json_encode($categories);    
     echo $json;
 }
+// fdsdsfgdfhdfhdhdfhdgfhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+//hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+//hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 function addToCategory($product){
     $category = $product->category;
     switch($category){
@@ -1237,9 +1305,7 @@ function addInventoryItem(){
     global $pdo;
 
     if(isset($_GET['product'])){
-        $product = json_decode($_GET['product']);  
-        
-        print_r($product);
+        $product = json_decode($_GET['product']); 
 
         $id = $product->id;
         $name = $product->name;
@@ -1249,6 +1315,7 @@ function addInventoryItem(){
         $stock = $product->stock;
         $category = $product->category;
         $console = $product->console;
+        $generation = $product->generation;
         $brand = $product->brand;
 
         $result = getProduct($id);

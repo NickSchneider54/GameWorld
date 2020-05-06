@@ -60,7 +60,7 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     }
     this.inv.getInventory().subscribe((result: InventoryItem[]) =>{
       for(var i = 0; i < result.length; i++){
-        this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+        this.INVENTORY[i] = {id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])};        
       }
       this.dataSource.data = this.INVENTORY;
     });   
@@ -90,7 +90,7 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     if(this.category == 'games'){      
       this.inv.searchInventory(this.category).subscribe((result: InventoryItem[]) =>{
         for(var i = 0; i < result.length; i++){
-          this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+          this.INVENTORY[i] = {id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])};        
         }
         console.log(this.INVENTORY);
         this.dataSource.data = this.INVENTORY;
@@ -99,7 +99,7 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     if(this.category == 'consoles'){
       this.inv.searchInventory(this.category).subscribe((result: InventoryItem[]) =>{
         for(var i = 0; i < result.length; i++){
-          this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+          this.INVENTORY[i] = {id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])};        
         }
         console.log(this.INVENTORY);
         this.dataSource.data = this.INVENTORY;
@@ -108,7 +108,7 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     if(this.category == 'equipment'){
       this.inv.searchInventory(this.category).subscribe((result: InventoryItem[]) =>{
         for(var i = 0; i < result.length; i++){
-          this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+          this.INVENTORY[i] = {id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])};        
         }
         console.log(this.INVENTORY);
         this.dataSource.data = this.INVENTORY;
@@ -117,7 +117,7 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     if(this.category == 'specialty'){
       this.inv.searchInventory(this.category).subscribe((result: InventoryItem[]) =>{
         for(var i = 0; i < result.length; i++){
-          this.INVENTORY.push({id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])});        
+          this.INVENTORY[i] = {id: result[i]['productID'], name: result[i]['name'], description: result[i]['description'], price : Number(result[i]['price']), used: Number(result[i]['used']), stock: Number(result[i]['stock'])};        
         }
         console.log(this.INVENTORY);
         this.dataSource.data = this.INVENTORY;
@@ -197,6 +197,10 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     };
     
     const dialogRef = this.dialog.open(EditInventoryComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
   }
 
   addItem(){
@@ -209,6 +213,10 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     };
     
     const dialogRef = this.dialog.open(AddInventoryComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
   }
 
 

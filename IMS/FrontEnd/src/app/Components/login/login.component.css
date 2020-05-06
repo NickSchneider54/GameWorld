@@ -31,3 +31,7 @@
     position: relative;
     top: 3.5px;
 }
+
+.error{
+    color: red;
+}

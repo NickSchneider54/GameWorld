@@ -1,11 +1,4 @@
-
-
-<!-- un-comment this for testing -->
-<!-- <mat-toolbar color="primary" class="toolbar"  > -->
-
-<!-- comment this line for testing  -->
 <mat-toolbar class="toolbar" *ngIf="loggedIn == 'true'" >
-
   <mat-toolbar-row>    
     <span>
       <button mat-button class="sidenavBtn" (click)="drawer.toggle()" >
@@ -14,42 +7,23 @@
     </span>
     <span>Game World</span>
     <img src="../assets/icon5.ico">
-    <!-- <mat-icon class="headerIcon">public</mat-icon> -->
     <span class="filler"></span>
-    <!-- <span>
-      <form>
-        <mat-form-field class="search-bar"><input matInput placeholder="search" (keydown.enter)="sendSearch($event)">
-        </mat-form-field>
-        <mat-icon>search</mat-icon>
-      </form>
-    </span> -->
     <span class="filler"></span>    
       <mat-icon class="personIcon">person</mat-icon><span>&nbsp; {{username}} &nbsp;</span>
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon>keyboard_arrow_down</mat-icon> </button>
       <mat-menu #menu="matMenu">
         <button *ngIf="level === 'master'" mat-menu-item [routerLink]="'/settings'">Settings</button>
         <button mat-menu-item (click)="drawer.toggle(); logout()">Logout</button>
-      </mat-menu>
-    
+      </mat-menu>    
   </mat-toolbar-row>
 </mat-toolbar>
 
-
-<!-- un-comment this for testing -->
-<!-- <mat-toolbar color="primary" class="notLoggedInToolbar"  > -->
-
-  <!-- comment this line for testing -->
-  <mat-toolbar color="primary" class="toolbar" *ngIf="loggedIn != 'true'" >
-
-    <mat-toolbar-row>
-      <span>Game World</span>
-      <img src="../assets/icon5.ico" id="icon">
-      <!-- <mat-icon class="headerIcon">public</mat-icon> -->
-    </mat-toolbar-row>
-   </mat-toolbar>   
-    
-    
-
+<mat-toolbar color="primary" class="toolbar" *ngIf="loggedIn != 'true'" >
+  <mat-toolbar-row>
+    <span>Game World</span>
+    <img src="../assets/icon5.ico" id="icon">
+  </mat-toolbar-row>
+</mat-toolbar>
 
 <mat-drawer-container class="dashContainer" autosize>
   <mat-drawer #drawer class="sidenav" mode="side">
@@ -61,18 +35,13 @@
         <a mat-list-item class="sideNavItem" (click)="drawer.toggle()"> <mat-icon class="sidebarIcons">clear</mat-icon>  Close</a>
       </mat-nav-list>
   </mat-drawer>
-
-  <div>
-    
+  <div>    
     <main>
       <div>
         <router-outlet></router-outlet>
       </div>
     </main> 
-    
-    <!--Components will be able to go here in the content area based upon which sidebar is clicked-->
   </div>
-
 </mat-drawer-container>
 
 

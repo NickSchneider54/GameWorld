@@ -79,8 +79,8 @@ export class BuySellComponent implements OnInit, AfterViewInit {
   addItemToCart(upc:string): void{
     if(this.upc != ""){
       this.search.getProduct(upc).subscribe((result: object) =>{
-        if(this.currentTab === "Sales"){
-          this.cart.addToCart(new Item(result));
+        if(this.currentTab == "Sales"){
+          this.checkCart(new Item(result));      
         }
         if(this.currentTab === "Purchases"){
           var item = new Item(result);
@@ -95,12 +95,39 @@ export class BuySellComponent implements OnInit, AfterViewInit {
     }
   }
 
+  checkCart(item){
+    if(this.shoppingCart.length > 0){
+      for(var i = 0; i < this.shoppingCart.length; i++){
+        if(item.product[0].productID == this.shoppingCart[i].product[0].productID){          
+          this.shoppingCart[i].qty += item.qty;
+          this.shoppingCart[i].product[0].price = this.round(parseFloat(this.shoppingCart[i].product[0].price) + parseFloat(item.product[0].price));
+          break;
+        }
+        else if(i == this.shoppingCart.length - 1){          
+          this.cart.addToCart(item);   
+          break;
+        }
+      }
+    }
+    else{      
+      this.cart.addToCart(item);   
+    }
+    console.log(item);
+  }
+
   removeItemFromCart(name:string){
     if(this.currentTab == "Sales"){
       for(var i = 0; i < this.shoppingCart.length; i++){
         if(this.shoppingCart[i].product[0].name === name){
-          this.shoppingCart.splice(i, 1);
-          break;
+          if(this.shoppingCart[i].qty > 1){
+            this.shoppingCart[i].qty--;
+            this.shoppingCart[i].product[0].price = this.round(parseFloat(this.shoppingCart[i].product[0].price)/2);
+            break;
+          }
+          else{
+            this.shoppingCart.splice(i, 1);
+            break;
+          }
         }
       }
     }

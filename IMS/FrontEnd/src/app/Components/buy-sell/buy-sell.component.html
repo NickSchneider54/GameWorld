@@ -1,37 +1,28 @@
 <div class="sidenav-content">
 <mat-tab-group class ='buySellTabs' (selectedTabChange)="tabClick($event)">
     <mat-tab label="Sales">
-        <div class='card-container'>
+        <div class='card-container' if="purchaseCard">
             <mat-card class='SellCard'> 
                 <mat-card-content>
-                <div class="addItemContainer">                                 
-                    <form class="buyItemForm">
-                        <!-- <mat-form-field >
-                            <mat-label>Item Name</mat-label>
-                            <input matInput [(ngModel)]="name" name="name">
-                        </mat-form-field> -->
-                        <mat-form-field >
-                            <mat-label>UPC</mat-label>
-                            <input matInput [(ngModel)]="upc" name="upc" (change)="addItemToCart(upc)">
-                         </mat-form-field>
-                      <!--  <mat-form-field >
-                            <mat-label>Console</mat-label>
-                            <input matInput [(ngModel)]="console" name="console">
-                        </mat-form-field> -->                                              
-                    </form> 
-                    <button mat-raised-button class="addItemBtn" (click)="addItemToCart(upc)">Add item to order</button>
-                </div>   
+                    <div class="addItemContainer">                                 
+                        <form class="buyItemForm">
+                            <mat-form-field >
+                                <mat-label>UPC</mat-label>
+                                <input matInput [(ngModel)]="upc" name="upc" (change)="addItemToCart(upc)">
+                            </mat-form-field>                                          
+                        </form> 
+                        <button mat-raised-button class="addItemBtn" (click)="addItemToCart(upc)">Add item to order</button>
+                    </div>   
                     <mat-divider [inset]="true"></mat-divider>               
-                    <h2>Order Details</h2>                  
-                <mat-divider [inset]="true"></mat-divider>
-                
+                        <h2>Order Details</h2>                  
+                    <mat-divider [inset]="true"></mat-divider>                
                     <mat-list>
                         <div mat-subheader>Sale Summary</div>               
                         <mat-list-item *ngFor="let item of shoppingCart">                   
-                            <div mat-line>{{item.product[0].name}} <span class="material-icons remove" (click)="removeItemFromCart(item.product[0].name)">highlight_off</span></div>
-                            <div mat-line>{{item.product[0].price}}</div>
+                            <div mat-line><span class="material-icons remove" (click)="removeItemFromCart(item.product[0].name)">highlight_off</span><span id="qty"><strong>{{item.qty}}</strong></span><strong>{{item.product[0].name}}:</strong> <span id="price">${{item.product[0].price}}</span></div>
+                            <div mat-line></div>
                         </mat-list-item>
-                        <h2>Order Total</h2>
+                        <h2 id="orderTotal">Order Total</h2>
                         <mat-divider [inset]="true"></mat-divider>
                         <h4>SubTotal: ${{subTotal}}</h4> 
                         <h4>Sales Tax: ${{salesTax}}</h4> 
@@ -39,10 +30,11 @@
                         <h2>Total: ${{cartTotal}}</h2>                
                     </mat-list>
                 </mat-card-content>
-                <button mat-raised-button class="completePurchaseBtn" (click)="completePurchase()">Complete Sale</button>
+                <button mat-raised-button class="completePurchaseBtn" id="saleBtn" (click)="completePurchase()">Complete Sale</button>
             </mat-card>
         </div>
     </mat-tab>
+
     <mat-tab label="Purchases"> 
         <div class='card-container'>
             <mat-card class='itemDetailsCard'>                
@@ -52,7 +44,7 @@
                     <form class="buyItemForm">
                         <mat-form-field >
                             <mat-label>Item Name</mat-label>
-                            <input matInput [(ngModel)]="name" name="name">
+                            <input matInput [(ngModel)]="name" name="name" disabled>
                         </mat-form-field>
                         <mat-form-field >
                             <mat-label>UPC</mat-label>
