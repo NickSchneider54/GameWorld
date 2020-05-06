@@ -77,20 +77,22 @@ export class BuySellComponent implements OnInit, AfterViewInit {
   }
 
   addItemToCart(upc:string): void{
-    this.search.getProduct(upc).subscribe((result: object) =>{
-      if(this.currentTab === "Sales"){
-        this.cart.addToCart(new Item(result));
-      }
-      if(this.currentTab === "Purchases"){
-        var item = new Item(result);
-        if(item.product[0].price != this.price){
-          item.product[0].price = this.price;
+    if(this.upc != ""){
+      this.search.getProduct(upc).subscribe((result: object) =>{
+        if(this.currentTab === "Sales"){
+          this.cart.addToCart(new Item(result));
         }
-        console.log(item)
-        this.cart.addToBuyList(item);
-      }
-      this.updateCart();
-    })
+        if(this.currentTab === "Purchases"){
+          var item = new Item(result);
+          if(item.product[0].price != this.price){
+            item.product[0].price = this.price;
+          }
+          console.log(item)
+          this.cart.addToBuyList(item);
+        }
+        this.updateCart();
+      })
+    }
   }
 
   removeItemFromCart(name:string){

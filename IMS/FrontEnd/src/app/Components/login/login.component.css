@@ -26,8 +26,13 @@
    
 }
 
+<<<<<<< HEAD
 .loginIcon {
     margin-right: 4px;
     position: relative;
     top: 3.5px;
+=======
+.error{
+    color: red;
+>>>>>>> a97584c401b3da1efcf36a10de97af40242961b9
 }
