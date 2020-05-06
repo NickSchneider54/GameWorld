@@ -15,6 +15,7 @@ import { OverrideAuthorizationComponent } from './Components/dialogs/override-au
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditInventoryComponent } from './Components/dialogs/edit-inventory/edit-inventory.component';
 import { AddInventoryComponent } from './Components/dialogs/add-inventory/add-inventory.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -39,7 +40,8 @@ import { AddInventoryComponent } from './Components/dialogs/add-inventory/add-in
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
