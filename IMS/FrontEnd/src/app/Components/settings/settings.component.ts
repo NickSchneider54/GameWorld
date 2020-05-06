@@ -10,6 +10,8 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { EditUserComponent } from '../dialogs/edit-user/edit-user.component'
 
 export interface User {
   id: number;
@@ -32,13 +34,12 @@ export class SettingsComponent extends DataSource<User> implements OnInit {
   password: string = "";
   level: string = "";
   dataSource = new MatTableDataSource<User>();
-  displayedColumns = ['id', 'username', 'password', 'level'];
+  displayedColumns = ['id', 'username', 'password', 'level', 'action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  private USERS: User[] = [];
   searchItem: string;
 
-  constructor(private user: LoginService, private update: UserService, private cookies: CookieService, private router: Router) { super(); }
+  constructor(private user: LoginService, private update: UserService, private cookies: CookieService, private router: Router, public dialog: MatDialog) { super(); }
 
   
   ngOnInit(): void {
@@ -49,9 +50,9 @@ export class SettingsComponent extends DataSource<User> implements OnInit {
       this.user.getUsers().subscribe((result: Employee[])=>{
         for(var i = 0; i < result.length; i++){
           this.users[i] = {id: result[i]['userID'], username: result[i]['username'], password: result[i]['password'], level: result[i]['level'], show: true};
-          this.USERS.push({id: result[i]['userID'], username: result[i]['username'], password: this.hidePass(result[i]['password']), level: result[i]['level']});
+          
         }
-        this.dataSource.data = this.USERS;
+        this.dataSource.data = this.users;
         console.log(this.users)
       });
     }
@@ -73,16 +74,6 @@ export class SettingsComponent extends DataSource<User> implements OnInit {
       console.log(result);
       alert(result);
     });
-  }
-  
-  updateEmployee(user){
-    this.update.updateUser(encodeURIComponent(JSON.stringify(user))).subscribe((result) =>{
-      alert(result);
-    });
-  }
-
-  deleteEmployee(user){
-
   }
 
   connect(): Observable<User[]> {
@@ -126,6 +117,17 @@ export class SettingsComponent extends DataSource<User> implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  openDialog(id): void {
+    const dialogConfig = new MatDialogConfig();
+  
+    dialogConfig.width = '600px';
+    dialogConfig.height = '400px';
+    dialogConfig.data = {
+      id: id
+    };
+    
+    const dialogRef = this.dialog.open(EditUserComponent, dialogConfig);
   }
 
   /**

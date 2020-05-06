@@ -6,7 +6,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { InventoryService } from 'src/app/Services/Inventory/inventory.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { EditInventoryComponent } from '../dialogs/edit-inventory/edit-inventory.component';

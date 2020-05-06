@@ -71,3 +71,16 @@
 .detailsCard{
     min-height: 35vh !important;
 }
+
+.moneyIcon {
+    margin-right: 4px;
+    position: relative;
+    top: 3.5px;
+}
+
+.sales {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}

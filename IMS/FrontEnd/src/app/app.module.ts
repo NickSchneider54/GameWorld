@@ -15,6 +15,7 @@ import { OverrideAuthorizationComponent } from './Components/dialogs/override-au
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditInventoryComponent } from './Components/dialogs/edit-inventory/edit-inventory.component';
 import { AddInventoryComponent } from './Components/dialogs/add-inventory/add-inventory.component';
+import { EditUserComponent } from './Components/dialogs/edit-user/edit-user.component';
 
 
 
@@ -27,6 +28,7 @@ import { AddInventoryComponent } from './Components/dialogs/add-inventory/add-in
     OverrideAuthorizationComponent,
     EditInventoryComponent,
     AddInventoryComponent,
+    EditUserComponent
     
   ],
   imports: [

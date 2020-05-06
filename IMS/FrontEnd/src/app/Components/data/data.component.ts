@@ -146,6 +146,7 @@ export class DataComponent implements OnInit, AfterViewInit {
         datasets:[{
           label: 'Daily Sales',
           data: [1,2,3,4,5,6,7],
+          fill: true,
           backgroundColor: "#02c39a"
         }]      
         },
@@ -173,7 +174,13 @@ export class DataComponent implements OnInit, AfterViewInit {
         labels: ["1","2","3"],
         datasets:[{
           label: 'Top Selling Games',
-          data: [1,2,3,4,5]
+          data: [1,2,3],
+          backgroundColor: [
+            'rgb(2, 128, 144)',
+            'rgb(2, 195, 154)',
+            'rgb(5, 102, 141)',
+          ]
+
         }]      
         },
         options: {
@@ -199,11 +206,18 @@ export class DataComponent implements OnInit, AfterViewInit {
         labels: ["Games","Consoles","Equipment","Misc."],
         datasets:[{
           label: 'Sales by Category',
-          data: [1,2,3,4]
+          data: [1,2,3,4],
+          backgroundColor: [
+            'rgb(5, 102, 141)',
+            'rgb(2, 128, 144)',
+            'rgb(240, 243, 189)',
+            'rgb(2, 195, 154)'
+          ]
         }]      
         },
         options: {
-          responsive: false,}
+          responsive: false,
+        }
     })
   }  
 

@@ -16,8 +16,18 @@
     margin:8px;
 }
 
+.login {
+    justify-content: center
+}
+
 #loginSubmit{
     margin-left: 40%;
     margin-bottom: 16px;
    
+}
+
+.loginIcon {
+    margin-right: 4px;
+    position: relative;
+    top: 3.5px;
 }

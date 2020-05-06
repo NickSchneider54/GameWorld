@@ -58,9 +58,9 @@
     margin-left:5%; 
     margin-right:85%;   
 }
-/* .addItemBtn{
-    margin-left:5%;    
-} */
+.addItemBtn{
+    margin-left: 5px;    
+}
 
 .addItemContainer{
     display:flex;
