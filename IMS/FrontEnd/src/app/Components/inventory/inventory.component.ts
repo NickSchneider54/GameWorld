@@ -82,7 +82,9 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
   }
 
   resetArray(){
+    console.log("in function");
     this.INVENTORY = [];
+    this.searchItem= '';
   }
 
   getCategory($event: Event){
