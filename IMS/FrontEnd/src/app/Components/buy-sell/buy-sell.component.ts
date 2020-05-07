@@ -196,14 +196,22 @@ export class BuySellComponent implements OnInit, AfterViewInit {
       alert("Order Complete");
     }
     else if(this.currentTab == 'Purchases'){
-      if(this.cookies.get("level") == "master" || this.authorization == true){
-        this.search.createBuyTicket().subscribe(result=>{});   
-        this.cart.clearBuyList();
-        this.updateCart();
-        alert("Order Complete");
+      if(this.cartTotal > 50){
+        if(this.cookies.get("level") == "master" || this.authorization == true){
+          this.search.createBuyTicket().subscribe(result=>{});   
+          this.cart.clearBuyList();
+          this.updateCart();
+          alert("Order Complete");
+        }
+        else{
+          this.openDialog();
+        }
       }
       else{
-        this.openDialog();
+        this.search.createBuyTicket().subscribe(result=>{});   
+          this.cart.clearBuyList();
+          this.updateCart();
+          alert("Order Complete");
       }
     }
   } 

@@ -11,11 +11,11 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Account Level</mat-label>
-    <select matNativeControl [(ngModel)]="level" required>
-      <option value="employee">Employee</option>
-      <option value="manager">Manager</option>
-      <option value="master">Master</option>
-    </select>
+    <mat-select matNativeControl [(ngModel)]="level" required>
+      <mat-option value="employee">Employee</mat-option>
+      <mat-option value="manager">Manager</mat-option>
+      <mat-option value="master">Master</mat-option>
+    </mat-select>
   </mat-form-field>
   <button mat-raised-button color="primary" id="addUserBtn" (click)="addEmployee(username, password, level)">Add
     Employee</button>
