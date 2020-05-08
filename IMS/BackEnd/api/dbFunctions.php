@@ -67,6 +67,7 @@ function getAllProducts(){
     $json = json_encode($inventory);
     echo $json;
 }
+// Gets Product from UPC
 function getProduct($upc){   
     global $pdo;
 
@@ -86,6 +87,7 @@ function getProduct($upc){
         return $result->fetch();
     }
 }
+// Gets Product's price from UPC
 function getProductPrice($product){
     global $pdo;
     global $totalSales;
@@ -105,6 +107,7 @@ function GetCustomerByCustID($sID){
 }
 
 //Brands*************************************
+// Returns all Brands
 function GetAllBrands(){
     global $pdo;
     $sql ="SELECT * FROM brands";
@@ -115,18 +118,21 @@ function GetAllBrands(){
     $json = json_encode($brands);
     echo $json;
 }
+// Returns Brand from ID
 function GetBrandByID($sID){
     global $pdo;
     $sql ="SELECT * FROM brands WHERE brandID =$sID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 }
+// Returns Brand based on Name given
 function GetBrandByName($sName){
     global $pdo;
     $sql ="SELECT * FROM brands WHERE name like $sName";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 }
+// Returns BrandID baswd on the given Brand name
 function getBrandID($brand){
     global $pdo;
     $sql = "SELECT brandID from brands WHERE name = '$brand'";
@@ -136,6 +142,7 @@ function getBrandID($brand){
 }
 
 //Consoles*****************************************
+// Returns all Consoles
 function GetAllConsoles(){
     global $pdo;
     $sql ="SELECT * FROM consoles";
@@ -146,6 +153,7 @@ function GetAllConsoles(){
     $json = json_encode($consoles);
     echo $json;
 }
+// Returns BrandID based on Console name
 function getConsoleBrand($sName){
     global $pdo;
 
@@ -160,6 +168,7 @@ function getConsoleBrand($sName){
     echo $json;
 
 }
+// Returns GenerationID based on Console name
 function getConsoleID($console){
     global $pdo;
     $sql = "SELECT generationID FROM consoles WHERE name = '$console'";
@@ -167,6 +176,7 @@ function getConsoleID($console){
     $query->execute();
     return $query->fetch();
 }
+// Returns Console info based on ID
 function GetConsoles($sID){
     global $pdo;
     $sql ="SELECT * FROM consoles WHERE consoleID =$sID";
@@ -174,6 +184,7 @@ function GetConsoles($sID){
     return $pdostate->fetch();
 
 }
+// Returns all consoleIDs
 function getAllConsoleIDs(){
     global $pdo;
 
@@ -182,24 +193,28 @@ function getAllConsoleIDs(){
     $query->execute();
     return $query->fetchAll();
 }
+// Returns Consoles based on brandID
 function GetConsolesByBrandID($sID){
     global $pdo;
     $sql ="SELECT * FROM consoles WHERE brandID =$sID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
+// Returns Consoles based on generationID
 function GetConsolesByGenID($sID){
     global $pdo;
     $sql ="SELECT * FROM consoles WHERE generationID =$sID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
+// Returns Consoles based on name
 function GetConsolesByName($sName){
     global $pdo;
     $sql ="SELECT * FROM consoles WHERE name like $sName";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
+// Returns consoleID & name based on consoleID
 function getAllSoldConsoles($id){
     global $pdo;
 
@@ -208,6 +223,7 @@ function getAllSoldConsoles($id){
     $query->execute();
     return $query->fetchAll();
 }
+// Returns Returns top selling Consoles in JSON format
 function getTopConsoles(){
     global $pdo;
     global $consoles;
@@ -221,6 +237,7 @@ function getTopConsoles(){
     $json = json_encode($consoles);
     echo $json;
 }
+// Logic for top Console Sales
 function getConsoleSales($ticket){
     global $pdo;
     global $consoles;
@@ -249,7 +266,7 @@ function getConsoleSales($ticket){
         }            
     }        
 }
-
+// Add Console to Console Table
 function addConsole($product){
     global $pdo;
 
@@ -275,6 +292,7 @@ function addConsole($product){
 }
 
 //Equipment***********************************
+// Returns all equipmentIDs
 function getAllEquipmentIDs(){
     global $pdo;
 
@@ -283,47 +301,30 @@ function getAllEquipmentIDs(){
     $query->execute();
     return $query->fetchAll();
 }
+// Returns Equipment based on equipmentID
 function GetEquipmentByID($sID){
     global $pdo;
     $sql ="SELECT * FROM equipment WHERE equipmentID =$sID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
-
-}function GetEquipmentByConsoleID($sID){
+}
+// Returns Equipment based on consoleID
+function GetEquipmentByConsoleID($sID){
     global $pdo;
     $sql ="SELECT * FROM equipment WHERE consoleID =$sID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
-function GetEquipmentByBrandID($sID){
+// Returns Equipment based on Type
+function GetEquipmentByType($sType){
     global $pdo;
-    $sql ="SELECT * FROM equipment WHERE BrandID =$sID";
+    $sql ="SELECT * FROM equipment WHERE type ='$sType'";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 
 }
-function GetEquipmentByTypeID($sID){
-    global $pdo;
-    $sql ="SELECT * FROM equipment WHERE typeID =$sID";
-    $pdostate = $pdo->query($sql);
-    return $pdostate->fetchAll();
-
-}
-function GetEquipmentTypeByID($sID){
-    global $pdo;
-    $sql ="SELECT * FROM equipmenttype WHERE eqTypeID =$sID";
-    $pdostate = $pdo->query($sql);
-    return $pdostate->fetch();
-
-}
-function GetEquipmentTypeByGameID($sID){
-    global $pdo;
-    $sql ="SELECT * FROM equipmenttype WHERE gameID =$sID";
-    $pdostate = $pdo->query($sql);
-    return $pdostate->fetchAll();
-
-}
+// Returns Equipment based on name
 function GetEquipmentByName($sName){
     global $pdo;
     $sql ="SELECT * FROM equipmenttype WHERE name like$sName";
@@ -331,6 +332,7 @@ function GetEquipmentByName($sName){
     return $pdostate->fetchAll();
 
 }
+// Returns Returns top selling Equipment in JSON format
 function getAllSoldEquipment($id){
     global $pdo;
 
@@ -339,6 +341,7 @@ function getAllSoldEquipment($id){
     $query->execute();
     return $query->fetchAll();
 }
+// Returns all time selling equipment
 function getAllTimeEquipment(){
     global $pdo;
     global $equipment;
@@ -351,6 +354,7 @@ function getAllTimeEquipment(){
     $json = json_encode($equipment);
     echo $json;
 }
+// Equipment Sales logic
 function getEquipmentSales($ticket){
     global $pdo;
     global $equipment;
@@ -378,6 +382,7 @@ function getEquipmentSales($ticket){
         } 
     }          
 }
+// Adds Product to Equipment Table
 function addEquipment($product){
     global $pdo;
 
@@ -398,12 +403,14 @@ function addEquipment($product){
 }
 
 //Games***********************************
+// Returns Games based on gameID
 function GetGamesByGameID($sID){
     global $pdo;
     $sql ="SELECT * FROM games WHERE gameID =$sID";
     $pdostate = $pdo->prepare($sql);
     return $pdostate->fetch();
 }
+// Returns Games based on consoleID
 function GetGamesByConsoleID($sID){
     global $pdo;
     $sql ="SELECT * FROM games WHERE consoleID =$sID";
@@ -411,6 +418,7 @@ function GetGamesByConsoleID($sID){
     return $pdostate->fetchAll();
 
 }
+// Returns Games based on name
 function GetGamesByName($sName){
     global $pdo;
     $sql ="SELECT * FROM games WHERE name like $sName";
@@ -419,6 +427,7 @@ function GetGamesByName($sName){
     return $pdostate->fetchAll();
 
 }
+// Returns Games based on releaseDate
 function GetGamesByDate($sDate){
     global $pdo;
     $sql ="SELECT * FROM games WHERE releaseDate like $sDate";
@@ -426,6 +435,7 @@ function GetGamesByDate($sDate){
     return $pdostate->fetchAll();
 
 }
+// Returns Games based on genre
 function GetGamesByGenre($sGenre){
     global $pdo;
     $sql ="SELECT * FROM games WHERE genre like $sGenre";
@@ -433,6 +443,7 @@ function GetGamesByGenre($sGenre){
     return $pdostate->fetchAll();
 
 }
+// Returns Games based on gameID
 function GetGamesByBrandID($sID){
     global $pdo;
     $sql ="SELECT * FROM games WHERE gameID =$sID";
@@ -440,6 +451,7 @@ function GetGamesByBrandID($sID){
     return $pdostate->fetchAll();
 
 }
+// Returns Game sales based on date range given 
 function getGames(){
     global $pdo;
     global $games;
@@ -475,16 +487,17 @@ function getGames(){
         echo $json;
     }
 }
+// Returns all GameIDs 
 function getAllGameIDs(){
     global $pdo;
 
     $sql = "SELECT gameID FROM games";
-
     $query = $pdo->prepare($sql);
     $query->execute();
 
     return $query->fetchAll();
 }
+// Returns all sold games
 function getTopGames(){
     global $pdo;
     global $sales;
@@ -498,16 +511,17 @@ function getTopGames(){
     $json = json_encode($sales);    
     echo $json; 
 }
+// Returns gameID & name based on gameID
 function getAllSoldGames($id){
     global $pdo;
 
     $sql = "SELECT gameID, name FROM games WHERE gameID = $id";
-
     $query = $pdo->prepare($sql);
     $query->execute();
 
     return $query->fetchAll();
 }
+// Returns all time selling games
 function getAllTimeGames(){
     global $pdo;
     global $games;
@@ -522,6 +536,7 @@ function getAllTimeGames(){
 
     echo $json;
 }
+// Game Sales Logic
 function getGameSales($ticket){
     global $pdo;
     global $games;
@@ -549,6 +564,7 @@ function getGameSales($ticket){
         } 
     }          
 }
+// Returns all Games
 function GetAllGames(){
     global $pdo;
     $sql ="SELECT * FROM games";
@@ -568,6 +584,7 @@ function GetAllGames(){
         return $result;
     }
 }
+// Adds product to Games table
 function addGame($product){
     global $pdo;
 
@@ -592,41 +609,7 @@ function addGame($product){
 }
 
 //SoldItems***********************************
-function GetSoldItemByID($sID){
-    global $pdo;
-    $sql ="SELECT * FROM solditems WHERE soldItemsID =$sID";
-    $pdostate = $pdo->query($sql);
-    return $pdostate->fetch();
-
-}
-function GetSoldItemByTicketID($sID){
-    global $pdo;
-    $sql ="SELECT * FROM solditems WHERE ticketID =$sID";
-    $pdostate = $pdo->query($sql);
-    return $pdostate->fetchAll();
-
-}
-function GetSoldItemByEquipmentID($sID){
-    global $pdo;
-    $sql ="SELECT * FROM solditems WHERE equipmentID =$sID";
-    $pdostate = $pdo->query($sql);
-    return $pdostate->fetchAll();
-
-}
-function GetSoldItemByGamesID($sID){
-    global $pdo;
-    $sql ="SELECT * FROM solditems WHERE gamesID =$sID";
-    $pdostate = $pdo->query($sql);
-    return $pdostate->fetchAll();
-
-}
-function GetSoldItemBySpecialID($sID){
-    global $pdo;
-    $sql ="SELECT * FROM solditems WHERE specialID =$sID";
-    $pdostate = $pdo->query($sql);
-    return $pdostate->fetchAll();
-
-}  
+// Creates Ticket Item based on the last entereed Ticket and updates inventory if Sale
 function createTicketItem($ticket, $item){
     global $pdo;
 
@@ -635,9 +618,7 @@ function createTicketItem($ticket, $item){
     $qty = 1;
     
     $sql = "INSERT INTO ticketitems (productID, name, ticketID, quantity) VALUES(?, ?, ?, ?)";
-
     $query = $pdo->prepare($sql);    
-
     $query->bindValue(1, $item);
     $query->bindValue(2, $name);
     $query->bindValue(3, $ticket);
@@ -645,10 +626,11 @@ function createTicketItem($ticket, $item){
     
     $query->execute();        
 
-    if($_GET['f'] == 'buy'){
+    if($_GET['f'] == 'sell'){
         updateInventory($item);
     }
 }
+// Returns Ticket Items based on ticketID
 function getTicketItems($ticket){
     global $pdo;
     global $games;
@@ -683,6 +665,7 @@ function getTicketItems($ticket){
         }
     } 
 }
+// Returns productID based on ticketID
 function getTicketItem($ticket){
     global $pdo;
 
@@ -692,17 +675,18 @@ function getTicketItem($ticket){
     
     return $query->fetchAll();
 }
+// Returns productID & name based on ticketID
 function getTicketItemInfo($ticket){
     global $pdo;
 
     $sql = "SELECT productID, name FROM ticketitems WHERE ticketID = $ticket";
-
     $query = $pdo->prepare($sql);
     $query->execute();
     return $query->fetchAll();
 }
 
 //Specialty************************************
+// Returns all accessoryIDs 
 function getAllAccessoryIDs(){
     global $pdo;
 
@@ -712,12 +696,14 @@ function getAllAccessoryIDs(){
 
     return $query->fetchAll();
 }
+// Returns Accessories based on accessoryID
 function GetSpecialByID($sID){
     global $pdo;
     $sql ="SELECT * FROM accessories WHERE accessoryID =$sID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetch();
 }
+// Returns accessoryID & name based on accessoryID
 function getAllSoldMisc($id){
     global $pdo;
     
@@ -727,6 +713,7 @@ function getAllSoldMisc($id){
 
     return $query->fetchAll();
 }
+// Returns all time selling specialty items in JSON
 function getAllTimeMisc(){
     global $pdo;
     global $misc;
@@ -741,6 +728,7 @@ function getAllTimeMisc(){
 
     echo $json;
 }
+// Speciality item sales logic
 function getMiscSales($ticket){
     global $pdo;
     global $misc;
@@ -768,6 +756,7 @@ function getMiscSales($ticket){
         } 
     }          
 }
+// Adds product to  Accessory Table
 function addSpecialty($product){
     global $pdo;
 
@@ -787,6 +776,7 @@ function addSpecialty($product){
 }
 
 //Ticket*****************************
+// Creates Transaction Ticket for both Sales and Buybacks
 function createTicket(){      
     if(isset($_GET['cart'])){
 
@@ -840,6 +830,7 @@ function createTicket(){
     $json = $message;
     echo json_encode($json);
 } 
+// Returns the last added Ticket's ticketID
 function getCurrentTicket(){
     global $pdo;
 
@@ -850,6 +841,7 @@ function getCurrentTicket(){
 
     return $query->fetchAll();
 }
+// Returns all ticketIDs based on date range given
 function getAllTicketIDs(){
     global $pdo;
 
@@ -894,6 +886,7 @@ function getAllTicketIDs(){
     }
            
 }
+// Returns Ticket based on ticketID
 function GetTicketByID($sID){
     global $pdo;
     $sql ="SELECT * FROM ticket WHERE ticketID =$sID";
@@ -901,6 +894,7 @@ function GetTicketByID($sID){
     return $pdostate->fetch();
 
 }
+// Returns Ticket based on customerID
 function GetTicketByCustomerID($sID){
     global $pdo;
     $sql ="SELECT * FROM ticket WHERE customerID =$sID";
@@ -908,6 +902,7 @@ function GetTicketByCustomerID($sID){
     return $pdostate->fetchAll();
 
 }
+// Returns Ticket based on userID
 function GetTicketByUserID($sID){
     global $pdo;
     $sql ="SELECT * FROM ticket WHERE userID =$sID";
@@ -916,6 +911,7 @@ function GetTicketByUserID($sID){
 }
 
 //Users*******************************************
+// Returns all User Sales
 function getUserSales(){
     global $pdo;
     global $users;
@@ -930,6 +926,7 @@ function getUserSales(){
 
     echo $json;
 }
+// Returns userID based on ticketID & ticketType
 function getUserID($ticket){
     global $pdo;
     global $users;
@@ -962,6 +959,7 @@ function getUserID($ticket){
         array_push($users, (object)["user"=>$username, "sales"=>1]);
     }        
 }
+// Returns username based on userID
 function getUserByID($id){
     global $pdo;
 
@@ -972,6 +970,7 @@ function getUserByID($id){
 
     return $query->fetch();
 }
+// Returns Users based on level
 function GetUserByLevel($sID){
     global $pdo;
     $sql ="SELECT * FROM users WHERE level =$sID";
@@ -979,6 +978,7 @@ function GetUserByLevel($sID){
     return $pdostate->fetchAll();
 
 }
+// Returns userID based on username
 function getUserByUsername(){
     global $pdo;
 
@@ -990,6 +990,7 @@ function getUserByUsername(){
 
     return $query->fetch();
 }
+// Updates given User's information
 function updateUserInfo(){
     global $pdo;
 
@@ -1017,6 +1018,7 @@ function updateUserInfo(){
         echo $json;
     }
 }
+// Adds User to Users table
 function addUser(){
     global $pdo;
 
@@ -1044,6 +1046,7 @@ function addUser(){
         echo $json;
     }
 }
+// Sets employed to false on given user
 function deleteUser(){
     global $pdo;
 
@@ -1064,6 +1067,7 @@ function deleteUser(){
 }
 
 //Generations*******************************************
+// Returns all Console Generations
 function GetAllGenerations(){
     global $pdo;
     $sql ="SELECT * FROM consolegenerations";
@@ -1074,18 +1078,21 @@ function GetAllGenerations(){
     $json = json_encode($generations);
     echo $json;
 }
+// Returns Console Generations based on generationID
 function GetGenByID($sID){
     global $pdo;
     $sql ="SELECT * FROM consolegenerations WHERE generationID =$sID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
+// Returns Console Generations based on name
 function GetGenByName($sName){
     global $pdo;
     $sql ="SELECT * FROM consolegenerations WHERE name like $sName";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
+// Returns brandID based on Console Generation name
 function getGenerationBrand($sName){    
     global $pdo;
 
@@ -1104,6 +1111,7 @@ function getGenerationBrand($sName){
         return $brand;
     }
 }
+// Returns generationID based on name
 function getGenerationID($sName){
     global $pdo;
 
@@ -1115,19 +1123,21 @@ function getGenerationID($sName){
 }
 
 //Accessories*******************************************
+// Returns Accessory based on accessoryID
 function GetAccessByID($sID){
     global $pdo;
     $sql ="SELECT * FROM accessories WHERE accessoryID =$sID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
-
+// Returns Accessory based on consoleID
 function GetAccessByConsole($sConsoleID){
     global $pdo;
     $sql ="SELECT * FROM accessories WHERE consoleID =$sConsoleID";
     $pdostate = $pdo->query($sql);
     return $pdostate->fetchAll();
 }
+// Returns Accessory based on description
 function GetAccessByDesc($sDesc){
     global $pdo;
     $sql ="SELECT * FROM accessories WHERE description =$sDesc";
@@ -1136,6 +1146,7 @@ function GetAccessByDesc($sDesc){
 }
 
 //Categories*******************************************
+// Category Sales Logic
 function getCategory($ticket){    
     global $pdo;    
     global $categories;
@@ -1167,6 +1178,7 @@ function getCategory($ticket){
         }
     }        
 }
+// Returns total category sales
 function getTotalCategorySales(){
     global $pdo;
     global $categories;
@@ -1180,9 +1192,7 @@ function getTotalCategorySales(){
     $json = json_encode($categories);    
     echo $json;
 }
-// fdsdsfgdfhdfhdhdfhdgfhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-//hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-//hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+// Routes to proper function based on category given
 function addToCategory($product){
     $category = $product->category;
     switch($category){
@@ -1219,6 +1229,7 @@ function getTotalSales(){
     
     echo $json;
 }
+// Returns top order days (Mon-Sun)
 function getTopOrderDays(){
     global $pdo;
     global $sales;
@@ -1233,6 +1244,7 @@ function getTopOrderDays(){
     $json = json_encode($sales);    
     echo $json;    
 }
+// Returns orderDate based on ticketID
 function getOrderDay($ticket){
     global $pdo;
     global $week;
@@ -1262,6 +1274,7 @@ function updateInventory($id){
         deductFromStock($id);
     }
 }
+// Decrements Stock by 1 of given Product
 function deductFromStock($id){
     global $pdo;
 
@@ -1270,6 +1283,7 @@ function deductFromStock($id){
     $query = $pdo->prepare($sql);
     $query->execute();
 }
+// Updates given Product information
 function editInventoryItem(){
     global $pdo;
 
@@ -1301,6 +1315,7 @@ function editInventoryItem(){
 
     }
 }
+// Adds product to Products table, then calls function to add to subsequent Table
 function addInventoryItem(){
     global $pdo;
 
@@ -1341,6 +1356,7 @@ function addInventoryItem(){
 }
 
 //search functions *******************************************
+// Searches Equipment Table
 function SearchEquipment($sID="",$sConsole="",$sName="",$sType=""){
     if(!empty($sID)){
         return GetEquipmentByID($sID);
@@ -1366,7 +1382,7 @@ function SearchEquipment($sID="",$sConsole="",$sName="",$sType=""){
         return array_unique(array_merge($aryEquipmentName,$aryEquipmentConsoles));
     }
 }
-
+// Searches Consoles Table
 function SearchConsoles($sID="",$sName ="",$sGen="",$sBrand=""){ 
     if(!empty($sID)){
         return GetConsoles($sID);
@@ -1408,6 +1424,7 @@ function SearchConsoles($sID="",$sName ="",$sGen="",$sBrand=""){
         }
     }
 }
+// Searches Accessories Table
 function SearchAccessories($sID="",$sConsole="",$sDesc=""){
     if(!empty($sID)){
         return GetAccessByID($sID);
@@ -1433,6 +1450,7 @@ function SearchAccessories($sID="",$sConsole="",$sDesc=""){
         return array_unique(array_merge($aryAccessDesc,$aryAccessConsoles));
     }
 }
+// Searches Games Table
 function SearchGames($sID="",$sConsole="",$sName="",$sDate="",$sGenre=""){
     $aryGames=[];
     if(!empty($sID)){
@@ -1483,6 +1501,7 @@ function SearchGames($sID="",$sConsole="",$sName="",$sDate="",$sGenre=""){
     }   
    
 }
+// Searches ConsoleGenerations Table
 function SearchGens($sID="",$sName=""){
     if(!empty($sID)){
         return GetGenByID($sID);
@@ -1491,6 +1510,7 @@ function SearchGens($sID="",$sName=""){
         return GetGenByName($sName);
     }
 }
+// Searches Brands Table
 function SearchBrands($sID="",$sName=""){
     if(!empty($sID)){
         return GetBrand($sID);
@@ -1500,7 +1520,7 @@ function SearchBrands($sID="",$sName=""){
     }
 }
 
-
+// Returns All Products associated with the Games Table
 function getSearchGames(){
     $games = GetAllGames();
     $results = array();
@@ -1510,7 +1530,7 @@ function getSearchGames(){
     $json = json_encode($results);
     echo $json;
 }
-
+// Returns All Products associated with the Consoles Table
 function getSearchConsoles(){
     $consoles = GetAllConsoleIDs();
     $results = array();
@@ -1520,7 +1540,7 @@ function getSearchConsoles(){
     $json = json_encode($results);
     echo $json;
 }
-
+// Returns All Products associated with the Equipment Table
 function getSearchEquipment(){
     $equipment = GetAllEquipmentIDs();
     $results = array();
@@ -1530,7 +1550,7 @@ function getSearchEquipment(){
     $json = json_encode($results);
     echo $json;
 }
-
+// Returns All Products associated with the Accessory Table
 function getSearchSpecialty(){
     $specialty = GetAllAccessoryIDs();
     $results = array();

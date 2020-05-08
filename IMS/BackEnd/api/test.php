@@ -6,7 +6,7 @@
     error_reporting(0);
     ini_set('display_errors', 0);
     
-    
+    // Global Variables
     $week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     $sales = array();
     $games = array();
@@ -19,6 +19,7 @@
     $totalSales = 0;
     $action = $_GET['action'];    
     
+    // Controller for Database Functions
     switch($action){
         case 'sell':
             $upc = $_GET['upc'];
@@ -41,6 +42,7 @@
             }
         break;
 
+        // Inventory Functions
         case 'inventory':
             switch($_GET['f']){
                 case 'getall':
@@ -80,6 +82,7 @@
                     addInventoryItem();
                 break;
 
+                // Inventory Search Functions
                 case 'search':
                     switch($_GET['cat']){
                         case 'games':
@@ -102,6 +105,7 @@
             }
         break;        
 
+        // All functions for sales data
         case 'data':
             switch($_GET['f']){
                 case 'games':
