@@ -233,6 +233,8 @@ export class DataComponent implements OnInit, AfterViewInit {
     
   }
 
+  /*
+  * Updates Chart information based on what button is clicked (Weekly or Monthly) */ 
   updateChart(chart:string, range:string){
       if(chart == this.chart1.data.datasets[0].label){
         this.dataService.getTopDays(range).subscribe((result: number[]) =>{
@@ -282,11 +284,15 @@ export class DataComponent implements OnInit, AfterViewInit {
     data.sort = this.sort;
   }
 
+  /*
+  * Sets the default value to sort by */ 
   setDefaultSort(data: MatTableDataSource<DataItem>){
     this.sort.sort(({ id: 'sales', start: 'desc'}) as MatSortable);
     data.sort = this.sort;
   }
 
+  /*
+  * Gets total sales data from DataService based on tab clicked */ 
   tabClick(tab){    
     this.salesTab = tab.tab.textLabel;
     console.log(this.salesTab);

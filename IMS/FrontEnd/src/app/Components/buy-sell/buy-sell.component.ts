@@ -38,12 +38,15 @@ export class BuySellComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/login']);
     }
    }
-
+  // Runs after ngOnInit when all HTML Elements have been loaded 
   ngAfterViewInit(){
     var input = document.querySelector('input');
     input.addEventListener('change', this.getProduct);
   }
 
+  /*
+  * Sets the currentTab from the selected tab Label. If the selected
+  * tab is 'Purchases' it will set an event listener on the upc input */ 
   tabClick(tab){    
     this.currentTab = tab.tab.textLabel;
     console.log(this.currentTab);
@@ -60,12 +63,16 @@ export class BuySellComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /*
+  * Clears the variables set from the last/current set product */ 
   clearProduct(){
     this.upc = "";
     this.name = "";
     this.price = "";
   }
 
+  /*
+  * Gets and sets product information based on the given UPC */ 
   getProduct(){
     this.search.getProduct(this.upc).subscribe((result: object) =>{
       console.log(result);
@@ -76,6 +83,8 @@ export class BuySellComponent implements OnInit, AfterViewInit {
     }) 
   }
 
+  /*
+  * Adds given item to current cart based on currentTab variable */ 
   addItemToCart(upc:string): void{
     if(this.upc != ""){
       this.search.getProduct(upc).subscribe((result: object) =>{
@@ -95,6 +104,8 @@ export class BuySellComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /*
+  * Checks to see if the given product is currently in the cart, if true increment the qty by 1 */ 
   checkCart(item){
     if(this.shoppingCart.length > 0){
       for(var i = 0; i < this.shoppingCart.length; i++){
@@ -115,6 +126,8 @@ export class BuySellComponent implements OnInit, AfterViewInit {
     console.log(item);
   }
 
+  /*
+  * Removes an item from the current cart, if its qty is > 1, it decrements the qty by 1 */ 
   removeItemFromCart(name:string){
     if(this.currentTab == "Sales"){
       for(var i = 0; i < this.shoppingCart.length; i++){
@@ -142,10 +155,13 @@ export class BuySellComponent implements OnInit, AfterViewInit {
     this.updateCart();
   }
 
+  /*
+  * Updates the corresponding cart based on the currentTab variable */ 
   updateCart(): void{
     this.subTotal = 0;
     this.salesTax = 0;
     this.cartTotal = 0;
+    // Sales tab
     if(this.currentTab == "Sales"){
       this.shoppingCart = this.cart.getShoppingCart();
       console.log(this.shoppingCart);
@@ -159,7 +175,7 @@ export class BuySellComponent implements OnInit, AfterViewInit {
       this.cookies.set('shoppingCart', JSON.stringify(this.shoppingCart));
       this.cartSell = this.cookies.get('shoppingCart');
     }
-
+    // Purchases tab
     if(this.currentTab == "Purchases"){
       this.buyList = this.cart.getBuyList();
       for(var i = 0; i < this.buyList.length; i++){
@@ -174,19 +190,29 @@ export class BuySellComponent implements OnInit, AfterViewInit {
     this.price = "";
   }
 
+  /*
+  * Calculates the current order's sales tax based on Nixa's tax rate */ 
   getSalesTax(total:number): number{
     return this.round(total * .0748);
   }
 
+  /*
+  * Calculates and returns the current cart total from the given subtotal and sales tax */ 
   getCartTotal(subTotal:number, salesTax:number): number{
     return this.round(subTotal + salesTax)
   }
 
+  /*
+  * Rounds the given number to two decimals */ 
   round(total:number): number{
     return Number(Math.round(+(total + 'e' + 2)) + 'e-' + 2);
   }
 
+  /*
+  * Calls corresponding service functions to create order tickets, based on
+  * the current open tab */ 
   completePurchase(){
+    // Sales Tab
     if(this.currentTab == 'Sales'){
       this.search.createSellTicket().subscribe(result=>{
         
@@ -195,7 +221,9 @@ export class BuySellComponent implements OnInit, AfterViewInit {
       this.updateCart();   
       alert("Order Complete");
     }
+    // Purchases Tab
     else if(this.currentTab == 'Purchases'){
+      console.log(this.cartTotal);
       if(this.cartTotal > 50){
         if(this.cookies.get("level") == "master" || this.authorization == true){
           this.search.createBuyTicket().subscribe(result=>{});   
@@ -215,7 +243,9 @@ export class BuySellComponent implements OnInit, AfterViewInit {
       }
     }
   } 
-  
+ 
+  /*
+  * Checks for cookies set, that hold shopping/buylist order information */ 
   savedCarts(){
     if(!this.cookies.get("shoppingCart") && !this.cookies.get("buyList")){
       this.cookies.set("shoppingCart", JSON.stringify(this.shoppingCart));
@@ -226,6 +256,8 @@ export class BuySellComponent implements OnInit, AfterViewInit {
     this.updateCart();
   }
 
+  /*
+  * Opens the manager override: Authorization Dialog */ 
   openDialog(): void {
     const dialogConfig = new MatDialogConfig();
 
@@ -238,7 +270,6 @@ export class BuySellComponent implements OnInit, AfterViewInit {
     };
     
     const dialogRef = this.dialog.open(OverrideAuthorizationComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe( data =>{
       console.log("Dialog output:", data);
       

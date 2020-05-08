@@ -55,22 +55,30 @@ export class AddInventoryComponent implements OnInit {
 
   }
 
+  /*
+  * Exits dialog */ 
   close() {
     this.dialogRef.close();
   }
 
+  /*
+  * Gets brand based on console selected */ 
   setConsoleInfo(console){
     this.inventory.getBrandByConsole(console).subscribe((result: any) =>{
       this.brand = result;
     });
   }
 
+  /*
+  * Gets brand based on console generation entered */ 
   setGenerationInfo(cGen){
     this.inventory.getBrandByGeneration(cGen).subscribe((result: any)=>{
       this.brand = result;
     })
   }
 
+  /*
+  * Adds product to Inventory */ 
   addProduct(){
     this.product = { id: this.upc, name: this.name, description: this.description, price: this.price, used: this.used, stock: this.stock, category: this.category, genre: this.genre, console: this.console, generation: this.generation, brand: this.brand };
     console.log(this.product);

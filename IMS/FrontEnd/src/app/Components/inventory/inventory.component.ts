@@ -11,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { EditInventoryComponent } from '../dialogs/edit-inventory/edit-inventory.component';
 import { AddInventoryComponent } from '../dialogs/add-inventory/add-inventory.component';
-// import { InventoryItem } from 'src/app/Classes/Inventory-Item/inventory-item';
+
 export interface InventoryItem {
   id: string;
   name: string;
@@ -68,12 +68,14 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     console.log(this.INVENTORY)
   }
 
+  // Runs after ngOnInit when all HTML Elements have been loaded 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    // this.table.dataSource = this.dataSource;
   }
 
+  /*
+  * Clears the current search filters, both category and searchItem */
   clearSearch(){
     this.category = 'products';
     this.searchItem = '';
@@ -81,12 +83,16 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     this.ngOnInit();
   }
 
+  /*
+  * Resets the Inventory information */
   resetArray(){
-    console.log("in function");
     this.INVENTORY = [];
     this.searchItem= '';
+    this.applyFilter();
   }
 
+  /*
+  * Gets Inventory Information based on the chosen category */
   getCategory($event: Event){
     this.resetArray();
     if(this.category == 'games'){      
@@ -127,9 +133,11 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     }
   }
 
-  applyFilter(event: Event) {
+  /*
+  * Applys filtering from the given searchItem from the search bar */ 
+  applyFilter() {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = this.searchItem.trim().toLowerCase();
   }
 
    /*
@@ -189,6 +197,8 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     });
   }
 
+  /*
+  * Opens the inventory-item Edit Dialog */ 
   openDialog(upc): void {
     const dialogConfig = new MatDialogConfig();
   
@@ -199,12 +209,13 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     };
     
     const dialogRef = this.dialog.open(EditInventoryComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
     });
   }
 
+  /*
+  * Opens the inventory-item Add Product Dialog */ 
   addItem(){
     const dialogConfig = new MatDialogConfig();
   
@@ -215,7 +226,6 @@ export class InventoryComponent extends DataSource<InventoryItem> implements Aft
     };
     
     const dialogRef = this.dialog.open(AddInventoryComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
     });

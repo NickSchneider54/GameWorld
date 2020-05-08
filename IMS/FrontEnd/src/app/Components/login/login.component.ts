@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /*
+  * Determines whether the field is blank, if true returns error and message reference */ 
   hasError(controlName: string, errorName: string){
     return this.loginForm.controls[controlName].hasError(errorName);
   }
@@ -48,6 +50,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /*
+  * Checks user inputted username and password against registered users */ 
   login(username:string, password:string){  
     this.incorrectUsername = false;
     this.incorrectPassword = false;  

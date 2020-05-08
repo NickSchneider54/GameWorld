@@ -37,12 +37,16 @@ export class EditUserComponent implements OnInit {
 
   }
 
+  /*
+  * Updates currently selected user information */ 
   updateEmployee(user){
     this.update.updateUser(encodeURIComponent(JSON.stringify(user))).subscribe((result) =>{
       alert(result);
     });
   }
 
+  /*
+  * Closes the dialog */ 
   close() {
     this.dialogRef.close();
   }

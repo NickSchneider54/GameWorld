@@ -10,7 +10,7 @@
       </mat-select>
     </mat-form-field>  
     <mat-form-field>
-      <input matInput [(ngModel)]="searchItem" (keyup)="applyFilter($event)" placeholder="Search">    
+      <input matInput [(ngModel)]="searchItem" (keyup)="applyFilter()" placeholder="Search">    
     </mat-form-field>
     <button mat-stroked-button (click)="clearSearch()">Clear Search</button>
   </div>
